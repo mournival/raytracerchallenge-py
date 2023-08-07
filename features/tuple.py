@@ -8,3 +8,7 @@ class Tuple(namedtuple('Tuple',[('x'), ('y'), ('z'), ('w')])):
 
     def isVector(self) -> bool:
         return self.w == 0.0
+
+
+def point(x: float, y: float, z: float) -> Tuple:
+    return Tuple(x, y, z, 1.0)

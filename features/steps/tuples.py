@@ -1,8 +1,6 @@
-from collections import namedtuple
-
 from behave import *
 
-from features.tuple import Tuple
+from features.tuple import Tuple, point
 
 use_step_matcher("parse")
 
@@ -65,4 +63,29 @@ def step_impl(context, name):
     :param name: Tuple Name
     :type context: behave.runner.Context
     """
-    assert(context.tuples[name].isVector())
+    assert (context.tuples[name].isVector())
+
+
+@given("{} ← point({:g}, {:g}, {:g})")
+def step_impl(context, name, x, y, z):
+    """
+    :param name: Point Name
+    :param x:
+    :param y:
+    :param z:
+    :param w:
+    :type context: behave.runner.Context    """
+    context.tuples[name] = point(x, y, z)
+
+
+@then("{} = tuple({:g}, {:g}, {:g}, {:g})")
+def step_impl(context, name, x, y, z, w):
+    """
+    :param name: Point Name
+    :param x:
+    :param y:
+    :param z:
+    :param w:
+    :type context: behave.runner.Context
+    """
+    assert (context.tuples[name] == Tuple(x, y, z, w))
