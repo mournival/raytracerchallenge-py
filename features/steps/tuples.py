@@ -131,7 +131,6 @@ def step_impl(context, a, b, x, y, z, w):
     """
     expected = Tuple(x, y, z, w)
     actual = context.tuples[a] + context.tuples[b]
-    print(actual)
     assert (actual == expected)
 
 
@@ -147,7 +146,6 @@ def step_impl(context, a, b, x, y, z):
     """
     expected = vector(x, y, z)
     actual = context.tuples[a] - context.tuples[b]
-    print(actual)
     assert (actual == expected)
 
 
