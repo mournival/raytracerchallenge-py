@@ -1,6 +1,6 @@
 from behave import *
 
-from features.tuple import Tuple, point, vector
+from tuple import Tuple, point, vector
 
 use_step_matcher("parse")
 
