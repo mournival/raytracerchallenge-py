@@ -7,4 +7,4 @@ class Tuple(namedtuple('Tuple',[('x'), ('y'), ('z'), ('w')])):
 
 
     def isVector(self) -> bool:
-        return ~self.isPoint()
+        return self.w == 0.0

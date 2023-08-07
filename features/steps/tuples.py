@@ -4,60 +4,65 @@ from behave import *
 
 from features.tuple import Tuple
 
-use_step_matcher("re")
+use_step_matcher("parse")
 
 
-@given("a ← tuple\(4\.3, -4\.2, 3\.1, 1\.0\)")
-def step_impl(context):
+@given('{} ← tuple({:g}, {:g}, {:g}, {:g})')
+def step_impl(context, a, x, y, z, w):
     """
+    :param a: Tuple Name
+    :param x:
+    :param y:
+    :param z:
+    :param w:
     :type context: behave.runner.Context
     """
-    context.tuples['a'] = Tuple(4.3, -4.2, 3.1, 1.0)
+    context.tuples[a] = Tuple(x, y, z, w)
 
 
-@then("a\.x = 4\.3")
-def step_impl(context):
+@then("{}.{} = {:g}")
+def step_impl(context, name, field, val):
     """
+    :param name: Tuple Name
+    :param field: Tuple Field
+    :param val: Field Value
     :type context: behave.runner.Context
     """
-    assert(context.tuples['a'].x == 4.3)
+    assert (context.tuples[name].__getattribute__(field) == val)
 
 
-@step("a\.y = -4\.2")
-def step_impl(context):
+@step("{} is a point")
+def step_impl(context, name):
     """
+    :param name: Tuple Name
     :type context: behave.runner.Context
     """
-    assert(context.tuples['a'].y == -4.2)
+    print(context.tuples[name])
+    assert(context.tuples[name].isPoint())
 
 
-@step("a\.z = 3\.1")
-def step_impl(context):
+@step("{} is not a vector")
+def step_impl(context, name):
     """
+    :param name: Tuple Name
     :type context: behave.runner.Context
     """
-    assert(context.tuples['a'].z == 3.1)
+    assert(~context.tuples[name].isVector())
 
 
-@step("a\.w = 1\.0")
-def step_impl(context):
+@step("{} is not a point")
+def step_impl(context, name):
     """
+    :param name: Tuple Name
     :type context: behave.runner.Context
     """
-    assert(context.tuples['a'].w == 1.0)
+    assert(~context.tuples[name].isPoint())
 
 
-@step("a is a point")
-def step_impl(context):
+@step("{} is a vector")
+def step_impl(context, name):
     """
+    :param name: Tuple Name
     :type context: behave.runner.Context
     """
-    assert(context.tuples['a'].isPoint())
-
-
-@step("a is not a vector")
-def step_impl(context):
-    """
-    :type context: behave.runner.Context
-    """
-    assert(context.tuples['a'].isVector())
+    assert(context.tuples[name].isVector())
