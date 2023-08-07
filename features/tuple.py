@@ -1,12 +1,12 @@
 from collections import namedtuple
 
 
-class Tuple(namedtuple('Tuple', [('x'), ('y'), ('z'), ('w')])):
+class Tuple(namedtuple('Tuple', "x y z w")):
 
-    def isPoint(self) -> bool:
+    def is_point(self) -> bool:
         return self.w == 1.0
 
-    def isVector(self) -> bool:
+    def is_vector(self) -> bool:
         return self.w == 0.0
 
     def __add__(self, other):
@@ -17,6 +17,7 @@ class Tuple(namedtuple('Tuple', [('x'), ('y'), ('z'), ('w')])):
 
     def __neg__(self):
         return Tuple(-self.x, -self.y, -self.z, -self.w)
+
 
 def point(x: float, y: float, z: float) -> Tuple:
     return Tuple(x, y, z, 1.0)

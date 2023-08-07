@@ -19,14 +19,15 @@ def step_impl(context, a, x, y, z, w):
 
 
 @then("{:w}.{:w} = {:g}")
-def step_impl(context, name, field, val):
+def step_impl(context, name, field, expected):
     """
     :param name: Tuple Name
     :param field: Tuple Field
-    :param val: Field Value
+    :param expected: Field Value
     :type context: behave.runner.Context
     """
-    assert (context.tuples[name].__getattribute__(field) == float(val))
+    actual = context.tuples[name].__getattribute__(field)
+    assert (actual == expected)
 
 
 @step("{:w} is a point")
@@ -35,8 +36,7 @@ def step_impl(context, name):
     :param name: Tuple Name
     :type context: behave.runner.Context
     """
-    print(context.tuples[name])
-    assert (context.tuples[name].isPoint())
+    assert (context.tuples[name].is_point())
 
 
 @step("{:w} is not a vector")
@@ -45,7 +45,7 @@ def step_impl(context, name):
     :param name: Tuple Name
     :type context: behave.runner.Context
     """
-    assert (~context.tuples[name].isVector())
+    assert (~context.tuples[name].is_vector())
 
 
 @step("{:w} is not a point")
@@ -54,7 +54,7 @@ def step_impl(context, name):
     :param name: Tuple Name
     :type context: behave.runner.Context
     """
-    assert (~context.tuples[name].isPoint())
+    assert (~context.tuples[name].is_point())
 
 
 @step("{:w} is a vector")
@@ -63,7 +63,7 @@ def step_impl(context, name):
     :param name: Tuple Name
     :type context: behave.runner.Context
     """
-    assert (context.tuples[name].isVector())
+    assert (context.tuples[name].is_vector())
 
 
 @given("{:w} ← point({:g}, {:g}, {:g})")
@@ -90,6 +90,7 @@ def step_impl(context, name, x, y, z, w):
     expected = Tuple(x, y, z, w)
     actual = -context.tuples[name]
     assert (actual == expected)
+
 
 @then("{:w} = tuple({:g}, {:g}, {:g}, {:g})")
 def step_impl(context, name, x, y, z, w):
