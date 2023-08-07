@@ -180,3 +180,19 @@ def step_impl(context,  a, c, x, y, z, w):
     expected = Tuple(x, y, z, w)
     actual = context.tuples[a] * c
     assert (actual == expected)
+
+
+@then("{:w} / {:g} = tuple({:g}, {:g}, {:g}, {:g})")
+def step_impl(context,  a, c, x, y, z, w):
+    """
+    :param a: Tuple Name
+    :param c:
+    :param x:
+    :param y:
+    :param z:
+    :param w:
+    :type context: behave.runner.Context
+    """
+    expected = Tuple(x, y, z, w)
+    actual = context.tuples[a] / c
+    assert (actual == expected)

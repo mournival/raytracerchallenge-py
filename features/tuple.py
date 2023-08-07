@@ -18,6 +18,9 @@ class Tuple(namedtuple('Tuple', "x y z w")):
     def __mul__(self, other: float):
         return Tuple(self.x * other, self.y * other, self.z * other, self.w * other)
 
+    def __truediv__(self, other: float):
+        return Tuple(self.x / other, self.y / other, self.z / other, self.w / other)
+
     def __neg__(self):
         return Tuple(-self.x, -self.y, -self.z, -self.w)
 
