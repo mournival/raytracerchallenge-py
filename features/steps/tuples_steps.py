@@ -107,3 +107,8 @@ def step_impl(context, v, x, y, z):
     assert (abs((actual.x - x)) < EPSILON)
     assert (abs((actual.y - y)) < EPSILON)
     assert (abs((actual.z - z)) < EPSILON)
+
+
+@when("{:w} ← normalize({:w})")
+def step_impl(context, norm, v):
+    context.tuples[norm] = normalize(context.tuples[v])

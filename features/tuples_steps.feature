@@ -97,10 +97,11 @@ Feature: Tuples, Vectors, and Points
 #    Then normalize(v) = approximately vector(0.26726, 0.53452, 0.80178)
     Then normalize(v) = vector(0.26726, 0.53452, 0.80178)
 
-#Scenario: The magnitude of a normalized vector
-#  Given v ← vector(1, 2, 3)
-#  When norm ← normalize(v)
-#  Then magnitude(norm) = 1
+    #TODO Reconcile steps with Scenario: Normalizing vector(4, 0, 0) gives (1, 0, 0)
+  Scenario: The magnitude of a normalized vector
+    Given v ← vector(1, 2, 3)
+    When norm ← normalize(v)
+    Then magnitude(norm) = 1
 #
 #Scenario: The dot product of two tuples
 #  Given a ← vector(1, 2, 3)
