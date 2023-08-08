@@ -7,7 +7,7 @@
 [![MIT License][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
-
+[![raytracerchallenge-py Behave Demo](https://github.com/mournival/raytracerchallenge-py/actions/workflows/behave.yml/badge.svg)](https://github.com/mournival/raytracerchallenge-py/actions/workflows/behave.yml)
 
 <!-- PROJECT LOGO -->
 <br />
