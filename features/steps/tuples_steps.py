@@ -3,7 +3,7 @@ from math import sqrt
 
 from behave import *
 
-from tuple import Tuple, point, vector, magnitude, normalize
+from tuple import Tuple, point, vector, magnitude, normalize, dot, cross
 
 use_step_matcher("parse")
 
@@ -112,3 +112,13 @@ def step_impl(context, v, x, y, z):
 @when("{:w} ← normalize({:w})")
 def step_impl(context, norm, v):
     context.tuples[norm] = normalize(context.tuples[v])
+
+
+@then("dot({:w}, {:w}) = {:g}")
+def step_impl(context, a, b, expected):
+    assert (abs(dot(context.tuples[a], context.tuples[b]) - expected) < EPSILON)
+
+
+@then("cross({:w}, {:w}) = vector({:g}, {:g}, {:g})")
+def step_impl(context, a, b, x, y, z):
+    assert (cross(context.tuples[a], context.tuples[b]) == vector(x, y, z))

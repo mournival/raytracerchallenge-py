@@ -26,11 +26,11 @@ class Tuple(namedtuple('Tuple', "x y z w")):
         return Tuple(-self.x, -self.y, -self.z, -self.w)
 
 
-def dot(lhs: Tuple, rhs: Tuple) -> Tuple:
+def dot(lhs: Tuple, rhs: Tuple) -> float:
     return lhs.x * rhs.x + lhs.y * rhs.y + lhs.z * rhs.z + lhs.w * rhs.w
 
 
-def magnitude(v: Tuple):
+def magnitude(v: Tuple) -> float:
     return math.sqrt(dot(v, v))
 
 
@@ -44,3 +44,7 @@ def vector(x: float, y: float, z: float) -> Tuple:
 
 def normalize(v: Tuple) -> Tuple:
     return v / magnitude(v)
+
+
+def cross(lhs: Tuple, rhs: Tuple) -> Tuple:
+    return vector(lhs.y * rhs.z - lhs.z * rhs.y, lhs.z * rhs.x - lhs.x * rhs.z, lhs.x * rhs.y - lhs.y * rhs.x)
