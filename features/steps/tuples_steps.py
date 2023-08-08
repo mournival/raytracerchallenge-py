@@ -3,6 +3,7 @@ from math import sqrt
 
 from behave import *
 
+from color import color
 from tuple import Tuple, point, vector, magnitude, normalize, dot, cross
 
 use_step_matcher("parse")
@@ -144,3 +145,8 @@ def step_impl(context, v, x, y, z):
 @then("magnitude({:w}) = √{:g}")
 def step_impl(context, a, expected):
     assert (magnitude(context.tuples[a]) == sqrt(expected))
+
+
+@given("{:w} ← color({:g}, {:g}, {:g})")
+def step_impl(context, c, r, g, b):
+    context.tuples[c] = color(r, g, b)
