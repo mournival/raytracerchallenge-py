@@ -1,3 +1,4 @@
+import math
 from collections import namedtuple
 
 
@@ -15,14 +16,21 @@ class Tuple(namedtuple('Tuple', "x y z w")):
     def __sub__(self, other):
         return Tuple(self.x - other.x, self.y - other.y, self.z - other.z, self.w - other.w)
 
-    def __mul__(self, other: float):
+    def __mul__(self, other):
         return Tuple(self.x * other, self.y * other, self.z * other, self.w * other)
 
-    def __truediv__(self, other: float):
+    def __truediv__(self, other):
         return Tuple(self.x / other, self.y / other, self.z / other, self.w / other)
 
     def __neg__(self):
         return Tuple(-self.x, -self.y, -self.z, -self.w)
+
+    def dot(self, other) -> float:
+        return self.x * other.x + self.y * other.y + self.z * other.z + self.w * other.w
+
+
+def magnitude(v: Tuple):
+    return math.sqrt(v.dot(v))
 
 
 def point(x: float, y: float, z: float) -> Tuple:
