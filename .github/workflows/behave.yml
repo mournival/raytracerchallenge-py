@@ -15,8 +15,8 @@ steps:
   - uses: actions/checkout@v3
   - uses: actions/setup-python@v4
     with:
-      python-version: ${{ matrix.python-version }}
+      python-version: 3.10.5
   - uses: cryptic-wizard/run-behave-tests@v0.3.0
     with:
-      test-path: raytracercallenge-py
-      test-output-name: ${{ matrix.os }}-${{ matrix.python-version }}.txt
+      test-path: example_project
+      test-output-name: results.txt
