@@ -3,7 +3,7 @@ from math import sqrt
 
 from behave import *
 
-from color import color
+from color import Color
 from tuple import Tuple, point, vector, magnitude, normalize, dot, cross
 
 use_step_matcher("parse")
@@ -142,6 +142,7 @@ def step_impl(context, v, x, y, z):
     assert (abs((actual.y - y)) < EPSILON)
     assert (abs((actual.z - z)) < EPSILON)
 
+
 @then("magnitude({:w}) = √{:g}")
 def step_impl(context, a, expected):
     assert (magnitude(context.tuples[a]) == sqrt(expected))
@@ -149,4 +150,22 @@ def step_impl(context, a, expected):
 
 @given("{:w} ← color({:g}, {:g}, {:g})")
 def step_impl(context, c, r, g, b):
-    context.tuples[c] = color(r, g, b)
+    context.tuples[c] = Color(r, g, b)
+
+
+@then("{:w} + {:w} = color({:g}, {:g}, {:g})")
+def step_impl(context, a, b, red, green, blue):
+    assert (context.tuples[a] + context.tuples[b] == Color(red, green, blue))
+
+
+@then("{:w} - {:w} = color({:g}, {:g}, {:g})")
+def step_impl(context, a, b, red, green, blue):
+    actual = context.tuples[a] - context.tuples[b]
+    assert (abs(actual.red - red) < EPSILON)
+    assert (abs(actual.green - green) < EPSILON)
+    assert (abs(actual.blue - blue) < EPSILON)
+
+
+@then("{:w} * {:g} = color({:g}, {:g}, {:g})")
+def step_impl(context, a, b, red, green, blue):
+    assert (context.tuples[a] * b == Color(red, green, blue))
