@@ -1,22 +1,19 @@
-build:
-  runs-on: ${{ matrix.os }}
-  strategy:
-    fail-fast: false
-    matrix:
-      os: [ubuntu-latest, macos-latest, windows-latest]
-      python-version: ['3.9', '3.10.5', '3.11']
-      exclude:
-        - os: ubuntu-latest
-          python-version: '3.9'
-        - os: windows-latest
-          python-version: '3.10.5'
-
-steps:
-  - uses: actions/checkout@v3
-  - uses: actions/setup-python@v4
-    with:
-      python-version: ${{ matrix.python-version }}
-  - uses: cryptic-wizard/run-behave-tests@v0.3.0
-    with:
-      test-path: raytracercallenge-py
-      test-output-name: ${{ matrix.os }}-${{ matrix.python-version }}.txt
+name: raytracerchallenge-py Behave Demo 
+run-name: ${{ github.actor }} is testing out Behave! 🚀
+on: [push]
+jobs:
+  Explore-GitHub-Actions:
+    runs-on: ubuntu-latest
+    steps:
+      - name: List files in the repository
+        run: |
+          ls ${{ github.workspace }}  
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: 3.10.5
+      - uses: cryptic-wizard/run-behave-tests@v0.3.0
+        with:
+          test-path: raytracerchallenge-py
+          test-output-name: ${{ matrix.os }}.txt
+      - run: echo "🍏 This job's status is ${{ job.status }}."
