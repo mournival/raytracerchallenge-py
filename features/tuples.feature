@@ -93,11 +93,8 @@ Feature: Tuples, Vectors, and Points
 
   Scenario: Normalizing vector(1, 2, 3)
     Given v ← vector(1, 2, 3)
-#    Given v ← vector(1/√14, 2/√14, 3/√14)
-#    Then normalize(v) = approximately vector(0.26726, 0.53452, 0.80178)
-    Then normalize(v) = vector(0.26726, 0.53452, 0.80178)
+    Then normalize(v) = approximately vector(0.26726, 0.53452, 0.80178)
 
-    #TODO Reconcile steps with Scenario: Normalizing vector(4, 0, 0) gives (1, 0, 0)
   Scenario: The magnitude of a normalized vector
     Given v ← vector(1, 2, 3)
     When norm ← normalize(v)

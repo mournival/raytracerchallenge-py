@@ -103,10 +103,7 @@ EPSILON = 0.0001
 
 @then("normalize({:w}) = vector({:g}, {:g}, {:g})")
 def step_impl(context, v, x, y, z):
-    actual = normalize(context.tuples[v])
-    assert (abs((actual.x - x)) < EPSILON)
-    assert (abs((actual.y - y)) < EPSILON)
-    assert (abs((actual.z - z)) < EPSILON)
+    assert (normalize(context.tuples[v]) == vector(x, y, z))
 
 
 @when("{:w} ← normalize({:w})")
@@ -122,3 +119,28 @@ def step_impl(context, a, b, expected):
 @then("cross({:w}, {:w}) = vector({:g}, {:g}, {:g})")
 def step_impl(context, a, b, x, y, z):
     assert (cross(context.tuples[a], context.tuples[b]) == vector(x, y, z))
+
+
+@then("normalize({:w}) = approximately vector({:g}, {:g}, {:g})")
+def step_impl(context, v, x, y, z):
+    actual = normalize(context.tuples[v])
+    assert (abs((actual.x - x)) < EPSILON)
+    assert (abs((actual.y - y)) < EPSILON)
+    assert (abs((actual.z - z)) < EPSILON)
+
+
+@then("{:w} = vector({:g}, {:g}, {:g})")
+def step_impl(context, v, x, y, z):
+    assert (context.tuples[v] == vector(x, y, z))
+
+
+@then("{:w} = approximately vector({:g}, {:g}, {:g})")
+def step_impl(context, v, x, y, z):
+    actual = context.tuples[v]
+    assert (abs((actual.x - x)) < EPSILON)
+    assert (abs((actual.y - y)) < EPSILON)
+    assert (abs((actual.z - z)) < EPSILON)
+
+@then("magnitude({:w}) = √{:g}")
+def step_impl(context, a, expected):
+    assert (magnitude(context.tuples[a]) == sqrt(expected))
