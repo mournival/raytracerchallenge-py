@@ -94,6 +94,11 @@ def step_impl(context, a, expected):
     assert (magnitude(context.tuples[a]) == expected)
 
 
+@then("magnitude({:w}) = approximately {:g}")
+def step_impl(context, a, expected):
+    assert (abs(magnitude(context.tuples[a]) - expected) < EPSILON)
+
+
 @then("magnitude({:w}) = √{:g}")
 def step_impl(context, a, expected):
     assert (magnitude(context.tuples[a]) == sqrt(expected))
