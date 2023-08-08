@@ -1,4 +1,4 @@
-Feature: Mournival modificiations to Tuples, Vectors, and Points
+Feature: Mournival modifications to Tuples, Vectors, and Points
 
   Scenario: Normalizing vector(1, 2, 3) (approximately)
     Given v ← vector(1/√14, 2/√14, 3/√14)

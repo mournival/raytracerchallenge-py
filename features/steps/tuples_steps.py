@@ -3,7 +3,7 @@ from math import sqrt
 
 from behave import *
 
-from color import Color
+from color import Color, hadamard_product
 from tuple import Tuple, point, vector, magnitude, normalize, dot, cross
 
 use_step_matcher("parse")
@@ -166,6 +166,13 @@ def step_impl(context, a, b, red, green, blue):
     assert (abs(actual.blue - blue) < EPSILON)
 
 
-@then("{:w} * {:g} = color({:g}, {:g}, {:g})")
+@then("{:w} * {:w} = color({:g}, {:g}, {:g})")
 def step_impl(context, a, b, red, green, blue):
-    assert (context.tuples[a] * b == Color(red, green, blue))
+    try:
+        b = float(b)
+        actual = context.tuples[a] * b
+    except ValueError:
+        actual = hadamard_product(context.tuples[a], context.tuples[b])
+    assert (abs(actual.red - red) < EPSILON)
+    assert (abs(actual.green - green) < EPSILON)
+    assert (abs(actual.blue - blue) < EPSILON)
