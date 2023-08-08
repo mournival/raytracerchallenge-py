@@ -5,9 +5,14 @@ jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
     steps:
+      - name: github.workspace
+        run: echo ${{ github.workspace }} 
       - name: List files in the repository
         run: |
-          ls ${{ github.workspace }}  
+          ls ${{ github.workspace }}
+      - name: List files in the repository
+        run: |
+          ls ${{ github.workspace }}/..  
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
         with:
