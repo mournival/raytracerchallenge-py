@@ -47,6 +47,11 @@ def step_impl(context, a, b, ppm):
     actual = context.globals[ppm].splitlines()
     expected = context.text.splitlines()
     i = a - 1
-    for r in expected[0:b-a + 1]:
+    for r in expected[0:b - a + 1]:
         assert (actual[i] == r), f"expected: '{r}', actual: '{actual[i]}'"
         i += 1
+
+
+@when("every pixel of {:w} is set to color({:g}, {:g}, {:g})")
+def step_impl(context, c, r, g, b):
+    context.globals[c].fill(Color(r, g, b))

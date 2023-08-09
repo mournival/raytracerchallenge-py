@@ -41,6 +41,9 @@ class Canvas(object):
             return ppm + '\n'
         return ppm + ' '
 
+    def fill(self, c: Color):
+        self._data.fill(c)
+
 
 if __name__ == '__main__':
     c = Canvas(10, 20)

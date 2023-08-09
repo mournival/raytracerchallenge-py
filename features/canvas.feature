@@ -37,7 +37,7 @@ Scenario: Constructing the PPM pixel data
     0 0 0 0 0 0 0 128 0 0 0 0 0 0 0
     0 0 0 0 0 0 0 0 0 0 0 0 0 0 255
     """
-#
+
 #Scenario: Splitting long lines in PPM files
 #  Given c ← canvas(10, 2)
 #  When every pixel of c is set to color(1, 0.8, 0.6)
@@ -49,7 +49,7 @@ Scenario: Constructing the PPM pixel data
 #    255 204 153 255 204 153 255 204 153 255 204 153 255 204 153 255 204
 #    153 255 204 153 255 204 153 255 204 153 255 204 153
 #    """
-#
+
 #Scenario: PPM files are terminated by a newline character
 #  Given c ← canvas(5, 3)
 #  When ppm ← canvas_to_ppm(c)
