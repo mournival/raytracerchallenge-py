@@ -22,13 +22,18 @@ def main():
     t = 0
     ps = list()
     while p.position.y > 0:
-        ps.append(p.position.y)
+        ps.append(p.position)
         p = tick(e, p)
         t += 1
-    plt.plot(range(t), ps)
-    plt.xlabel('tick')
-    plt.ylabel('height')
-    plt.title('Projectile Altitude')
+    plt.axes(projection='3d')
+    time = range(t)
+    x = [p.x for p in ps]
+    plt.xlabel( 'Tick')
+    plt.ylabel( 'Distance')
+    y = [p.y for p in ps]
+    plt.plot(time, x, y)
+    plt.plot(time, x, 0)
+    plt.title('Projectile Path')
     plt.show()
 
 
