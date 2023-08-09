@@ -25,3 +25,13 @@ def step_impl(context, name, expected):
 def step_impl(context, c, r, g, b):
     for p in context.canvases[c].pixels():
         assert (p == Color(r, g, b))
+
+
+@when("write_pixel({:w}, {:d}, {:d}, {:w})")
+def step_impl(context, c, x, y, name):
+    context.canvases[c][x, y] = context.tuples[name]
+
+
+@then("pixel_at({:w}, {:d}, {:d}) = {:w}")
+def step_impl(context, c, x, y, name):
+    assert (context.canvases[c][x,y] == context.tuples[name])
