@@ -12,7 +12,7 @@ def tick(env: environment, proj: projectile) -> projectile:
     velocity = proj.velocity + env.gravity + env.wind
     return projectile(position, velocity)
 
-m = 1
+m = 10
 p_naught = projectile(point(0, 1, 0), normalize(vector(1, 1, 0)) * m)
 e = environment(vector(0, -0.1, 0), vector(-0.01, 0, 0))
 
