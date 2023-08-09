@@ -31,28 +31,15 @@ class Canvas(object):
         ppm = ""
         count = 0
         for p in self.pixels():
-            r = round(p.red * 255)
-            if r < 0:
-                r = 0
-            elif r > 255:
-                r = 255
-            g = round(p.green * 255)
-            if g < 0:
-                g = 0
-            elif g > 255:
-                g = 255
-            b = round(p.blue * 255)
-            if b < 0:
-                b = 0
-            elif b > 255:
-                b = 255
-            ppm = ppm + ' '.join([str(r), str(g), str(b)])
             count += 1
-            if count % 5 == 0:
-                ppm = ppm + '\n'
-            else:
-                ppm = ppm + ' '
+            ppm = ppm + ' '.join(p.clamp_color(0, 255))
+            ppm = self.add_separator(count, ppm)
         return ppm
+
+    def add_separator(self, count, ppm):
+        if count % self.width == 0:
+            return ppm + '\n'
+        return ppm + ' '
 
 
 if __name__ == '__main__':

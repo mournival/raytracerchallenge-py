@@ -48,5 +48,5 @@ def step_impl(context, a, b, ppm):
     expected = context.text.splitlines()
     i = a - 1
     for r in expected[0:b-a + 1]:
-        assert (actual[i] == r)
+        assert (actual[i] == r), f"expected: '{r}', actual: '{actual[i]}'"
         i += 1
