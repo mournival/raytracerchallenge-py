@@ -7,9 +7,9 @@ class Canvas(object):
 
     def __init__(self, width, height):
         self._data = np.empty((width, height), Color)
-        for r in range(width):
-            for c in range(height):
-                self._data[r, c] = Color(0, 0, 0)
+        for row in range(width):
+            for col in range(height):
+                self._data[row, col] = Color(0, 0, 0)
         self.width, self.height = self._data.shape
 
     def pixels(self):
@@ -22,33 +22,23 @@ class Canvas(object):
         self._data[key] = value
 
     def to_ppm(self):
-        return f"""P3
-{self.width} {self.height}
-255
-{self._pixel_rows()}"""
+        return '\n'.join(['P3', f"{self.width} {self.height}", "255", *self._pixel_rows()]) + '\n'
 
     def _pixel_rows(self):
-        ppm = ""
-        count = 0
-        for p in self.pixels():
-            count += 1
-            ppm = ppm + ' '.join(p.clamp_color(0, 255))
-            ppm = self.add_separator(count, ppm)
-        return ppm
+        pr = list()
+        for pixels in [self.pixels()[x: x + self.width] for x in range(0, self.width * self.height, self.width)]:
+            pr.append(' '.join([' '.join(p.clamp_color(0, 255)) for p in pixels]))
+        return pr
 
-    def add_separator(self, count, ppm):
-        if count % self.width == 0:
-            return ppm + '\n'
-        return ppm + ' '
-
-    def fill(self, c: Color):
-        self._data.fill(c)
+    def fill(self, color: Color):
+        self._data.fill(color)
 
 
 if __name__ == '__main__':
-    c = Canvas(10, 20)
-    print(c.height)
-    print(c.width)
-    print(c.pixels())
+    c = Canvas(2, 2)
+    # print(c.height)
+    # print(c.width)
+    c.fill(Color(1, 2, 3))
     c[0, 0] = Color(1, 1, 1)
-    print(c[0, 0])
+    # print(c.pixels())
+    print(c.to_ppm())
