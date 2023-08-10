@@ -3,6 +3,15 @@ import numpy as np
 from color import Color
 
 
+def clamp_line(line):
+    if (len(line)) < 71:
+        return [line]
+    for i in range(70, 0, -1):
+        if line[i] == ' ':
+            return [line[: i]] + clamp_line(line[i + 1:])
+    return [line]
+
+
 class Canvas(object):
 
     def __init__(self, width, height):
@@ -26,8 +35,10 @@ class Canvas(object):
 
     def _pixel_rows(self):
         pr = list()
-        for pixels in [self.pixels()[x: x + self.width] for x in range(0, self.width * self.height, self.width)]:
-            pr.append(' '.join([' '.join(p.clamp_color(0, 255)) for p in pixels]))
+        row = [self.pixels()[x: x + self.width] for x in range(0, self.width * self.height, self.width)]
+        for pixels in row:
+            line = ' '.join([' '.join(p.clamp_color(0, 255)) for p in pixels])
+            pr = pr + clamp_line(line)
         return pr
 
     def fill(self, color: Color):
