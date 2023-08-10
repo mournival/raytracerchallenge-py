@@ -16,27 +16,28 @@ def step_impl(context, a, x, y, z, w):
 
 @then("{:w}.{:w} = {:g}")
 def step_impl(context, name, field, expected):
-    assert (context.tuples[name].__getattribute__(field) == expected)
+    assert context.tuples[name].__getattribute__(
+        field) == expected, f"{context.tuples[name].__getattribute__(field).field} != {expected}"
 
 
 @step("{:w} is a point")
 def step_impl(context, name):
-    assert (context.tuples[name].is_point())
+    assert context.tuples[name].is_point(), f"{context.tuples[name]} is NOT a point"
 
 
 @step("{:w} is not a vector")
 def step_impl(context, name):
-    assert (~context.tuples[name].is_vector())
+    assert ~context.tuples[name].is_vector(), f"{context.tuples[name]} is a vector"
 
 
 @step("{:w} is not a point")
 def step_impl(context, name):
-    assert (~context.tuples[name].is_point())
+    assert ~context.tuples[name].is_point(), f"{context.tuples[name]} is a point"
 
 
 @step("{:w} is a vector")
 def step_impl(context, name):
-    assert (context.tuples[name].is_vector())
+    assert context.tuples[name].is_vector(), f"{context.tuples[name]} is NOT a vector"
 
 
 @given("{:w} ← point({:g}, {:g}, {:g})")
@@ -46,12 +47,12 @@ def step_impl(context, name, x, y, z):
 
 @then("-{:w} = tuple({:g}, {:g}, {:g}, {:g})")
 def step_impl(context, name, x, y, z, w):
-    assert (-context.tuples[name] == Tuple(x, y, z, w))
+    assert_equal(-context.tuples[name], Tuple(x, y, z, w))
 
 
 @then("{:w} = tuple({:g}, {:g}, {:g}, {:g})")
 def step_impl(context, name, x, y, z, w):
-    assert (context.tuples[name] == Tuple(x, y, z, w))
+    assert_equal(context.tuples[name], Tuple(x, y, z, w))
 
 
 @given("{:w} ← vector({:g}, {:g}, {:g})")
@@ -66,50 +67,47 @@ def step_impl(context, name, x1, x2, y1, y2, z1, z2):
 
 @then("{:w} + {:w} = tuple({:g}, {:g}, {:g}, {:g})")
 def step_impl(context, a, b, x, y, z, w):
-    assert (context.tuples[a] + context.tuples[b] == Tuple(x, y, z, w))
+    assert_equal(context.tuples[a] + context.tuples[b], Tuple(x, y, z, w))
 
 
 @then("{:w} - {:w} = vector({:g}, {:g}, {:g})")
 def step_impl(context, a, b, x, y, z):
-    assert (context.tuples[a] - context.tuples[b] == vector(x, y, z))
+    assert_equal(context.tuples[a] - context.tuples[b], vector(x, y, z))
 
 
 @then("{:w} - {:w} = point({:g}, {:g}, {:g})")
 def step_impl(context, a, b, x, y, z):
-    assert (context.tuples[a] - context.tuples[b] == point(x, y, z))
+    assert_equal(context.tuples[a] - context.tuples[b], point(x, y, z))
 
 
 @then("{:w} * {:g} = tuple({:g}, {:g}, {:g}, {:g})")
 def step_impl(context, a, c, x, y, z, w):
-    assert (context.tuples[a] * c == Tuple(x, y, z, w))
+    assert_equal(context.tuples[a] * c, Tuple(x, y, z, w))
 
 
 @then("{:w} / {:g} = tuple({:g}, {:g}, {:g}, {:g})")
 def step_impl(context, a, c, x, y, z, w):
-    assert (context.tuples[a] / c == Tuple(x, y, z, w))
+    assert_equal(context.tuples[a] / c, Tuple(x, y, z, w))
 
 
 @then("magnitude({:w}) = {:g}")
 def step_impl(context, a, expected):
-    assert (magnitude(context.tuples[a]) == expected)
+    assert_equal(magnitude(context.tuples[a]), expected)
 
 
 @then("magnitude({:w}) = approximately {:g}")
 def step_impl(context, a, expected):
-    assert (abs(magnitude(context.tuples[a]) - expected) < EPSILON)
+    assert_equal(magnitude(context.tuples[a]), expected)
 
 
 @then("magnitude({:w}) = √{:g}")
-def step_impl(context, a, expected):
-    assert (magnitude(context.tuples[a]) == sqrt(expected))
-
-
-EPSILON = 0.0001
+def step_impl(context, a, b):
+    assert_equal(magnitude(context.tuples[a]), sqrt(b))
 
 
 @then("normalize({:w}) = vector({:g}, {:g}, {:g})")
 def step_impl(context, v, x, y, z):
-    assert (normalize(context.tuples[v]) == vector(x, y, z))
+    assert_equal(normalize(context.tuples[v]), vector(x, y, z))
 
 
 @when("{:w} ← normalize({:w})")
@@ -119,38 +117,32 @@ def step_impl(context, norm, v):
 
 @then("dot({:w}, {:w}) = {:g}")
 def step_impl(context, a, b, expected):
-    assert (abs(dot(context.tuples[a], context.tuples[b]) - expected) < EPSILON)
+    assert_equal(dot(context.tuples[a], context.tuples[b]), expected)
 
 
 @then("cross({:w}, {:w}) = vector({:g}, {:g}, {:g})")
 def step_impl(context, a, b, x, y, z):
-    assert (cross(context.tuples[a], context.tuples[b]) == vector(x, y, z))
+    assert_equal(cross(context.tuples[a], context.tuples[b]), vector(x, y, z))
 
 
 @then("normalize({:w}) = approximately vector({:g}, {:g}, {:g})")
 def step_impl(context, v, x, y, z):
-    actual = normalize(context.tuples[v])
-    assert (abs((actual.x - x)) < EPSILON)
-    assert (abs((actual.y - y)) < EPSILON)
-    assert (abs((actual.z - z)) < EPSILON)
+    assert_approximate_xyz(normalize(context.tuples[v]), x, y, z)
 
 
 @then("{:w} = vector({:g}, {:g}, {:g})")
 def step_impl(context, v, x, y, z):
-    assert (context.tuples[v] == vector(x, y, z))
+    assert_equal(context.tuples[v], vector(x, y, z))
 
 
 @then("{:w} = approximately vector({:g}, {:g}, {:g})")
 def step_impl(context, v, x, y, z):
-    actual = context.tuples[v]
-    assert (abs((actual.x - x)) < EPSILON)
-    assert (abs((actual.y - y)) < EPSILON)
-    assert (abs((actual.z - z)) < EPSILON)
+    assert_approximate_xyz(context.tuples[v], x, y, z)
 
 
 @then("magnitude({:w}) = √{:g}")
-def step_impl(context, a, expected):
-    assert (magnitude(context.tuples[a]) == sqrt(expected))
+def step_impl(context, a, c):
+    assert_equal(magnitude(context.tuples[a]), sqrt(c))
 
 
 @given("{:w} ← color({:g}, {:g}, {:g})")
@@ -160,15 +152,12 @@ def step_impl(context, c, r, g, b):
 
 @then("{:w} + {:w} = color({:g}, {:g}, {:g})")
 def step_impl(context, a, b, red, green, blue):
-    assert (context.tuples[a] + context.tuples[b] == Color(red, green, blue))
+    assert_equal(context.tuples[a] + context.tuples[b], Color(red, green, blue))
 
 
 @then("{:w} - {:w} = color({:g}, {:g}, {:g})")
 def step_impl(context, a, b, red, green, blue):
-    actual = context.tuples[a] - context.tuples[b]
-    assert (abs(actual.red - red) < EPSILON)
-    assert (abs(actual.green - green) < EPSILON)
-    assert (abs(actual.blue - blue) < EPSILON)
+    assert_approximate_rgb(context.tuples[a] - context.tuples[b], red, green, blue)
 
 
 @then("{:w} * {:w} = color({:g}, {:g}, {:g})")
@@ -178,6 +167,25 @@ def step_impl(context, a, b, red, green, blue):
         actual = context.tuples[a] * b
     except ValueError:
         actual = hadamard_product(context.tuples[a], context.tuples[b])
-    assert (abs(actual.red - red) < EPSILON)
-    assert (abs(actual.green - green) < EPSILON)
-    assert (abs(actual.blue - blue) < EPSILON)
+    assert_approximate_rgb(actual, red, green, blue)
+
+
+def assert_equal(actual, expected):
+    assert actual == expected, f"{actual} != {expected}"
+
+
+def assert_approximately_equal(actual, expected):
+    EPSILON = 0.0001
+    assert abs((actual - expected)) < EPSILON, f"{actual} !~ {expected}"
+
+
+def assert_approximate_xyz(actual: Tuple, x, y, z):
+    assert_approximately_equal(actual.x, x)
+    assert_approximately_equal(actual.y, y)
+    assert_approximately_equal(actual.z, z)
+
+
+def assert_approximate_rgb(actual: Color, red, green, blue):
+    assert_approximately_equal(actual.red, red)
+    assert_approximately_equal(actual.green, green)
+    assert_approximately_equal(actual.blue, blue)

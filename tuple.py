@@ -25,6 +25,9 @@ class Tuple(namedtuple('Tuple', "x y z w")):
     def __neg__(self):
         return Tuple(-self.x, -self.y, -self.z, -self.w)
 
+    def __eq__(self, other) -> bool:
+        return self.x == other.x and self.y == other.y and self.z == other.z and self.w == other.w
+
 
 def dot(lhs: Tuple, rhs: Tuple) -> float:
     return lhs.x * rhs.x + lhs.y * rhs.y + lhs.z * rhs.z + lhs.w * rhs.w
