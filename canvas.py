@@ -22,7 +22,7 @@ class Canvas(object):
         self.width, self.height = self._data.shape
 
     def pixels(self):
-        return list(self._data.flatten())
+        return list(self._data.flatten(order='F'))
 
     def __getitem__(self, indices):
         return self._data[indices]
