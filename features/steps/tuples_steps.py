@@ -4,6 +4,7 @@ from math import sqrt
 from behave import *
 
 from color import Color, hadamard_product
+from features.environment import assert_equal, assert_approximate_xyz, assert_approximate_rgb
 from tuple import Tuple, point, vector, magnitude, normalize, dot, cross
 
 use_step_matcher("parse")
@@ -170,22 +171,3 @@ def step_impl(context, a, b, red, green, blue):
     assert_approximate_rgb(actual, red, green, blue)
 
 
-def assert_equal(actual, expected):
-    assert actual == expected, f"{actual} != {expected}"
-
-
-def assert_approximately_equal(actual, expected):
-    EPSILON = 0.0001
-    assert abs((actual - expected)) < EPSILON, f"{actual} !~ {expected}"
-
-
-def assert_approximate_xyz(actual: Tuple, x, y, z):
-    assert_approximately_equal(actual.x, x)
-    assert_approximately_equal(actual.y, y)
-    assert_approximately_equal(actual.z, z)
-
-
-def assert_approximate_rgb(actual: Color, red, green, blue):
-    assert_approximately_equal(actual.red, red)
-    assert_approximately_equal(actual.green, green)
-    assert_approximately_equal(actual.blue, blue)
