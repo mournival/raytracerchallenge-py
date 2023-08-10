@@ -1,5 +1,5 @@
-Feature: Matrices
-
+#Feature: Matrices
+#
 #  Scenario: Constructing and inspecting a 4x4 matrix
 #    Given the following 4x4 matrix M:
 #      | 1    | 2    | 3    | 4    |
