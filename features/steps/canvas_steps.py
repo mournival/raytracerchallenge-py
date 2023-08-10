@@ -55,3 +55,8 @@ def step_impl(context, a, b, ppm):
 @when("every pixel of {:w} is set to color({:g}, {:g}, {:g})")
 def step_impl(context, c, r, g, b):
     context.globals[c].fill(Color(r, g, b))
+
+
+@then("{:w} ends with a newline character")
+def step_impl(context, ppm):
+    assert context.globals[ppm][-1] == '\n', f"{ppm} does not end with a newline character"
