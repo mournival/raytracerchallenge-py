@@ -44,3 +44,12 @@ def assert_array_equal(actual, expected):
 
 def assert_array_not_equal(actual, expected):
     assert ~np.array_equal(actual, expected), f"{actual} = {expected}"
+
+
+@then("{:l} * {:l} is the following 4x4 matrix")
+def step_impl(context, a, b):
+    heading_row = Row(context.table.headings, context.table.headings)
+    table_data = context.table.rows
+    table_data.insert(0, heading_row)
+    expected = np.array(table_data, dtype='float')
+    assert_array_equal(np.dot(context.globals[a], context.globals[b]), expected)
