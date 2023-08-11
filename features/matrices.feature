@@ -14,26 +14,26 @@ Feature: Matrices
     And M[3,0] = 13.5
     And M[3,2] = 15.5
 
-Scenario: A 2x2 matrix ought to be representable
-  Given the following 2x2 matrix M:
-    | -3 |  5 |
-    |  1 | -2 |
-  Then M[0,0] = -3
+  Scenario: A 2x2 matrix ought to be representable
+    Given the following 2x2 matrix M:
+      | -3 | 5  |
+      | 1  | -2 |
+    Then M[0,0] = -3
     And M[0,1] = 5
     And M[1,0] = 1
     And M[1,1] = -2
 
-Scenario: A 3x3 matrix ought to be representable
-  Given the following 3x3 matrix M:
-    | -3 |  5 |  0 |
-    |  1 | -2 | -7 |
-    |  0 |  1 |  1 |
-  Then M[0,0] = -3
+  Scenario: A 3x3 matrix ought to be representable
+    Given the following 3x3 matrix M:
+      | -3 | 5  | 0  |
+      | 1  | -2 | -7 |
+      | 0  | 1  | 1  |
+    Then M[0,0] = -3
     And M[1,1] = -2
     And M[2,2] = 1
 
-Scenario: Matrix equality with identical matrices
-  Given the following matrix A:
+  Scenario: Matrix equality with identical matrices
+    Given the following matrix A:
       | 1 | 2 | 3 | 4 |
       | 5 | 6 | 7 | 8 |
       | 9 | 8 | 7 | 6 |
@@ -43,10 +43,10 @@ Scenario: Matrix equality with identical matrices
       | 5 | 6 | 7 | 8 |
       | 9 | 8 | 7 | 6 |
       | 5 | 4 | 3 | 2 |
-  Then A = B
+    Then A = B
 
-Scenario: Matrix equality with different matrices
-  Given the following matrix A:
+  Scenario: Matrix equality with different matrices
+    Given the following matrix A:
       | 1 | 2 | 3 | 4 |
       | 5 | 6 | 7 | 8 |
       | 9 | 8 | 7 | 6 |
@@ -56,24 +56,24 @@ Scenario: Matrix equality with different matrices
       | 6 | 7 | 8 | 9 |
       | 8 | 7 | 6 | 5 |
       | 4 | 3 | 2 | 1 |
-  Then A != B
+    Then A != B
 
-Scenario: Multiplying two matrices
-  Given the following matrix A:
+  Scenario: Multiplying two matrices
+    Given the following matrix A:
       | 1 | 2 | 3 | 4 |
       | 5 | 6 | 7 | 8 |
       | 9 | 8 | 7 | 6 |
       | 5 | 4 | 3 | 2 |
     And the following matrix B:
-      | -2 | 1 | 2 |  3 |
-      |  3 | 2 | 1 | -1 |
-      |  4 | 3 | 6 |  5 |
-      |  1 | 2 | 7 |  8 |
-  Then A * B is the following 4x4 matrix:
-      | 20|  22 |  50 |  48 |
-      | 44|  54 | 114 | 108 |
-      | 40|  58 | 110 | 102 |
-      | 16|  26 |  46 |  42 |
+      | -2 | 1 | 2 | 3  |
+      | 3  | 2 | 1 | -1 |
+      | 4  | 3 | 6 | 5  |
+      | 1  | 2 | 7 | 8  |
+    Then A * B is the following 4x4 matrix:
+      | 20 | 22 | 50  | 48  |
+      | 44 | 54 | 114 | 108 |
+      | 40 | 58 | 110 | 102 |
+      | 16 | 26 | 46  | 42  |
 
 #Scenario: A matrix multiplied by a tuple
 #  Given the following matrix A:
@@ -96,17 +96,17 @@ Scenario: Multiplying two matrices
 #  Given a ← tuple(1, 2, 3, 4)
 #  Then identity_matrix * a = a
 #
-Scenario: Transposing a matrix
-  Given the following matrix A:
-    | 0 | 9 | 3 | 0 |
-    | 9 | 8 | 0 | 8 |
-    | 1 | 8 | 5 | 3 |
-    | 0 | 0 | 5 | 8 |
-  Then transpose(A) is the following matrix:
-    | 0 | 9 | 1 | 0 |
-    | 9 | 8 | 8 | 0 |
-    | 3 | 0 | 5 | 5 |
-    | 0 | 8 | 3 | 8 |
+  Scenario: Transposing a matrix
+    Given the following matrix A:
+      | 0 | 9 | 3 | 0 |
+      | 9 | 8 | 0 | 8 |
+      | 1 | 8 | 5 | 3 |
+      | 0 | 0 | 5 | 8 |
+    Then transpose(A) is the following matrix:
+      | 0 | 9 | 1 | 0 |
+      | 9 | 8 | 8 | 0 |
+      | 3 | 0 | 5 | 5 |
+      | 0 | 8 | 3 | 8 |
 
 #Scenario: Transposing the identity matrix
 #  Given A ← transpose(identity_matrix)
@@ -157,55 +157,56 @@ Scenario: Transposing a matrix
 #    And minor(A, 1, 0) = 25
 #    And cofactor(A, 1, 0) = -25
 #
-Scenario: Calculating the determinant of a 3x3 matrix
-  Given the following 3x3 matrix A:
-    |  1 |  2 |  6 |
-    | -5 |  8 | -4 |
-    |  2 |  6 |  4 |
+  Scenario: Calculating the determinant of a 3x3 matrix
+    Given the following 3x3 matrix A:
+      | 1  | 2 | 6  |
+      | -5 | 8 | -4 |
+      | 2  | 6 | 4  |
 #  Then cofactor(A, 0, 0) = 56
 #    And cofactor(A, 0, 1) = 12
 #    And cofactor(A, 0, 2) = -46
 #    And determinant(A) = -196
-  Then determinant(A) = -196
+    Then determinant(A) = -196
 
-#Scenario: Calculating the determinant of a 4x4 matrix
-#  Given the following 4x4 matrix A:
-#    | -2 | -8 |  3 |  5 |
-#    | -3 |  1 |  7 |  3 |
-#    |  1 |  2 | -9 |  6 |
-#    | -6 |  7 |  7 | -9 |
+  Scenario: Calculating the determinant of a 4x4 matrix
+    Given the following 4x4 matrix A:
+      | -2 | -8 | 3  | 5  |
+      | -3 | 1  | 7  | 3  |
+      | 1  | 2  | -9 | 6  |
+      | -6 | 7  | 7  | -9 |
 #  Then cofactor(A, 0, 0) = 690
 #    And cofactor(A, 0, 1) = 447
 #    And cofactor(A, 0, 2) = 210
 #    And cofactor(A, 0, 3) = 51
 #    And determinant(A) = -4071
-#
-#Scenario: Testing an invertible matrix for invertibility
-#  Given the following 4x4 matrix A:
-#    |  6 |  4 |  4 |  4 |
-#    |  5 |  5 |  7 |  6 |
-#    |  4 | -9 |  3 | -7 |
-#    |  9 |  1 |  7 | -6 |
-#  Then determinant(A) = -2120
+    Then determinant(A) = -4071
+
+Scenario: Testing an invertible matrix for invertibility
+  Given the following 4x4 matrix A:
+    |  6 |  4 |  4 |  4 |
+    |  5 |  5 |  7 |  6 |
+    |  4 | -9 |  3 | -7 |
+    |  9 |  1 |  7 | -6 |
+  Then determinant(A) = -2120
 #    And A is invertible
 #
-#Scenario: Testing a noninvertible matrix for invertibility
-#  Given the following 4x4 matrix A:
-#    | -4 |  2 | -2 | -3 |
-#    |  9 |  6 |  2 |  6 |
-#    |  0 | -5 |  1 | -5 |
-#    |  0 |  0 |  0 |  0 |
-#  Then determinant(A) = 0
+Scenario: Testing a noninvertible matrix for invertibility
+  Given the following 4x4 matrix A:
+    | -4 |  2 | -2 | -3 |
+    |  9 |  6 |  2 |  6 |
+    |  0 | -5 |  1 | -5 |
+    |  0 |  0 |  0 |  0 |
+  Then determinant(A) = 0
 #    And A is not invertible
 #
-#Scenario: Calculating the inverse of a matrix
-#  Given the following 4x4 matrix A:
-#      | -5 |  2 |  6 | -8 |
-#      |  1 | -5 |  1 |  8 |
-#      |  7 |  7 | -6 | -7 |
-#      |  1 | -3 |  7 |  4 |
+Scenario: Calculating the inverse of a matrix
+  Given the following 4x4 matrix A:
+      | -5 |  2 |  6 | -8 |
+      |  1 | -5 |  1 |  8 |
+      |  7 |  7 | -6 | -7 |
+      |  1 | -3 |  7 |  4 |
 #    And B ← inverse(A)
-#  Then determinant(A) = 532
+  Then determinant(A) = 532
 #    And cofactor(A, 2, 3) = -160
 #    And B[3,2] = -160/532
 #    And cofactor(A, 3, 2) = 105
