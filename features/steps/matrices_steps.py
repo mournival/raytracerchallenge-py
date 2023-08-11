@@ -1,16 +1,20 @@
+import numpy as np
 from behave import *
+from behave.model import Row
+
+from features.environment import assert_equal
 
 use_step_matcher("parse")
 
 
-@given("the following 4x4 matrix M:")
-def step_impl(context):
-    raise NotImplementedError('Urgh')
+@given("the following {:d}x{:d} matrix {:w}")
+def step_impl(context, m , n, name):
+    heading_row = Row(context.table.headings, context.table.headings)
+    table_data = context.table.rows
+    table_data.insert(0, heading_row)
+    context.globals[name] = np.array(table_data, dtype='float')
 
 
-@then("M[0,0] = 1")
-def step_impl(context):
-    """
-    :type context: behave.runner.Context
-    """
-    raise NotImplementedError(u'STEP: Then M[0,0] = 1')
+@then("{:w}[{:d},{:d}] = {:g}")
+def step_impl(context, name, x, y, expected):
+    assert_equal(context.globals[name][x, y], expected)

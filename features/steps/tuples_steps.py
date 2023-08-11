@@ -169,5 +169,3 @@ def step_impl(context, a, b, red, green, blue):
     except ValueError:
         actual = hadamard_product(context.tuples[a], context.tuples[b])
     assert_approximate_rgb(actual, red, green, blue)
-
-
