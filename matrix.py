@@ -20,6 +20,9 @@ def transpose(A):
 def matmul(A, B):
     return np.matmul(A, B)
 
+def dot(a, b):
+    return np.dot(a, b)
 
 def array_equal(A, B):
     return np.array_equal(A, B)
+

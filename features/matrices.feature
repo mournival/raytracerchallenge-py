@@ -75,14 +75,14 @@ Feature: Matrices
       | 40 | 58 | 110 | 102 |
       | 16 | 26 | 46  | 42  |
 
-#Scenario: A matrix multiplied by a tuple
-#  Given the following matrix A:
-#      | 1 | 2 | 3 | 4 |
-#      | 2 | 4 | 4 | 2 |
-#      | 8 | 6 | 4 | 1 |
-#      | 0 | 0 | 0 | 1 |
-#    And b ← tuple(1, 2, 3, 1)
-#  Then A * b = tuple(18, 24, 33, 1)
+Scenario: A matrix multiplied by a tuple
+  Given the following matrix A:
+      | 1 | 2 | 3 | 4 |
+      | 2 | 4 | 4 | 2 |
+      | 8 | 6 | 4 | 1 |
+      | 0 | 0 | 0 | 1 |
+    And b ← tuple(1, 2, 3, 1)
+    Then A * b = tuple(18, 24, 33, 1)
 #
 Scenario: Multiplying a matrix by the identity matrix
   Given the following matrix A:
@@ -91,11 +91,11 @@ Scenario: Multiplying a matrix by the identity matrix
     | 2 | 4 |  8 | 16 |
     | 4 | 8 | 16 | 32 |
   Then A * identity_matrix = A
-#
-#Scenario: Multiplying the identity matrix by a tuple
-#  Given a ← tuple(1, 2, 3, 4)
-#  Then identity_matrix * a = a
-#
+
+Scenario: Multiplying the identity matrix by a tuple
+  Given a ← tuple(1, 2, 3, 4)
+  Then identity_matrix * a = a
+
   Scenario: Transposing a matrix
     Given the following matrix A:
       | 0 | 9 | 3 | 0 |
@@ -108,10 +108,10 @@ Scenario: Multiplying a matrix by the identity matrix
       | 3 | 0 | 5 | 5 |
       | 0 | 8 | 3 | 8 |
 
-#Scenario: Transposing the identity matrix
-#  Given A ← transpose(identity_matrix)
-#  Then A = identity_matrix
-#
+Scenario: Transposing the identity matrix
+  Given A ← transpose(identity_matrix)
+  Then A = identity_matrix
+
 Scenario: Calculating the determinant of a 2x2 matrix
   Given the following 2x2 matrix A:
     |  1 | 5 |
