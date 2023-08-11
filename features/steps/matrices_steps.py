@@ -1,8 +1,8 @@
-import numpy as np
 from behave import *
 from behave.model import Row
 
 from features.environment import assert_equal, assert_approximately_equal
+from matrix import eye, det, matrix, transpose, matmul, array_equal
 
 use_step_matcher("parse")
 
@@ -22,7 +22,7 @@ def step_impl(context, name, x, y, expected):
     assert_equal(context.globals[name][x, y], expected)
 
 
-@then("{:l} = {:l}")
+@then("{:w} = {:l}")
 def step_impl(context, a, b):
     assert_array_equal(context.globals[a], context.globals[b])
 
@@ -34,28 +34,35 @@ def step_impl(context, a, b):
 
 @then("{:l} * {:l} is the following 4x4 matrix")
 def step_impl(context, a, b):
-    assert_array_equal(np.dot(context.globals[a], context.globals[b]), create_table_from(context))
+    assert_array_equal(matmul(context.globals[a], context.globals[b]), create_table_from(context))
+
+
+@then("{:l} * identity_matrix = {:l}")
+def step_impl(context, a, b):
+    A = context.globals[a]
+    assert_array_equal(matmul(A, eye(A.shape[0])), context.globals[b])
 
 
 @then("transpose({:l}) is the following matrix")
 def step_impl(context, a):
-    assert_array_equal(np.transpose(context.globals[a]), create_table_from(context))
+    assert_array_equal(transpose(context.globals[a]), create_table_from(context))
 
 
 @then("determinant({:l}) = {:g}")
 def step_impl(context, a, expected):
-    assert_approximately_equal(np.linalg.det(context.globals[a]), expected)
+    assert_approximately_equal(det(context.globals[a]), expected)
+
 
 def assert_array_equal(actual, expected):
-    assert np.array_equal(actual, expected), f"{actual} != {expected}"
+    assert array_equal(actual, expected), f"{actual} != {expected}"
 
 
 def assert_array_not_equal(actual, expected):
-    assert ~np.array_equal(actual, expected), f"{actual} = {expected}"
+    assert ~array_equal(actual, expected), f"{actual} = {expected}"
 
 
 def create_table_from(context):
     heading_row = Row(context.table.headings, context.table.headings)
     table_data = context.table.rows
     table_data.insert(0, heading_row)
-    return np.array(table_data, dtype='float')
+    return matrix(table_data)
