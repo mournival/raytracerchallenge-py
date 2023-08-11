@@ -157,16 +157,17 @@ Scenario: Transposing a matrix
 #    And minor(A, 1, 0) = 25
 #    And cofactor(A, 1, 0) = -25
 #
-#Scenario: Calculating the determinant of a 3x3 matrix
-#  Given the following 3x3 matrix A:
-#    |  1 |  2 |  6 |
-#    | -5 |  8 | -4 |
-#    |  2 |  6 |  4 |
+Scenario: Calculating the determinant of a 3x3 matrix
+  Given the following 3x3 matrix A:
+    |  1 |  2 |  6 |
+    | -5 |  8 | -4 |
+    |  2 |  6 |  4 |
 #  Then cofactor(A, 0, 0) = 56
 #    And cofactor(A, 0, 1) = 12
 #    And cofactor(A, 0, 2) = -46
 #    And determinant(A) = -196
-#
+  Then determinant(A) = -196
+
 #Scenario: Calculating the determinant of a 4x4 matrix
 #  Given the following 4x4 matrix A:
 #    | -2 | -8 |  3 |  5 |

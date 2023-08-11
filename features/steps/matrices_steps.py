@@ -2,7 +2,7 @@ import numpy as np
 from behave import *
 from behave.model import Row
 
-from features.environment import assert_equal
+from features.environment import assert_equal, assert_approximately_equal
 
 use_step_matcher("parse")
 
@@ -41,6 +41,10 @@ def step_impl(context, a, b):
 def step_impl(context, a):
     assert_array_equal(np.transpose(context.globals[a]), create_table_from(context))
 
+
+@then("determinant({:l}) = {:g}")
+def step_impl(context, a, expected):
+    assert_approximately_equal(np.linalg.det(context.globals[a]), expected)
 
 def assert_array_equal(actual, expected):
     assert np.array_equal(actual, expected), f"{actual} != {expected}"
