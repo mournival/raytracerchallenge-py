@@ -206,7 +206,7 @@ Feature: Matrices
       | 7  | 7  | -6 | -7 |
       | 1  | -3 | 7  | 4  |
 #    And B ← inverse(A)
-    Then determinant(A) = 532
+     Then determinant(A) = 532
 #    And cofactor(A, 2, 3) = -160
 #    And B[3,2] = -160/532
 #    And cofactor(A, 3, 2) = 105

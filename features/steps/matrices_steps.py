@@ -1,8 +1,8 @@
 from behave import *
-from behave.model import Row
 
-from features.environment import assert_equal, assert_approximately_equal
-from matrix import eye, det, matrix, transpose, matmul, array_equal, dot, submatrix
+from features.environment import assert_equal, assert_approximately_equal, create_matrix_from, assert_array_equal, \
+    assert_array_not_equal
+from matrix import eye, det, transpose, matmul, dot, submatrix
 from tuple import Tuple
 
 use_step_matcher("parse")
@@ -11,13 +11,13 @@ use_step_matcher("parse")
 @given("the following {:d}x{:d} matrix {:w}")
 @given("the following {:d}x{:d} matrix {:w}:")
 def step_impl(context, m, n, name):
-    context.globals[name] = create_table_from(context)
+    context.globals[name] = create_matrix_from(context)
 
 
 @given("the following matrix {:w}")
 @given("the following matrix {:w}:")
 def step_impl(context, name):
-    context.globals[name] = create_table_from(context)
+    context.globals[name] = create_matrix_from(context)
 
 
 @then("{:w}[{:d},{:d}] = {:g}")
@@ -38,7 +38,7 @@ def step_impl(context, a, b):
 @then("{:l} * {:l} is the following 4x4 matrix")
 @then("{:l} * {:l} is the following 4x4 matrix:")
 def step_impl(context, a, b):
-    assert_array_equal(matmul(context.globals[a], context.globals[b]), create_table_from(context))
+    assert_array_equal(matmul(context.globals[a], context.globals[b]), create_matrix_from(context))
 
 
 @then("{:l} * identity_matrix = {:l}")
@@ -56,7 +56,7 @@ def step_impl(context, a):
 @then("transpose({:l}) is the following matrix")
 @then("transpose({:l}) is the following matrix:")
 def step_impl(context, a):
-    assert_array_equal(transpose(context.globals[a]), create_table_from(context))
+    assert_array_equal(transpose(context.globals[a]), create_matrix_from(context))
 
 
 @then("determinant({:l}) = {:g}")
@@ -81,22 +81,7 @@ def step_impl(context, a, b):
     assert_array_equal(dot(eye(4), a_), context.tuples[b])
 
 
-def assert_array_equal(actual, expected):
-    assert array_equal(actual, expected), f"{actual} != {expected}"
-
-
-def assert_array_not_equal(actual, expected):
-    assert ~array_equal(actual, expected), f"{actual} = {expected}"
-
-
-def create_table_from(context):
-    heading_row = Row(context.table.headings, context.table.headings)
-    table_data = context.table.rows
-    table_data.insert(0, heading_row)
-    return matrix(table_data)
-
-
 @then("submatrix({:l}, {:d}, {:d}) is the following {}x{} matrix")
 @then("submatrix({:l}, {:d}, {:d}) is the following {}x{} matrix:")
 def step_impl(context, a, m, n, _m, _n):
-    assert_array_equal(submatrix(context.globals[a], m, n), create_table_from(context))
+    assert_array_equal(submatrix(context.globals[a], m, n), create_matrix_from(context))
