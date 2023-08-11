@@ -32,17 +32,22 @@ def step_impl(context, a, b):
     assert_array_not_equal(context.globals[a], context.globals[b])
 
 
+@then("{:l} * {:l} is the following 4x4 matrix")
+def step_impl(context, a, b):
+    assert_array_equal(np.dot(context.globals[a], context.globals[b]), create_table_from(context))
+
+
+@then("transpose({:l}) is the following matrix")
+def step_impl(context, a):
+    assert_array_equal(np.transpose(context.globals[a]), create_table_from(context))
+
+
 def assert_array_equal(actual, expected):
     assert np.array_equal(actual, expected), f"{actual} != {expected}"
 
 
 def assert_array_not_equal(actual, expected):
     assert ~np.array_equal(actual, expected), f"{actual} = {expected}"
-
-
-@then("{:l} * {:l} is the following 4x4 matrix")
-def step_impl(context, a, b):
-    assert_array_equal(np.dot(context.globals[a], context.globals[b]), create_table_from(context))
 
 
 def create_table_from(context):
