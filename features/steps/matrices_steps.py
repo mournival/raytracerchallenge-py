@@ -2,18 +2,20 @@ from behave import *
 from behave.model import Row
 
 from features.environment import assert_equal, assert_approximately_equal
-from matrix import eye, det, matrix, transpose, matmul, array_equal, dot
+from matrix import eye, det, matrix, transpose, matmul, array_equal, dot, submatrix
 from tuple import Tuple
 
 use_step_matcher("parse")
 
 
 @given("the following {:d}x{:d} matrix {:w}")
+@given("the following {:d}x{:d} matrix {:w}:")
 def step_impl(context, m, n, name):
     context.globals[name] = create_table_from(context)
 
 
 @given("the following matrix {:w}")
+@given("the following matrix {:w}:")
 def step_impl(context, name):
     context.globals[name] = create_table_from(context)
 
@@ -34,23 +36,25 @@ def step_impl(context, a, b):
 
 
 @then("{:l} * {:l} is the following 4x4 matrix")
+@then("{:l} * {:l} is the following 4x4 matrix:")
 def step_impl(context, a, b):
     assert_array_equal(matmul(context.globals[a], context.globals[b]), create_table_from(context))
 
 
 @then("{:l} * identity_matrix = {:l}")
 def step_impl(context, a, b):
-    A = context.globals[a]
-    assert_array_equal(matmul(A, eye(A.shape[0])), context.globals[b])
+    a_ = context.globals[a]
+    assert_array_equal(matmul(a_, eye(a_.shape[0])), context.globals[b])
 
 
 @then("{:l} = identity_matrix")
 def step_impl(context, a):
-    A = context.globals[a]
-    assert_array_equal(A, eye(A.shape[0]))
+    m = context.globals[a]
+    assert_array_equal(m, eye(m.shape[0]))
 
 
 @then("transpose({:l}) is the following matrix")
+@then("transpose({:l}) is the following matrix:")
 def step_impl(context, a):
     assert_array_equal(transpose(context.globals[a]), create_table_from(context))
 
@@ -90,3 +94,9 @@ def create_table_from(context):
     table_data = context.table.rows
     table_data.insert(0, heading_row)
     return matrix(table_data)
+
+
+@then("submatrix({:l}, {:d}, {:d}) is the following {}x{} matrix")
+@then("submatrix({:l}, {:d}, {:d}) is the following {}x{} matrix:")
+def step_impl(context, a, m, n, _m, _n):
+    assert_array_equal(submatrix(context.globals[a], m, n), create_table_from(context))

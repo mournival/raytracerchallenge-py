@@ -9,21 +9,25 @@ def eye(n):
     return np.eye(n)
 
 
-def array_equal(A, B):
-    return np.array_equal(A, B)
+def array_equal(a, b):
+    return np.array_equal(a, b)
 
 
-def det(A):
-    return np.linalg.det(A)
+def det(a):
+    return np.linalg.det(a)
 
 
 def dot(a, b):
     return np.dot(a, b)
 
 
-def matmul(A, B):
-    return np.matmul(A, B)
+def matmul(a, b):
+    return np.matmul(a, b)
 
 
-def transpose(A):
-    return np.transpose(A)
+def submatrix(a, m, n):
+    return np.delete(np.delete(np.array(a), m, axis=0), n, axis=1)
+
+
+def transpose(a):
+    return np.transpose(a)
