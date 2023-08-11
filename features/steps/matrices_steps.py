@@ -9,18 +9,12 @@ use_step_matcher("parse")
 
 @given("the following {:d}x{:d} matrix {:w}")
 def step_impl(context, m, n, name):
-    heading_row = Row(context.table.headings, context.table.headings)
-    table_data = context.table.rows
-    table_data.insert(0, heading_row)
-    context.globals[name] = np.array(table_data, dtype='float')
+    context.globals[name] = create_table_from(context)
 
 
 @given("the following matrix {:w}")
 def step_impl(context, name):
-    heading_row = Row(context.table.headings, context.table.headings)
-    table_data = context.table.rows
-    table_data.insert(0, heading_row)
-    context.globals[name] = np.array(table_data, dtype='float')
+    context.globals[name] = create_table_from(context)
 
 
 @then("{:w}[{:d},{:d}] = {:g}")
@@ -48,8 +42,11 @@ def assert_array_not_equal(actual, expected):
 
 @then("{:l} * {:l} is the following 4x4 matrix")
 def step_impl(context, a, b):
+    assert_array_equal(np.dot(context.globals[a], context.globals[b]), create_table_from(context))
+
+
+def create_table_from(context):
     heading_row = Row(context.table.headings, context.table.headings)
     table_data = context.table.rows
     table_data.insert(0, heading_row)
-    expected = np.array(table_data, dtype='float')
-    assert_array_equal(np.dot(context.globals[a], context.globals[b]), expected)
+    return np.array(table_data, dtype='float')
