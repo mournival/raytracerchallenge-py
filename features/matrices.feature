@@ -186,8 +186,8 @@ Feature: Matrices
       | 4 | -9 | 3 | -7 |
       | 9 | 1  | 7 | -6 |
     Then determinant(A) = -2120
-#    And A is invertible
-#
+    And A is invertible
+
   Scenario: Testing a noninvertible matrix for invertibility
     Given the following 4x4 matrix A:
       | -4 | 2  | -2 | -3 |
@@ -195,8 +195,8 @@ Feature: Matrices
       | 0  | -5 | 1  | -5 |
       | 0  | 0  | 0  | 0  |
     Then determinant(A) = 0
-#    And A is not invertible
-#
+    And A is not invertible
+
   Scenario: Calculating the inverse of a matrix
     Given the following 4x4 matrix A:
       | -5 | 2  | 6  | -8 |
@@ -215,24 +215,24 @@ Feature: Matrices
 #      | -0.07895 | -0.22368 | -0.05263 |  0.19737 |
 #      | -0.52256 | -0.81391 | -0.30075 |  0.30639 |
 #
-Scenario: Calculating the inverse of another matrix
-  Given the following 4x4 matrix A:
-    |  8 | -5 |  9 |  2 |
-    |  7 |  5 |  6 |  1 |
-    | -6 |  0 |  9 |  6 |
-    | -3 |  0 | -9 | -4 |
+  Scenario: Calculating the inverse of another matrix
+    Given the following 4x4 matrix A:
+      | 8  | -5 | 9  | 2  |
+      | 7  | 5  | 6  | 1  |
+      | -6 | 0  | 9  | 6  |
+      | -3 | 0  | -9 | -4 |
 #  Then inverse(A) is the following 4x4 matrix:
 #    | -0.15385 | -0.15385 | -0.28205 | -0.53846 |
 #    | -0.07692 |  0.12308 |  0.02564 |  0.03077 |
 #    |  0.35897 |  0.35897 |  0.43590 |  0.92308 |
 #    | -0.69231 | -0.69231 | -0.76923 | -1.92308 |
 #
-Scenario: Calculating the inverse of a third matrix
-  Given the following 4x4 matrix A:
-    |  9 |  3 |  0 |  9 |
-    | -5 | -2 | -6 | -3 |
-    | -4 |  9 |  6 |  4 |
-    | -7 |  6 |  6 |  2 |
+  Scenario: Calculating the inverse of a third matrix
+    Given the following 4x4 matrix A:
+      | 9  | 3  | 0  | 9  |
+      | -5 | -2 | -6 | -3 |
+      | -4 | 9  | 6  | 4  |
+      | -7 | 6  | 6  | 2  |
 #  Then inverse(A) is the following 4x4 matrix:
 #    | -0.04074 | -0.07778 |  0.14444 | -0.22222 |
 #    | -0.07778 |  0.03333 |  0.36667 | -0.33333 |

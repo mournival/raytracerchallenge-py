@@ -2,7 +2,7 @@ from behave import *
 from behave.model import Row
 
 from features.environment import assert_equal, assert_approximately_equal
-from matrix import eye, det, matrix, transpose, matmul, array_equal, dot, submatrix, minor, cofactor
+from matrix import eye, det, matrix, transpose, matmul, array_equal, dot, submatrix, minor, cofactor, invertible
 from tuple import Tuple
 
 use_step_matcher("parse")
@@ -63,6 +63,7 @@ def step_impl(context, a):
 def step_impl(context, a, r, c, expected):
     assert_approximately_equal(cofactor(context.globals[a], r, c), expected)
 
+
 @then("determinant({:l}) = {:g}")
 def step_impl(context, a, expected):
     assert_approximately_equal(det(context.globals[a]), expected)
@@ -95,7 +96,7 @@ def assert_array_equal(actual, expected):
 
 
 def assert_array_not_equal(actual, expected):
-    assert ~array_equal(actual, expected), f"{actual} = {expected}"
+    assert not array_equal(actual, expected), f"{actual} = {expected}"
 
 
 def create_table_from(context):
@@ -114,3 +115,13 @@ def step_impl(context, a, m, n, _m, _n):
 @step("{:l} ← submatrix({:l}, {:d}, {:d})")
 def step_impl(context, b, a, m, n):
     context.globals[b] = submatrix(context.globals[a], m, n)
+
+
+@step("{:l} is invertible")
+def step_impl(context, a):
+    assert (invertible(context.globals[a]))
+
+
+@step("{:l} is not invertible")
+def step_impl(context, a):
+    assert (not invertible(context.globals[a]))

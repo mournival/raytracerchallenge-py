@@ -14,7 +14,7 @@ def array_equal(a, b):
 
 
 def cofactor(a, r, c):
-    return (-1 if (r + c) % 2 else 1) *  det(submatrix(a, r, c))
+    return (-1 if (r + c) % 2 else 1) * det(submatrix(a, r, c))
 
 
 def det(a):
@@ -23,6 +23,10 @@ def det(a):
 
 def dot(a, b):
     return np.dot(a, b)
+
+
+def invertible(a):
+    return det(a) != 0
 
 
 def matmul(a, b):
