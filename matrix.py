@@ -13,6 +13,10 @@ def array_equal(a, b):
     return np.array_equal(a, b)
 
 
+def cofactor(a, r, c):
+    return (-1 if (r + c) % 2 else 1) *  det(submatrix(a, r, c))
+
+
 def det(a):
     return np.linalg.det(a)
 
@@ -23,6 +27,10 @@ def dot(a, b):
 
 def matmul(a, b):
     return np.matmul(a, b)
+
+
+def minor(a, r, c):
+    return det(submatrix(a, r, c))
 
 
 def submatrix(a, m, n):

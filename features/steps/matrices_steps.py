@@ -2,7 +2,7 @@ from behave import *
 from behave.model import Row
 
 from features.environment import assert_equal, assert_approximately_equal
-from matrix import eye, det, matrix, transpose, matmul, array_equal, dot, submatrix
+from matrix import eye, det, matrix, transpose, matmul, array_equal, dot, submatrix, minor, cofactor
 from tuple import Tuple
 
 use_step_matcher("parse")
@@ -59,9 +59,18 @@ def step_impl(context, a):
     assert_array_equal(transpose(context.globals[a]), create_table_from(context))
 
 
+@then("cofactor({:l}, {:d}, {:d}) = {:g}")
+def step_impl(context, a, r, c, expected):
+    assert_approximately_equal(cofactor(context.globals[a], r, c), expected)
+
 @then("determinant({:l}) = {:g}")
 def step_impl(context, a, expected):
     assert_approximately_equal(det(context.globals[a]), expected)
+
+
+@then("minor({:l}, {:d}, {:d}) = {:g}")
+def step_impl(context, a, r, c, expected):
+    assert_approximately_equal(minor(context.globals[a], r, c), expected)
 
 
 @then("{:l} * {:l} = tuple({:g}, {:g}, {:g}, {:g})")
