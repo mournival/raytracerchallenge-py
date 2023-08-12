@@ -2,7 +2,8 @@ from behave import *
 from behave.model import Row
 
 from features.environment import assert_equal, assert_approximately_equal
-from matrix import eye, det, matrix, transpose, matmul, array_equal, dot, submatrix, minor, cofactor, invertible
+from matrix import eye, det, matrix, transpose, matmul, array_equal, dot, submatrix, minor, cofactor, invertible, \
+    inverse, array_approximately_equal
 from tuple import Tuple
 
 use_step_matcher("parse")
@@ -23,6 +24,11 @@ def step_impl(context, name):
 @then("{:w}[{:d},{:d}] = {:g}")
 def step_impl(context, name, x, y, expected):
     assert_equal(context.globals[name][x, y], expected)
+
+
+@then("{:w}[{:d},{:d}] = {:d}/{:d}")
+def step_impl(context, name, x, y, numerator, denomator):
+    assert_approximately_equal(context.globals[name][x, y], numerator / denomator)
 
 
 @then("{:l} = {:l}")
@@ -91,14 +97,6 @@ def step_impl(context, a, b):
     assert_array_equal(dot(eye(4), a_), context.tuples[b])
 
 
-def assert_array_equal(actual, expected):
-    assert array_equal(actual, expected), f"{actual} != {expected}"
-
-
-def assert_array_not_equal(actual, expected):
-    assert not array_equal(actual, expected), f"{actual} = {expected}"
-
-
 def create_table_from(context):
     heading_row = Row(context.table.headings, context.table.headings)
     table_data = context.table.rows
@@ -125,3 +123,37 @@ def step_impl(context, a):
 @step("{:l} is not invertible")
 def step_impl(context, a):
     assert (not invertible(context.globals[a]))
+
+
+@step("{:l} ← inverse({:l})")
+def step_impl(context, b, a):
+    context.globals[b] = inverse(context.globals[a])
+
+
+@then("{:l} is the following 4x4 matrix")
+@then("{:l} is the following 4x4 matrix:")
+def step_impl(context, a):
+    assert_array_approximately_equal(context.globals[a], create_table_from(context))
+
+
+@then("inverse({:l}) is the following 4x4 matrix")
+@then("inverse({:l}) is the following 4x4 matrix:")
+def step_impl(context, a):
+    assert_array_approximately_equal(inverse(context.globals[a]), create_table_from(context))
+
+
+def assert_array_equal(actual, expected):
+    assert array_equal(actual, expected), f"{actual} != {expected}"
+
+
+def assert_array_approximately_equal(actual, expected):
+    assert array_approximately_equal(actual, expected), f"{actual} != {expected}"
+
+
+def assert_array_not_equal(actual, expected):
+    assert not array_equal(actual, expected), f"{actual} = {expected}"
+
+
+@step("{:l} ← {:l} * {:l}")
+def step_impl(context, c, a, b):
+    context.globals[c] = matmul(context.globals[a], context.globals[b])

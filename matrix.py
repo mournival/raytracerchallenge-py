@@ -13,6 +13,10 @@ def array_equal(a, b):
     return np.array_equal(a, b)
 
 
+def array_approximately_equal(a, b):
+    return np.allclose(a, b, rtol=0.0001)
+
+
 def cofactor(a, r, c):
     return (-1 if (r + c) % 2 else 1) * det(submatrix(a, r, c))
 
@@ -23,6 +27,10 @@ def det(a):
 
 def dot(a, b):
     return np.dot(a, b)
+
+
+def inverse(a):
+    return np.linalg.inv(a)
 
 
 def invertible(a):
