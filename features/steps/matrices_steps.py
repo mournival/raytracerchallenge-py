@@ -100,3 +100,8 @@ def create_table_from(context):
 @then("submatrix({:l}, {:d}, {:d}) is the following {}x{} matrix:")
 def step_impl(context, a, m, n, _m, _n):
     assert_array_equal(submatrix(context.globals[a], m, n), create_table_from(context))
+
+
+@step("{:l} ← submatrix({:l}, {:d}, {:d})")
+def step_impl(context, b, a, m, n):
+    context.globals[b] = submatrix(context.globals[a], m, n)
