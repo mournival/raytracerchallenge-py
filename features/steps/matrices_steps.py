@@ -150,7 +150,7 @@ def assert_array_approximately_equal(actual, expected):
     assert array_approximately_equal(actual, expected), f"{actual} != {expected}"
 
 
-def assert_array_not_equal(actual, expected):
+def assert_array_not_equal(actual,the following expected):
     assert not array_equal(actual, expected), f"{actual} = {expected}"
 
 
