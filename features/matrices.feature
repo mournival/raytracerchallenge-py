@@ -251,4 +251,4 @@ Feature: Matrices
       | 7 | 0  | 5 | 4 |
       | 6 | -2 | 0 | 5 |
     And C ← A * B
-#  Then C * inverse(B) = A
+    Then C * inverse(B) = A

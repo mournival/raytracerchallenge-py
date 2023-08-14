@@ -49,5 +49,9 @@ def submatrix(a, m, n):
     return np.delete(np.delete(np.array(a), m, axis=0), n, axis=1)
 
 
+def translation(x, y, z):
+    return np.array([[1, 0, 0, x], [0, 1, 0, y], [0, 0, 1, z], [0, 0, 0, 1]])
+
+
 def transpose(a):
     return np.transpose(a)
