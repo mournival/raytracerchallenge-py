@@ -45,6 +45,10 @@ def minor(a, r, c):
     return det(submatrix(a, r, c))
 
 
+def scaling(x, y, z):
+    return np.array([[x, 0, 0, 0], [0, y, 0, 0], [0, 0, z, 0], [0, 0, 0, 1]])
+
+
 def submatrix(a, m, n):
     return np.delete(np.delete(np.array(a), m, axis=0), n, axis=1)
 

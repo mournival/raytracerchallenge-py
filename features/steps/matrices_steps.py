@@ -3,8 +3,8 @@ from behave.model import Row
 
 from features.environment import assert_equal, assert_approximately_equal
 from matrix import eye, det, matrix, transpose, matmul, array_equal, dot, submatrix, minor, cofactor, invertible, \
-    inverse, array_approximately_equal, translation
-from tuple import Tuple, point
+    inverse, array_approximately_equal, scaling, translation
+from tuple import Tuple, point, vector
 
 use_step_matcher("parse")
 
@@ -34,6 +34,21 @@ def step_impl(context, name, x, y, numerator, denominator):
 @then("{:l} = {:l}")
 def step_impl(context, a, b):
     assert_array_equal(context.globals[a], context.globals[b])
+
+
+@then("{:l} * {:l} = {:l}")
+def step_impl(context, a, b, c):
+    assert_array_equal(dot(context.globals[a], context.tuples[b]), context.tuples[c])
+
+
+@then("{:l} * {:l} = point({:g}, {:g}, {:g})")
+def step_impl(context, a, b, x, y, z):
+    assert_array_equal(dot(context.globals[a], context.tuples[b]), point(x, y, z))
+
+
+@then("{:l} * {:l} = vector({:g}, {:g}, {:g})")
+def step_impl(context, a, b, x, y, z):
+    assert_array_equal(dot(context.globals[a], context.tuples[b]), vector(x, y, z))
 
 
 @then("{:l} != {:l}")
@@ -152,9 +167,19 @@ def step_impl(context, c, b, a):
     assert_array_approximately_equal(matmul(context.globals[c], inverse(context.globals[b])), context.globals[a])
 
 
+@step("{:l} ← scaling({:g}, {:g}, {:g})")
+def step_impl(context, a, x, y, z):
+    context.globals[a] = scaling(x, y, z)
+
+
 @step("{:l} ← translation({:g}, {:g}, {:g})")
 def step_impl(context, a, x, y, z):
     context.globals[a] = translation(x, y, z)
+
+
+@step("{:l} ← {:l} * {:l}")
+def step_impl(context, c, a, b):
+    context.globals[c] = matmul(context.globals[a], context.globals[b])
 
 
 @then("{:l} * {:l} = point({:g}, {:g}, {:g})")
