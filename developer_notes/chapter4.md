@@ -17,7 +17,7 @@ the 'Then' step def is
 ```python
 @then("{:l} * {:l} = {:l}")
 def step_impl(context, a, b, c):
-    assert_array_equal(dot(context.globals[a], context.tuples[b]), context.tuples[c])
+    assert_array_equal(dot(context.scenario_vars[a], context.scenario_vars[b]), context.scenario_vars[c])
 ```
 and that looks fine.
 

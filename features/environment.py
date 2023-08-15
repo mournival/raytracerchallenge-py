@@ -1,10 +1,34 @@
+from cmath import sqrt, pi, inf
+import re
+
+from parse import with_pattern
+
 from color import Color
 from tuple import Tuple
 
 
+@with_pattern(r'(-?√?π?\d*\s*/\s*\d+)|(√\d+)')
+def parse_ratio(text):
+    a = text
+    m = re.match("^(-)?(√)?(\d+)/(\d+)$", a)
+    if m:
+        groups = m.groups()
+        sign = -1 if groups[0] else 1
+        numerator = sqrt(int(groups[2])) if groups[1] else int(groups[2])
+        denominator = int(groups[3])
+        return sign * numerator / denominator
+    a = text
+    m = re.match(r'π / (\d+)$', a)
+    if m:
+        return pi / int(m.groups()[0])
+    m = re.match(r'√(\d+)$', a)
+    if m:
+        return sqrt(int(m.groups()[0]))
+    return inf
+
+
 def before_feature(context, feature):
-    context.tuples = dict()
-    context.globals = dict()
+    context.scenario_vars = dict()
 
 
 def assert_equal(actual, expected):
