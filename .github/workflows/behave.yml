@@ -15,6 +15,5 @@ jobs:
       - uses: cryptic-wizard/run-behave-tests@v0.3.0
         with:
           test-path: .
-          test-output-name: behave.txt
-          # test-output-name: ${{ matrix.os }}.txt
-      - run: echo "This job's status is ${{ job.status }}." >> $GITHUB_STATE
+          test-output-name: ${{ matrix.os }}.txt
+      - run: echo "🍏 This job's status is ${{ job.status }}."
