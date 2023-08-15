@@ -1,48 +1,25 @@
-import math
-import re
-from cmath import sqrt
-
 from behave import use_step_matcher, given, then, step, register_type
 from behave.model import Row
-from parse import with_pattern
 
-from features.environment import assert_equal, assert_approximately_equal
+from features.environment import assert_equal, assert_approximately_equal, parse_ratio
 from matrix import eye, det, matrix, transpose, matmul, array_equal, dot, submatrix, minor, cofactor, invertible, \
     inverse, array_approximately_equal, scaling, translation, rotation_x
 from tuple import Tuple, point, vector
 
 use_step_matcher("parse")
 
-
-@with_pattern(r'-?√?π?\d*\s*/\s*\d+')
-def parse_ratio(text):
-    a = text
-    m = re.match("^(-)?(√)?(\d+)/(\d+)$", a)
-    if m:
-        groups = m.groups()
-        sign = -1 if groups[0] else 1
-        numerator = sqrt(int(groups[2])) if groups[1] else int(groups[2])
-        denominator = int(groups[3])
-        return sign * numerator / denominator
-    a = text
-    m = re.match(r'π / (\d+)$', a)
-    if m:
-        return math.pi / int(m.groups()[0])
-    return math.inf
-
-
 register_type(rn=parse_ratio)
-
-
-@given("the following {}x{} matrix {:w}")
-@given("the following {}x{} matrix {:w}:")
-def step_matrix_create_empty_n_m(context, _m, _n, name):
-    context.scenario_vars[name] = create_table_from(context)
 
 
 @given("the following matrix {:w}")
 @given("the following matrix {:w}:")
-def step_matrix_from_example(context, name):
+@given("the following 2x2 matrix {:w}")
+@given("the following 2x2 matrix {:w}:")
+@given("the following 3x3 matrix {:w}")
+@given("the following 3x3 matrix {:w}:")
+@given("the following 4x4 matrix {:w}")
+@given("the following 4x4 matrix {:w}:")
+def step_matrix_create_empty_n_m(context, name):
     context.scenario_vars[name] = create_table_from(context)
 
 
@@ -87,6 +64,27 @@ def step_matrix_multiplication_equals(context, a, b):
     assert_array_equal(matmul(context.scenario_vars[a], context.scenario_vars[b]), create_table_from(context))
 
 
+@then("{:w} is the following 4x4 matrix")
+@then("{:w} is the following 4x4 matrix:")
+def step_matrix_create_4x4_matrix(context, a):
+    assert_array_approximately_equal(context.scenario_vars[a], create_table_from(context))
+
+
+@then("{:w}({:l}) is the following matrix")
+@then("{:w}({:l}) is the following matrix:")
+@then("{:w}({:l}) is the following 4x4 matrix")
+@then("{:w}({:l}) is the following 4x4 matrix:")
+def step_matrix_transpose_approximately_equal(context, operation, a):
+    m = create_table_from(context)
+    a_ = context.scenario_vars[a]
+    if operation == 'transpose':
+        assert_array_approximately_equal(transpose(a_), m)
+    elif operation == 'inverse':
+        assert_array_approximately_equal(inverse(a_), m)
+    else:
+        raise NotImplementedError(f"{operation}({a} is the following matrix: {m}")
+
+
 @then("{:l} * identity_matrix = {:l}")
 def step_matrix_identity_multiplication(context, a, b):
     a_ = context.scenario_vars[a]
@@ -97,12 +95,6 @@ def step_matrix_identity_multiplication(context, a, b):
 def step_matrix_equals_identity(context, a):
     m = context.scenario_vars[a]
     assert_array_equal(m, eye(m.shape[0]))
-
-
-@then("transpose({:l}) is the following matrix")
-@then("transpose({:l}) is the following matrix:")
-def step_matrix_transpose_equals(context, a):
-    assert_array_equal(transpose(context.scenario_vars[a]), create_table_from(context))
 
 
 @then("cofactor({:l}, {:d}, {:d}) = {:g}")
@@ -162,18 +154,6 @@ def step_matrix_create_inverse(context, b, a):
     context.scenario_vars[b] = inverse(context.scenario_vars[a])
 
 
-@then("{:l} is the following 4x4 matrix")
-@then("{:l} is the following 4x4 matrix:")
-def step_matrix_create_4x4_matrix(context, a):
-    assert_array_approximately_equal(context.scenario_vars[a], create_table_from(context))
-
-
-@then("inverse({:l}) is the following 4x4 matrix")
-@then("inverse({:l}) is the following 4x4 matrix:")
-def step_matrix_equals_4x4_matrix(context, a):
-    assert_array_approximately_equal(inverse(context.scenario_vars[a]), create_table_from(context))
-
-
 @step("{:l} ← {:l} * {:l}")
 def step_matrix_create_product(context, c, a, b):
     context.scenario_vars[c] = matmul(context.scenario_vars[a], context.scenario_vars[b])
@@ -186,7 +166,8 @@ def step_matrix_create_rotation_x(context, c, radians):
 
 @then("{:l} * inverse({:l}) = {:l}")
 def step_matrix_inverse_multiplication_equals(context, c, b, a):
-    assert_array_approximately_equal(matmul(context.scenario_vars[c], inverse(context.scenario_vars[b])), context.scenario_vars[a])
+    assert_array_approximately_equal(matmul(context.scenario_vars[c], inverse(context.scenario_vars[b])),
+                                     context.scenario_vars[a])
 
 
 @step("{:l} ← scaling({:g}, {:g}, {:g})")
@@ -217,7 +198,8 @@ def step_matrix_translate_with_radicals_alt1_point_approximately_equals(context,
 
 @then("{:l}_{:l} * {:l} = point({:g}, {:g}, {:g})")
 def step_matrix_translate_point_approximately_equals(context, a_0, a_1, b, x, y, z):
-    assert_array_approximately_equal(dot(context.scenario_vars[f"{a_0}_{a_1}"], context.scenario_vars[b]), point(x, y, z))
+    assert_array_approximately_equal(dot(context.scenario_vars[f"{a_0}_{a_1}"], context.scenario_vars[b]),
+                                     point(x, y, z))
 
 
 def assert_array_equal(actual, expected):

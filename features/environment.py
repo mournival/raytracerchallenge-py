@@ -1,30 +1,11 @@
-from cmath import sqrt, pi, inf
+import math
 import re
+from cmath import sqrt
 
 from parse import with_pattern
 
 from color import Color
 from tuple import Tuple
-
-
-@with_pattern(r'(-?√?π?\d*\s*/\s*\d+)|(√\d+)')
-def parse_ratio(text):
-    a = text
-    m = re.match("^(-)?(√)?(\d+)/(\d+)$", a)
-    if m:
-        groups = m.groups()
-        sign = -1 if groups[0] else 1
-        numerator = sqrt(int(groups[2])) if groups[1] else int(groups[2])
-        denominator = int(groups[3])
-        return sign * numerator / denominator
-    a = text
-    m = re.match(r'π / (\d+)$', a)
-    if m:
-        return pi / int(m.groups()[0])
-    m = re.match(r'√(\d+)$', a)
-    if m:
-        return sqrt(int(m.groups()[0]))
-    return inf
 
 
 def before_feature(context, feature):
@@ -50,3 +31,24 @@ def assert_approximate_rgb(actual: Color, red, green, blue):
     assert_approximately_equal(actual.red, red)
     assert_approximately_equal(actual.green, green)
     assert_approximately_equal(actual.blue, blue)
+
+
+@with_pattern(r'-?√?π?\d*\s*/\s*\d+|√\d+')
+def parse_ratio(text):
+    a = text
+    m = re.match(r'^√(\d+)$', a)
+    if m:
+        return sqrt(int(m.groups()[0]))
+    a = text
+    m = re.match("^(-)?(√)?(\d+)/(\d+)$", a)
+    if m:
+        groups = m.groups()
+        sign = -1 if groups[0] else 1
+        numerator = sqrt(int(groups[2])) if groups[1] else int(groups[2])
+        denominator = int(groups[3])
+        return sign * numerator / denominator
+    a = text
+    m = re.match(r'π / (\d+)$', a)
+    if m:
+        return math.pi / int(m.groups()[0])
+    return math.inf
