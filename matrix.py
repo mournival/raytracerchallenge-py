@@ -1,3 +1,5 @@
+from cmath import cos, sin
+
 import numpy as np
 
 
@@ -43,6 +45,12 @@ def matmul(a, b):
 
 def minor(a, r, c):
     return det(submatrix(a, r, c))
+
+
+def rotation_x(radians):
+    return np.array([
+        [1, 0, 0, 0], [0, cos(radians), -sin(radians), 0], [0, sin(radians), cos(radians), 0], [0, 0, 0, 1]
+    ])
 
 
 def scaling(x, y, z):

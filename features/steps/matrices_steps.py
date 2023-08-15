@@ -1,9 +1,11 @@
+from cmath import pi, sqrt
+
 from behave import *
 from behave.model import Row
 
 from features.environment import assert_equal, assert_approximately_equal
 from matrix import eye, det, matrix, transpose, matmul, array_equal, dot, submatrix, minor, cofactor, invertible, \
-    inverse, array_approximately_equal, scaling, translation
+    inverse, array_approximately_equal, scaling, translation, rotation_x
 from tuple import Tuple, point, vector
 
 use_step_matcher("parse")
@@ -140,7 +142,7 @@ def step_impl(context, a):
     assert (not invertible(context.globals[a]))
 
 
-@step("{:l} ← inverse({:l})")
+@step("{:l} ← inverse({:w})")
 def step_impl(context, b, a):
     context.globals[b] = inverse(context.globals[a])
 
@@ -160,6 +162,11 @@ def step_impl(context, a):
 @step("{:l} ← {:l} * {:l}")
 def step_impl(context, c, a, b):
     context.globals[c] = matmul(context.globals[a], context.globals[b])
+
+
+@step("{:w} ← rotation_x(π / {:d})")
+def step_impl(context, c, denominator):
+    context.globals[c] = rotation_x(pi / denominator)
 
 
 @then("{:l} * inverse({:l}) = {:l}")
@@ -185,6 +192,23 @@ def step_impl(context, c, a, b):
 @then("{:l} * {:l} = point({:g}, {:g}, {:g})")
 def step_impl(context, a, b, x, y, z):
     assert_array_equal(dot(context.globals[a], context.tuples[b]), point(x, y, z))
+
+
+@then("{:l}_{:l} * {:l} = point({:g}, √{:d}/{:d}, √{:d}/{:d})")
+def step_impl(context, a_0, a_1, b, x, y_n, y_d, z_n, z_d):
+    assert_array_equal(dot(context.globals[f"{a_0}_{a_1}"], context.tuples[b]),
+                       point(x, sqrt(y_n) / y_d, sqrt(z_n) / z_d))
+
+
+@then("{:l} * {:l} = point({:g}, √{:d}/{:d}, -√{:d}/{:d})")
+def step_impl(context, a, b, x, y_n, y_d, z_n, z_d):
+    assert_array_approximately_equal(dot(context.globals[a], context.tuples[b]),
+                       point(x, sqrt(y_n) / y_d, -sqrt(z_n) / z_d))
+
+
+@then("{:l}_{:l} * {:l} = point({:g}, {:g}, {:g})")
+def step_impl(context, a_0, a_1, b, x, y, z):
+    assert_array_approximately_equal(dot(context.globals[f"{a_0}_{a_1}"], context.tuples[b]), point(x, y, z))
 
 
 def assert_array_equal(actual, expected):

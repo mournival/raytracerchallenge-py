@@ -5,7 +5,7 @@ may be a poor design choice.
 
 BBIAB
 
-Err, nevermind. Given
+Err, never mind. Given
 ```gherkin
 Scenario: Translation does not affect vectors
   Given transform ← translation(5, -3, 2)
@@ -20,3 +20,10 @@ def step_impl(context, a, b, c):
     assert_array_equal(dot(context.globals[a], context.tuples[b]), context.tuples[c])
 ```
 and that looks fine.
+
+## Test parsing
+And here is where I begin to think about creating parsing helper utils for the 'special' cases (radicals)
+``` gherkin
+    Then inv * p = point(0, √2/2, -√2/2)
+```
+and all the matrix and vector multiplications and dot products.
