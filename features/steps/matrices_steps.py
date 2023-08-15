@@ -1,7 +1,10 @@
-from cmath import pi, sqrt
+import math
+import re
+from cmath import sqrt
 
-from behave import use_step_matcher, given, then, step
+from behave import use_step_matcher, given, then, step, register_type
 from behave.model import Row
+from parse import with_pattern
 
 from features.environment import assert_equal, assert_approximately_equal
 from matrix import eye, det, matrix, transpose, matmul, array_equal, dot, submatrix, minor, cofactor, invertible, \
@@ -9,6 +12,26 @@ from matrix import eye, det, matrix, transpose, matmul, array_equal, dot, submat
 from tuple import Tuple, point, vector
 
 use_step_matcher("parse")
+
+
+@with_pattern(r'-?√?π?\d*\s*/\s*\d+')
+def parse_ratio(text):
+    a = text
+    m = re.match("^(-)?(√)?(\d+)/(\d+)$", a)
+    if m:
+        groups = m.groups()
+        sign = -1 if groups[0] else 1
+        numerator = sqrt(int(groups[2])) if groups[1] else int(groups[2])
+        denominator = int(groups[3])
+        return sign * numerator / denominator
+    a = text
+    m = re.match(r'π / (\d+)$', a)
+    if m:
+        return math.pi / int(m.groups()[0])
+    return math.inf
+
+
+register_type(rn=parse_ratio)
 
 
 @given("the following {:d}x{:d} matrix {:w}")
@@ -28,9 +51,9 @@ def step_matrix_element_equals(context, name, x, y, expected):
     assert_equal(context.globals[name][x, y], expected)
 
 
-@then("{:w}[{:d},{:d}] = {:d}/{:d}")
-def step_matrix_element_approximately_equals(context, name, x, y, numerator, denominator):
-    assert_approximately_equal(context.globals[name][x, y], numerator / denominator)
+@then("{:w}[{:d},{:d}] = {:rn}")
+def step_matrix_element_approximately_equals(context, name, x, y, expected):
+    assert_approximately_equal(context.globals[name][x, y], expected)
 
 
 @then("{:l} = {:l}")
@@ -156,9 +179,9 @@ def step_matrix_create_product(context, c, a, b):
     context.globals[c] = matmul(context.globals[a], context.globals[b])
 
 
-@step("{:w} ← rotation_x(π / {:d})")
-def step_matrix_create_rotation_x(context, c, denominator):
-    context.globals[c] = rotation_x(pi / denominator)
+@step("{:w} ← rotation_x({:rn})")
+def step_matrix_create_rotation_x(context, c, radians):
+    context.globals[c] = rotation_x(radians)
 
 
 @then("{:l} * inverse({:l}) = {:l}")
@@ -181,16 +204,15 @@ def step_matrix_translate_point_equals(context, a, b, x, y, z):
     assert_array_equal(dot(context.globals[a], context.tuples[b]), point(x, y, z))
 
 
-@then("{:l}_{:l} * {:l} = point({:g}, √{:d}/{:d}, √{:d}/{:d})")
-def step_matrix_translate_with_radicals_point_approximately_equals(context, a_0, a_1, b, x, y_n, y_d, z_n, z_d):
+@then("{:l}_{:l} * {:l} = point({:g}, {:rn}, {:rn})")
+def step_matrix_translate_with_radicals_point_approximately_equals(context, a_0, a_1, b, x, y, z):
     assert_array_approximately_equal(dot(context.globals[f"{a_0}_{a_1}"], context.tuples[b]),
-                                     point(x, sqrt(y_n) / y_d, sqrt(z_n) / z_d))
+                                     point(x, y, z))
 
 
-@then("{:l} * {:l} = point({:g}, √{:d}/{:d}, -√{:d}/{:d})")
-def step_matrix_translate_with_radicals_alt1_point_approximately_equals(context, a, b, x, y_n, y_d, z_n, z_d):
-    assert_array_approximately_equal(dot(context.globals[a], context.tuples[b]),
-                                     point(x, sqrt(y_n) / y_d, -sqrt(z_n) / z_d))
+@then("{:l} * {:l} = point({:g}, {:rn}, {:rn})")
+def step_matrix_translate_with_radicals_alt1_point_approximately_equals(context, a, b, x, y, z):
+    assert_array_approximately_equal(dot(context.globals[a], context.tuples[b]), point(x, y, z))
 
 
 @then("{:l}_{:l} * {:l} = point({:g}, {:g}, {:g})")
