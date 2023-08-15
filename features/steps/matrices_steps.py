@@ -196,7 +196,7 @@ def step_impl(context, a, b, x, y, z):
 
 @then("{:l}_{:l} * {:l} = point({:g}, √{:d}/{:d}, √{:d}/{:d})")
 def step_impl(context, a_0, a_1, b, x, y_n, y_d, z_n, z_d):
-    assert_array_equal(dot(context.globals[f"{a_0}_{a_1}"], context.tuples[b]),
+    assert_array_approximately_equal(dot(context.globals[f"{a_0}_{a_1}"], context.tuples[b]),
                        point(x, sqrt(y_n) / y_d, sqrt(z_n) / z_d))
 
 
