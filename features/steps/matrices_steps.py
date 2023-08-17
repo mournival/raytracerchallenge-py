@@ -56,11 +56,6 @@ def step_matrix_create_inverse(context, b, a):
     context.scenario_vars[b] = inverse(context.scenario_vars[a])
 
 
-@step("{:id} ← {:op}({:g}, {:g}, {:g})")
-def step_matrix_create_scaling(context, a, operation, x, y, z):
-    context.scenario_vars[a] = operation(x, y, z)
-
-
 @step("{:id} ← submatrix({:id}, {:d}, {:d})")
 def step_matrix_create_submatrix(context, b, a, m, n):
     context.scenario_vars[b] = submatrix(context.scenario_vars[a], m, n)
@@ -122,7 +117,7 @@ def step_matrix_transpose_approximately_equal(context, operation, a):
 
 
 @then("{:op}({:id}, {:d}, {:d}) = {:g}")
-def step_matrix_cofactor_equals(context, operation, a, r, c, expected):
+def step_matrix_factor_equals(context, operation, a, r, c, expected):
     assert_approximately_equal(operation(context.scenario_vars[a], r, c), expected)
 
 
