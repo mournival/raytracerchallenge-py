@@ -1,11 +1,10 @@
 from behave import use_step_matcher, given, then, step, register_type
-from behave.model import Row
 
 from color import Color, hadamard_product
 from features.environment import assert_equal, assert_approximately_equal, parse_ratio, parse_id, parse_matrix_name, \
-    parse_operation, parse_radians
-from matrix import matrix, transpose, array_equal, dot, submatrix, invertible, inverse, array_approximately_equal, \
-    rotation_x, rotation_y
+    parse_operation, parse_radians, assert_array_equal, assert_array_approximately_equal, assert_array_not_equal, \
+    create_table_from
+from matrix import transpose, dot, submatrix, invertible, inverse, rotation_x, rotation_y
 from tuple import Tuple
 
 use_step_matcher("parse")
@@ -141,22 +140,3 @@ def step_matrix_submatrix_equals(context, a, m, n, _m, _n):
 def step_matrix_inverse_multiplication_equals(context, c, operation, b, a):
     assert_array_approximately_equal(dot(context.scenario_vars[c], operation(context.scenario_vars[b])),
                                      context.scenario_vars[a])
-
-
-def assert_array_equal(actual, expected):
-    assert array_equal(actual, expected), f"{actual} != {expected}"
-
-
-def assert_array_approximately_equal(actual, expected):
-    assert array_approximately_equal(actual, expected), f"{actual} != {expected}"
-
-
-def assert_array_not_equal(actual, expected):
-    assert not array_equal(actual, expected), f"{actual} = {expected}"
-
-
-def create_table_from(context):
-    heading_row = Row(context.table.headings, context.table.headings)
-    table_data = context.table.rows
-    table_data.insert(0, heading_row)
-    return matrix(table_data)

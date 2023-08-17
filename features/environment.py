@@ -3,7 +3,10 @@ import re
 from math import sqrt
 
 import numpy as np
+from behave.model import Row
 from parse import with_pattern
+
+from matrix import array_equal, array_approximately_equal, matrix
 
 
 def before_feature(context, feature):
@@ -18,6 +21,25 @@ def assert_equal(actual, expected):
 def assert_approximately_equal(actual, expected):
     epsilon = 0.0001
     assert abs((actual - expected)) < epsilon, f"{actual} !~ {expected}"
+
+
+def assert_array_equal(actual, expected):
+    assert array_equal(actual, expected), f"{actual} != {expected}"
+
+
+def assert_array_approximately_equal(actual, expected):
+    assert array_approximately_equal(actual, expected), f"{actual} != {expected}"
+
+
+def assert_array_not_equal(actual, expected):
+    assert not array_equal(actual, expected), f"{actual} = {expected}"
+
+
+def create_table_from(context):
+    heading_row = Row(context.table.headings, context.table.headings)
+    table_data = context.table.rows
+    table_data.insert(0, heading_row)
+    return matrix(table_data)
 
 
 @with_pattern(r'-?√?\d*\s*/\s*\d+|\d+/√\d+|√\d+|\d+')
@@ -71,48 +93,48 @@ def parse_id(text):
 
 @with_pattern(r'\w+')
 def parse_operation(text):
-    if text == 'transpose':
-        import matrix
-        return matrix.transpose
-    if text == 'inverse':
-        import matrix
-        return matrix.inverse
-    if text == 'translation':
-        import matrix
-        return matrix.translation
-    if text == 'scaling':
-        import matrix
-        return matrix.scaling
-    if text == 'determinant':
-        import matrix
-        return matrix.det
     if text == 'cofactor':
         import matrix
         return matrix.cofactor
+    if text == 'color':
+        from color import Color
+        return Color
+    if text == 'cross':
+        from tuple import cross
+        return cross
+    if text == 'determinant':
+        import matrix
+        return matrix.det
+    if text == 'dot':
+        from tuple import dot
+        return dot
+    if text == 'inverse':
+        import matrix
+        return matrix.inverse
+    if text == 'magnitude':
+        from tuple import magnitude
+        return magnitude
     if text == 'minor':
         import matrix
         return matrix.minor
     if text == 'normalize':
         from tuple import normalize
         return normalize
-    if text == 'dot':
-        from tuple import dot
-        return dot
-    if text == 'cross':
-        from tuple import cross
-        return cross
-    if text == 'magnitude':
-        from tuple import magnitude
-        return magnitude
     if text == 'point':
         from tuple import point
         return point
+    if text == 'scaling':
+        import matrix
+        return matrix.scaling
+    if text == 'translation':
+        import matrix
+        return matrix.translation
+    if text == 'transpose':
+        import matrix
+        return matrix.transpose
     if text == 'vector':
         from tuple import vector
         return vector
-    if text == 'color':
-        from color import Color
-        return Color
     raise NotImplementedError(f"{text}")
 
 
