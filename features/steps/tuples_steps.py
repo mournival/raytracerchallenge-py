@@ -73,12 +73,14 @@ def step_tuple_addition(context, a, b, x, y, z, w):
 
 @then("{:id} - {:id} = {:op}({:g}, {:g}, {:g})")
 def step_tuple_subtraction_equals(context, a, b, dtype, x, y, z):
-    difference = (context.scenario_vars[a] - context.scenario_vars[b]) - dtype(x, y, z)
-    assert (difference[0] < 0.0001)
-    assert (difference[1] < 0.0001)
-    assert (difference[2] < 0.0001)
+    expected = dtype(x, y, z)
+    actual = context.scenario_vars[a] - context.scenario_vars[b]
+    difference = actual - expected
+    assert (difference[0] < 0.0001), f"{actual} !~ {expected}"
+    assert (difference[1] < 0.0001), f"{actual} !~ {expected}"
+    assert (difference[2] < 0.0001), f"{actual} !~ {expected}"
     if dtype != Color:
-        assert (difference[3] < 0.0001)
+        assert (difference[3] < 0.0001), f"{actual} !~ {expected}"
 
 
 @then("{:id} * {:g} = tuple({:g}, {:g}, {:g}, {:g})")
@@ -148,8 +150,7 @@ def step_tuple_color_addition(context, a, b, red, green, blue):
 
 @then("{:id} * {:g} = color({:g}, {:g}, {:g})")
 def step_tuple_color_scaling(context, a, b, red, green, blue):
-    b = float(b)
-    actual = context.scenario_vars[a] * b
+    actual = context.scenario_vars[a] * float(b)
     assert_approximately_equal(actual.red, red)
     assert_approximately_equal(actual.green, green)
     assert_approximately_equal(actual.blue, blue)
