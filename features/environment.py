@@ -51,4 +51,9 @@ def parse_ratio(text):
     m = re.match(r'π / (\d+)$', a)
     if m:
         return math.pi / int(m.groups()[0])
-    return math.inf
+    raise Exception(f"Error parsing {text}")
+
+
+@with_pattern(r'[a-z]+_[a-z]+')
+def parse_id(text):
+    return text

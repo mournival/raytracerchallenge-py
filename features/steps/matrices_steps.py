@@ -1,7 +1,7 @@
 from behave import use_step_matcher, given, then, step, register_type
 from behave.model import Row
 
-from features.environment import assert_equal, assert_approximately_equal, parse_ratio
+from features.environment import assert_equal, assert_approximately_equal, parse_ratio, parse_id
 from matrix import eye, det, matrix, transpose, matmul, array_equal, dot, submatrix, minor, cofactor, invertible, \
     inverse, array_approximately_equal, scaling, translation, rotation_x
 from tuple import Tuple, point, vector
@@ -9,6 +9,7 @@ from tuple import Tuple, point, vector
 use_step_matcher("parse")
 
 register_type(rn=parse_ratio)
+register_type(id=parse_id)
 
 
 @given("the following matrix {:w}")
@@ -180,9 +181,9 @@ def step_matrix_create_translation(context, a, x, y, z):
     context.scenario_vars[a] = translation(x, y, z)
 
 
-@then("{:l}_{:l} * {:l} = point({:g}, {:rn}, {:rn})")
-def step_matrix_translate_with_radicals_point_approximately_equals(context, a_0, a_1, b, x, y, z):
-    assert_array_approximately_equal(dot(context.scenario_vars[f"{a_0}_{a_1}"], context.scenario_vars[b]),
+@then("{:id} * {:l} = point({:g}, {:rn}, {:rn})")
+def step_matrix_translate_with_radicals_point_approximately_equals(context, a, b, x, y, z):
+    assert_array_approximately_equal(dot(context.scenario_vars[a], context.scenario_vars[b]),
                                      point(x, y, z))
 
 
@@ -191,9 +192,9 @@ def step_matrix_translate_with_radicals_alt1_point_approximately_equals(context,
     assert_array_approximately_equal(dot(context.scenario_vars[a], context.scenario_vars[b]), point(x, y, z))
 
 
-@then("{:l}_{:l} * {:l} = point({:g}, {:g}, {:g})")
-def step_matrix_translate_point_approximately_equals(context, a_0, a_1, b, x, y, z):
-    assert_array_approximately_equal(dot(context.scenario_vars[f"{a_0}_{a_1}"], context.scenario_vars[b]),
+@then("{:id} * {:l} = point({:g}, {:g}, {:g})")
+def step_matrix_translate_point_approximately_equals(context, a, b, x, y, z):
+    assert_array_approximately_equal(dot(context.scenario_vars[a], context.scenario_vars[b]),
                                      point(x, y, z))
 
 
