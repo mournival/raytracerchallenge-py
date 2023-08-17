@@ -4,10 +4,6 @@ from cmath import sqrt
 
 from parse import with_pattern
 
-from color import Color
-from matrix import transpose, inverse, translation, scaling
-from tuple import Tuple
-
 
 def before_feature(context, feature):
     context.scenario_vars = dict()
@@ -20,18 +16,6 @@ def assert_equal(actual, expected):
 def assert_approximately_equal(actual, expected):
     epsilon = 0.0001
     assert abs((actual - expected)) < epsilon, f"{actual} !~ {expected}"
-
-
-def assert_approximate_xyz(actual: Tuple, x, y, z):
-    assert_approximately_equal(actual.x, x)
-    assert_approximately_equal(actual.y, y)
-    assert_approximately_equal(actual.z, z)
-
-
-def assert_approximate_rgb(actual: Color, red, green, blue):
-    assert_approximately_equal(actual.red, red)
-    assert_approximately_equal(actual.green, green)
-    assert_approximately_equal(actual.blue, blue)
 
 
 @with_pattern(r'-?√?π?\d*\s*/\s*\d+|√\d+')
@@ -63,13 +47,47 @@ def parse_id(text):
 @with_pattern(r'\w+')
 def parse_operation(text):
     if text == 'transpose':
-        return transpose
+        import matrix
+        return matrix.transpose
     if text == 'inverse':
-        return inverse
+        import matrix
+        return matrix.inverse
     if text == 'translation':
-        return translation
+        import matrix
+        return matrix.translation
     if text == 'scaling':
-        return scaling
+        import matrix
+        return matrix.scaling
+    if text == 'determinant':
+        import matrix
+        return matrix.det
+    if text == 'cofactor':
+        import matrix
+        return matrix.cofactor
+    if text == 'minor':
+        import matrix
+        return matrix.minor
+    if text == 'normalize':
+        from tuple import normalize
+        return normalize
+    if text == 'dot':
+        from tuple import dot
+        return dot
+    if text == 'cross':
+        from tuple import cross
+        return cross
+    if text == 'magnitude':
+        from tuple import magnitude
+        return magnitude
+    if text == 'point':
+        from tuple import point
+        return point
+    if text == 'vector':
+        from tuple import vector
+        return vector
+    if text == 'color':
+        from color import Color
+        return Color
     raise NotImplementedError(f"{text}")
 
 

@@ -27,6 +27,8 @@ def det(a):
     return np.linalg.det(a)
 
 
+# For 2D arrays, this subsumes def matmul(a,b) -> np.matmul(a, b), and allows scalar
+# products, so is more flexible
 def dot(a, b):
     return np.dot(a, b)
 
@@ -37,10 +39,6 @@ def inverse(a):
 
 def invertible(a):
     return det(a) != 0
-
-
-def matmul(a, b):
-    return np.matmul(a, b)
 
 
 def minor(a, r, c):
