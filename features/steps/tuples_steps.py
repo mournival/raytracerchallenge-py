@@ -1,10 +1,7 @@
-import math
-
 from behave import use_step_matcher, given, when, then, register_type
 
 from color import Color, hadamard_product
-from features.environment import assert_equal, parse_ratio, \
-    parse_operation, assert_approximately_equal
+from features.environment import assert_equal, parse_ratio, parse_operation, assert_approximately_equal
 from tuple import Tuple, vector
 
 use_step_matcher("parse")
@@ -18,9 +15,9 @@ def step_tuple_create(context, a, x, y, z, w):
     context.scenario_vars[a] = Tuple(x, y, z, w)
 
 
-@given("{:w} ← {:op}({:g}/√{:g}, {:g}/√{:g}, {:g}/√{:g})")
-def step_tuple_create_vector_with_radicals(context, name, dtype, x1, x2, y1, y2, z1, z2):
-    context.scenario_vars[name] = dtype(x1 / math.sqrt(x2), y1 / math.sqrt(y2), z1 / math.sqrt(z2))
+@given("{:w} ← {:op}({:rn}, {:rn}, {:rn})")
+def step_tuple_create_vector_with_radicals(context, name, dtype, x, y, z):
+    context.scenario_vars[name] = dtype(x, y, z)
 
 
 @given("{:w} ← {:op}({:g}, {:g}, {:g})")
@@ -95,7 +92,6 @@ def step_tuple_scalar_division(context, a, c, x, y, z, w):
 
 
 @then("{:op}({:w}) = {:rn}")
-@then("{:op}({:w}) = {:g}")
 def step_tuple_operation_equals(context, operation, a, expected):
     assert_equal(operation(context.scenario_vars[a]), expected)
 
@@ -135,10 +131,12 @@ def step_tuple_equal(context, v, dtype, x, y, z):
 
 @then("{:w} = approximately {:op}({:g}, {:g}, {:g})")
 def step_tuple_approximately_equal(context, v, dtype, x, y, z):
-    difference = context.scenario_vars[v] - dtype(x, y, z)
-    assert (difference[0] < 0.0001)
-    assert (difference[1] < 0.0001)
-    assert (difference[2] < 0.0001)
+    expected = dtype(x, y, z)
+    actual = context.scenario_vars[v]
+    difference = actual - expected
+    assert (difference[0] < 0.0001), f"{actual} !~ {expected}"
+    assert (difference[1] < 0.0001), f"{actual} !~ {expected}"
+    assert (difference[2] < 0.0001), f"{actual} !~ {expected}"
     if dtype != Color:
         assert (difference[3] < 0.0001)
 

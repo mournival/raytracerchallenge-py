@@ -2,11 +2,13 @@ import math
 import re
 from math import sqrt
 
+import numpy as np
 from parse import with_pattern
 
 
 def before_feature(context, feature):
     context.scenario_vars = dict()
+    context.scenario_vars['identity_matrix'] = np.eye(4)
 
 
 def assert_equal(actual, expected):
@@ -18,24 +20,41 @@ def assert_approximately_equal(actual, expected):
     assert abs((actual - expected)) < epsilon, f"{actual} !~ {expected}"
 
 
-@with_pattern(r'-?√?\d*\s*/\s*\d+|√\d+')
+# 1/√14, 2/√14, 3/√14
+# 0, √2/2, -√2/2
+# √14
+@with_pattern(r'-?√?\d*\s*/\s*\d+|\d+/√\d+|√\d+|\d+')
 def parse_ratio(text):
-    a = text
-    m = re.match(r'^√(\d+)$', a)
+    m = re.match(r'^√(\d+)$', text)
     if m:
         return sqrt(int(m.groups()[0]))
-    a = text
-    m = re.match("^(-)?(√)?(\d+)/(\d+)$", a)
+    m = re.match('-(\d*)\s*/√\s*(\d+)', text)
     if m:
-        groups = m.groups()
-        sign = -1 if groups[0] else 1
-        numerator = sqrt(int(groups[2])) if groups[1] else int(groups[2])
-        denominator = int(groups[3])
-        return sign * numerator / denominator
-    a = text
-    m = re.match(r'π / (\d+)$', a)
+        g = m.groups()
+        return -int(g[0]) / sqrt(int(g[1]))
+    m = re.match('(\d*)/√(\d+)', text)
     if m:
-        return math.pi / int(m.groups()[0])
+        g = m.groups()
+        return int(g[0]) / sqrt(int(g[1]))
+    m = re.match('-√(\d*)\s*/\s*(\d+)', text)
+    if m:
+        g = m.groups()
+        return -sqrt(int(g[0])) / int(g[1])
+    m = re.match(r'√(\d*)\s*/\s*(\d+)', text)
+    if m:
+        g = m.groups()
+        return sqrt(int(g[0])) / int(g[1])
+    m = re.match('-(\d*)\s*/\s*(\d+)', text)
+    if m:
+        g = m.groups()
+        return -int(g[0]) / int(g[1])
+    m = re.match(r'(\d*)\s*/\s*(\d+)', text)
+    if m:
+        g = m.groups()
+        return int(g[0]) / int(g[1])
+    m = re.match(r'^(\d*)$', text)
+    if m:
+        return int(m.groups()[0])
     raise Exception(f"Error parsing {text}")
 
 
@@ -48,7 +67,7 @@ def parse_radians(text):
     raise Exception(f"Error parsing {text}")
 
 
-@with_pattern(r'[a-z]+_[a-z]+')
+@with_pattern(r'[a-z]+_[a-z]+|[a-z]+')
 def parse_id(text):
     return text
 

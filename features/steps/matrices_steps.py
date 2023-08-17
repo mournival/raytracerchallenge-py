@@ -3,17 +3,17 @@ from behave.model import Row
 
 from features.environment import assert_equal, assert_approximately_equal, parse_ratio, parse_id, parse_matrix_name, \
     parse_operation, parse_radians
-from matrix import eye, matrix, transpose, array_equal, dot, submatrix, invertible, \
+from matrix import matrix, transpose, array_equal, dot, submatrix, invertible, \
     inverse, array_approximately_equal, rotation_x, rotation_y
 from tuple import Tuple
 
 use_step_matcher("parse")
 
-register_type(rn=parse_ratio)
 register_type(rad=parse_radians)
 register_type(id=parse_id)
 register_type(mn=parse_matrix_name)
 register_type(op=parse_operation)
+register_type(rn=parse_ratio)
 
 
 @given("{:mn}")
@@ -21,9 +21,9 @@ def step_matrix_create_empty_n_m(context, name):
     context.scenario_vars[name] = create_table_from(context)
 
 
-@given("{:l} ← transpose(identity_matrix)")
-def step_matrix_create_transpose(context, a):
-    context.scenario_vars[a] = transpose(eye(4))
+@given("{:l} ← transpose({:id})")
+def step_matrix_create_transpose(context, a, b):
+    context.scenario_vars[a] = transpose(context.scenario_vars[b])
 
 
 @step("{:l} is invertible")
@@ -76,19 +76,18 @@ def step_matrix_element_approximately_equals(context, name, r, c, expected):
     assert_approximately_equal(context.scenario_vars[name][r, c], expected)
 
 
-@then("{:l} = {:l}")
+@then("{:l} = {:id}")
 def step_matrix_equals(context, a, b):
     assert_array_equal(context.scenario_vars[a], context.scenario_vars[b])
 
 
-@then("{:l} * {:l} = {:l}")
+@then("{:id} * {:id} = {:id}")
 def step_matrix_tuple_multiplication_equals(context, a, b, c):
     assert_array_equal(dot(context.scenario_vars[a], context.scenario_vars[b]), context.scenario_vars[c])
 
 
-@then("{:id} * {:l} = {:op}({:g}, {:rn}, {:rn})")
-@then("{:l} * {:l} = {:op}({:g}, {:rn}, {:rn})")
-@then("{:id} * {:l} = {:op}({:rn}, {:g}, {:rn})")
+@then("{:id} * {:l} = {:op}({:rn}, {:rn}, {:rn})")
+@then("{:l} * {:l} = {:op}({:rn}, {:rn}, {:rn})")
 @then("{:id} * {:l} = {:op}({:g}, {:g}, {:g})")
 @then("{:l} * {:l} = {:op}({:g}, {:g}, {:g})")
 def step_matrix_point_multiplication_equals(context, a, b, dtype, x, y, z):
@@ -120,18 +119,6 @@ def step_matrix_transpose_approximately_equal(context, operation, a):
     assert_array_approximately_equal(operation(context.scenario_vars[a]), create_table_from(context))
 
 
-@then("{:l} * identity_matrix = {:l}")
-def step_matrix_identity_multiplication(context, a, b):
-    a_ = context.scenario_vars[a]
-    assert_array_equal(dot(a_, eye(a_.shape[0])), context.scenario_vars[b])
-
-
-@then("{:l} = identity_matrix")
-def step_matrix_equals_identity(context, a):
-    m = context.scenario_vars[a]
-    assert_array_equal(m, eye(m.shape[0]))
-
-
 @then("{:op}({:l}, {:d}, {:d}) = {:g}")
 def step_matrix_cofactor_equals(context, operation, a, r, c, expected):
     assert_approximately_equal(operation(context.scenario_vars[a], r, c), expected)
@@ -145,12 +132,6 @@ def step_matrix_determinant_equals(context, operation, a, expected):
 @then("{:l} * {:l} = tuple({:g}, {:g}, {:g}, {:g})")
 def step_matrix_tuple_dot_product_equals(context, a, b, x, y, z, w):
     assert_array_equal(dot(context.scenario_vars[a], context.scenario_vars[b]), Tuple(x, y, z, w))
-
-
-@then("identity_matrix * {:l} = {:l}")
-def step_matrix_identity_tuple_multiplication_equals(context, a, b):
-    a_ = context.scenario_vars[a]
-    assert_array_equal(dot(eye(4), a_), context.scenario_vars[b])
 
 
 @then("submatrix({:l}, {:d}, {:d}) is the following {}x{} matrix")
