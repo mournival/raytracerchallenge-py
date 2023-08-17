@@ -1,37 +1,33 @@
 from behave import use_step_matcher, given, then, step, register_type
 from behave.model import Row
 
-from features.environment import assert_equal, assert_approximately_equal, parse_ratio, parse_id
+from features.environment import assert_equal, assert_approximately_equal, parse_ratio, parse_id, parse_matrix_name, \
+    parse_operation
 from matrix import eye, det, matrix, transpose, matmul, array_equal, dot, submatrix, minor, cofactor, invertible, \
-    inverse, array_approximately_equal, scaling, translation, rotation_x
+    inverse, array_approximately_equal, rotation_x
 from tuple import Tuple, point, vector
 
 use_step_matcher("parse")
 
 register_type(rn=parse_ratio)
 register_type(id=parse_id)
+register_type(mn=parse_matrix_name)
+register_type(op=parse_operation)
 
 
-@given("the following matrix {:w}")
-@given("the following matrix {:w}:")
-@given("the following 2x2 matrix {:w}")
-@given("the following 2x2 matrix {:w}:")
-@given("the following 3x3 matrix {:w}")
-@given("the following 3x3 matrix {:w}:")
-@given("the following 4x4 matrix {:w}")
-@given("the following 4x4 matrix {:w}:")
+@given("{:mn}")
 def step_matrix_create_empty_n_m(context, name):
     context.scenario_vars[name] = create_table_from(context)
 
 
 @then("{:w}[{:d},{:d}] = {:g}")
-def step_matrix_element_equals(context, name, x, y, expected):
-    assert_equal(context.scenario_vars[name][x, y], expected)
+def step_matrix_element_equals(context, name, r, c, expected):
+    assert_equal(context.scenario_vars[name][r, c], expected)
 
 
 @then("{:w}[{:d},{:d}] = {:rn}")
-def step_matrix_element_approximately_equals(context, name, x, y, expected):
-    assert_approximately_equal(context.scenario_vars[name][x, y], expected)
+def step_matrix_element_approximately_equals(context, name, r, c, expected):
+    assert_approximately_equal(context.scenario_vars[name][r, c], expected)
 
 
 @then("{:l} = {:l}")
@@ -71,19 +67,12 @@ def step_matrix_create_4x4_matrix(context, a):
     assert_array_approximately_equal(context.scenario_vars[a], create_table_from(context))
 
 
-@then("{:w}({:l}) is the following matrix")
-@then("{:w}({:l}) is the following matrix:")
-@then("{:w}({:l}) is the following 4x4 matrix")
-@then("{:w}({:l}) is the following 4x4 matrix:")
+@then("{:op}({:l}) is the following matrix")
+@then("{:op}({:l}) is the following matrix:")
+@then("{:op}({:l}) is the following 4x4 matrix")
+@then("{:op}({:l}) is the following 4x4 matrix:")
 def step_matrix_transpose_approximately_equal(context, operation, a):
-    m = create_table_from(context)
-    a_ = context.scenario_vars[a]
-    if operation == 'transpose':
-        assert_array_approximately_equal(transpose(a_), m)
-    elif operation == 'inverse':
-        assert_array_approximately_equal(inverse(a_), m)
-    else:
-        raise NotImplementedError(f"{operation}({a} is the following matrix: {m}")
+    assert_array_approximately_equal(operation(context.scenario_vars[a]), create_table_from(context))
 
 
 @then("{:l} * identity_matrix = {:l}")
@@ -166,14 +155,9 @@ def step_matrix_create_inverse(context, b, a):
     context.scenario_vars[b] = inverse(context.scenario_vars[a])
 
 
-@step("{:l} ← scaling({:g}, {:g}, {:g})")
-def step_matrix_create_scaling(context, a, x, y, z):
-    context.scenario_vars[a] = scaling(x, y, z)
-
-
-@step("{:l} ← translation({:g}, {:g}, {:g})")
-def step_matrix_create_translation(context, a, x, y, z):
-    context.scenario_vars[a] = translation(x, y, z)
+@step("{:l} ← {:op}({:g}, {:g}, {:g})")
+def step_matrix_create_scaling(context, a, operation, x, y, z):
+    context.scenario_vars[a] = operation(x, y, z)
 
 
 @step("{:l} ← submatrix({:l}, {:d}, {:d})")

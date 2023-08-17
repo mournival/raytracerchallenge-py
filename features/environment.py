@@ -5,6 +5,7 @@ from cmath import sqrt
 from parse import with_pattern
 
 from color import Color
+from matrix import transpose, inverse, translation, scaling
 from tuple import Tuple
 
 
@@ -57,3 +58,22 @@ def parse_ratio(text):
 @with_pattern(r'[a-z]+_[a-z]+')
 def parse_id(text):
     return text
+
+
+@with_pattern(r'\w+')
+def parse_operation(text):
+    if text == 'transpose':
+        return transpose
+    if text == 'inverse':
+        return inverse
+    if text == 'translation':
+        return translation
+    if text == 'scaling':
+        return scaling
+    raise NotImplementedError(f"{text}")
+
+
+@with_pattern(r'the following (\dx\d )?matrix \w+:?')
+def parse_matrix_name(text):
+    m = re.match(r'the following \d?x?\d? ?matrix (\w):?', text)
+    return m.groups()[0]
