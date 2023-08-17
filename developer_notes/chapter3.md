@@ -28,19 +28,19 @@ Given the following 4x4 matrix M:
 ```
 
 ```
-@then("inverse({:l}) is the following 4x4 matrix")
+@then("inverse({:id}) is the following 4x4 matrix")
 ```
 matches for Behave, but 
 ```
-@then("inverse({:l}) is the following 4x4 matrix:")
+@then("inverse({:id}) is the following 4x4 matrix:")
 ```
 matches for PyCharm (no warning nag)
 
 By putting both annotations on the step, both are happy.
 It looks wierd though:
 ```
-@then("inverse({:l}) is the following 4x4 matrix")
-@then("inverse({:l}) is the following 4x4 matrix:")
+@then("inverse({:id}) is the following 4x4 matrix")
+@then("inverse({:id}) is the following 4x4 matrix:")
 def step_impl(context, a):
     assert_array_approximately_equal(inverse(context.globals[a]), create_table_from(context))
 ```

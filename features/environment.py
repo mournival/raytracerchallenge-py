@@ -67,7 +67,7 @@ def parse_radians(text):
     raise Exception(f"Error parsing {text}")
 
 
-@with_pattern(r'[a-z]+_[a-z]+|[a-z]+')
+@with_pattern(r'[a-zA-Z]+_[a-zA-Z]+|[a-zA-Z]+|[acpv]\d')
 def parse_id(text):
     return text
 

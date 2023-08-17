@@ -15,7 +15,7 @@ Scenario: Translation does not affect vectors
 the 'Then' step def is
 
 ```python
-@then("{:l} * {:l} = {:l}")
+@then("{:id} * {:id} = {:id}")
 def step_impl(context, a, b, c):
     assert_array_equal(dot(context.scenario_vars[a], context.scenario_vars[b]), context.scenario_vars[c])
 ```
@@ -51,7 +51,7 @@ tag for the custom parse method, the step function that matches
 ```
 is
 ```gherkin
-@then("{:l} * {:l} = point({:g}, {:rn}, {:rn})")
+@then("{:id} * {:id} = point({:g}, {:rn}, {:rn})")
 def step_matrix_translate_with_radicals_alt1_point_approximately_equals(context, a, b, x, y, z):
     assert_array_approximately_equal(dot(context.scenario_vars[a], context.scenario_vars[b]), point(x, y, z))
 ```

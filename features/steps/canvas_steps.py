@@ -1,48 +1,50 @@
-from behave import use_step_matcher, given, when, then, step
+from behave import use_step_matcher, given, when, then, step, register_type
 
 from canvas import Canvas
 from color import Color
+from features.environment import parse_id
 
 use_step_matcher("parse")
+register_type(id=parse_id)
 
 
-@given("{:w} ← canvas({:d}, {:d})")
+@given("{:id} ← canvas({:d}, {:d})")
 def step_canvas_create(context, c, h, w):
     context.scenario_vars[c] = Canvas(h, w)
 
 
-@then("{:w}.width = {:g}")
+@then("{:id}.width = {:g}")
 def step_canvas_width_equals(context, name, expected):
     assert context.scenario_vars[name].__getattribute__("width") == expected, f"{name}.width = {expected}"
 
 
-@then("{:w}.height = {:g}")
+@then("{:id}.height = {:g}")
 def step_canvas_height_equals(context, name, expected):
     assert context.scenario_vars[name].__getattribute__("height") == expected, f"{name}.height = {expected}"
 
 
-@step("every pixel of {:w} is color({:g}, {:g}, {:g})")
+@step("every pixel of {:id} is color({:g}, {:g}, {:g})")
 def step_canvas_pixels_are(context, c, r, g, b):
     for p in context.scenario_vars[c].pixels():
         assert p == Color(r, g, b), f"every pixel of {c} is NOT color({r}, {g}, {b})"
 
 
-@when("write_pixel({:w}, {:d}, {:d}, {:w})")
+@when("write_pixel({:id}, {:d}, {:d}, {:id})")
 def step_canvas_write_pixel(context, c, x, y, name):
     context.scenario_vars[c][x, y] = context.scenario_vars[name]
 
 
-@then("pixel_at({:w}, {:d}, {:d}) = {:w}")
+@then("pixel_at({:id}, {:d}, {:d}) = {:id}")
 def step_canvas_pixel_at(context, c, x, y, name):
     assert context.scenario_vars[c][x, y] == context.scenario_vars[name], f"pixel_at({c}, {x}, {y}) != {context.scenario_vars[c][x, y]}"
 
 
-@when("{:w} ← canvas_to_ppm({:w})")
+@when("{:id} ← canvas_to_ppm({:id})")
 def step_canvas_create_ppm_string(context, ppm, c):
     context.scenario_vars[ppm] = context.scenario_vars[c].to_ppm()
 
 
-@then("lines {:d}-{:d} of {:w} are")
+@then("lines {:d}-{:d} of {:id} are")
 def step_canvas_ppm_lines_are(context, a, b, ppm):
     actual = context.scenario_vars[ppm].splitlines()
     expected = context.text.splitlines()
@@ -52,11 +54,11 @@ def step_canvas_ppm_lines_are(context, a, b, ppm):
         i += 1
 
 
-@when("every pixel of {:w} is set to color({:g}, {:g}, {:g})")
+@when("every pixel of {:id} is set to color({:g}, {:g}, {:g})")
 def step_canvas_fill(context, c, r, g, b):
     context.scenario_vars[c].fill(Color(r, g, b))
 
 
-@then("{:w} ends with a newline character")
+@then("{:id} ends with a newline character")
 def step_canvas_ppm_end_newline(context, ppm):
     assert context.scenario_vars[ppm][-1] == '\n', f"{ppm} does not end with a newline character"
