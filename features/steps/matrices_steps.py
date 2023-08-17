@@ -4,8 +4,8 @@ from behave.model import Row
 from color import Color, hadamard_product
 from features.environment import assert_equal, assert_approximately_equal, parse_ratio, parse_id, parse_matrix_name, \
     parse_operation, parse_radians
-from matrix import matrix, transpose, array_equal, dot, submatrix, invertible, \
-    inverse, array_approximately_equal, rotation_x, rotation_y
+from matrix import matrix, transpose, array_equal, dot, submatrix, invertible, inverse, array_approximately_equal, \
+    rotation_x, rotation_y
 from tuple import Tuple
 
 use_step_matcher("parse")

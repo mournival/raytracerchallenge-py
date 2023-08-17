@@ -36,7 +36,8 @@ def step_canvas_write_pixel(context, c, x, y, name):
 
 @then("pixel_at({:id}, {:d}, {:d}) = {:id}")
 def step_canvas_pixel_at(context, c, x, y, name):
-    assert context.scenario_vars[c][x, y] == context.scenario_vars[name], f"pixel_at({c}, {x}, {y}) != {context.scenario_vars[c][x, y]}"
+    assert context.scenario_vars[c][x, y] == context.scenario_vars[
+        name], f"pixel_at({c}, {x}, {y}) != {context.scenario_vars[c][x, y]}"
 
 
 @when("{:id} ← canvas_to_ppm({:id})")

@@ -102,7 +102,7 @@ def step_tuple_operation_approximately_equals(context, operation, a, expected):
 
 
 @then("{:op}({:id}) = {:op}({:g}, {:g}, {:g})")
-def step_tuple_operation_equals(context, operation, v, dtype, x, y, z):
+def step_tuple_operations_equal(context, operation, v, dtype, x, y, z):
     assert_equal(operation(context.scenario_vars[v]), dtype(x, y, z))
 
 
@@ -120,7 +120,7 @@ def step_tuple_operation_scalar_equals(context, operation, a, b, expected):
 
 
 @then("{:op}({:id}, {:id}) = vector({:g}, {:g}, {:g})")
-def step_tuple_operation_equals(context, operation, a, b, x, y, z):
+def step_tuple_binary_operation_equals(context, operation, a, b, x, y, z):
     assert_equal(operation(context.scenario_vars[a], context.scenario_vars[b]), vector(x, y, z))
 
 
