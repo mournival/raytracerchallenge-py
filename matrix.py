@@ -1,4 +1,4 @@
-from cmath import cos, sin
+from math import cos, sin
 
 import numpy as np
 
@@ -48,6 +48,12 @@ def minor(a, r, c):
 def rotation_x(radians):
     return np.array([
         [1, 0, 0, 0], [0, cos(radians), -sin(radians), 0], [0, sin(radians), cos(radians), 0], [0, 0, 0, 1]
+    ])
+
+
+def rotation_y(radians):
+    return np.array([
+        [cos(radians), 0, sin(radians), 0], [0, 1, 0, 0], [-sin(radians), 0, cos(radians), 0], [0, 0, 0, 1]
     ])
 
 

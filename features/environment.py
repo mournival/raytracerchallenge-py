@@ -1,6 +1,6 @@
 import math
 import re
-from cmath import sqrt
+from math import sqrt
 
 from parse import with_pattern
 
@@ -18,7 +18,7 @@ def assert_approximately_equal(actual, expected):
     assert abs((actual - expected)) < epsilon, f"{actual} !~ {expected}"
 
 
-@with_pattern(r'-?√?π?\d*\s*/\s*\d+|√\d+')
+@with_pattern(r'-?√?\d*\s*/\s*\d+|√\d+')
 def parse_ratio(text):
     a = text
     m = re.match(r'^√(\d+)$', a)
@@ -32,6 +32,15 @@ def parse_ratio(text):
         numerator = sqrt(int(groups[2])) if groups[1] else int(groups[2])
         denominator = int(groups[3])
         return sign * numerator / denominator
+    a = text
+    m = re.match(r'π / (\d+)$', a)
+    if m:
+        return math.pi / int(m.groups()[0])
+    raise Exception(f"Error parsing {text}")
+
+
+@with_pattern(r'π\s/\s\d+')
+def parse_radians(text):
     a = text
     m = re.match(r'π / (\d+)$', a)
     if m:

@@ -2,14 +2,15 @@ from behave import use_step_matcher, given, then, step, register_type
 from behave.model import Row
 
 from features.environment import assert_equal, assert_approximately_equal, parse_ratio, parse_id, parse_matrix_name, \
-    parse_operation
+    parse_operation, parse_radians
 from matrix import eye, matrix, transpose, array_equal, dot, submatrix, invertible, \
-    inverse, array_approximately_equal, rotation_x
+    inverse, array_approximately_equal, rotation_x, rotation_y
 from tuple import Tuple
 
 use_step_matcher("parse")
 
 register_type(rn=parse_ratio)
+register_type(rad=parse_radians)
 register_type(id=parse_id)
 register_type(mn=parse_matrix_name)
 register_type(op=parse_operation)
@@ -40,9 +41,14 @@ def step_matrix_create_product(context, c, a, b):
     context.scenario_vars[c] = dot(context.scenario_vars[a], context.scenario_vars[b])
 
 
-@step("{:id} ← rotation_x({:rn})")
+@step("{:id} ← rotation_x({:rad})")
 def step_matrix_create_rotation_x(context, c, radians):
     context.scenario_vars[c] = rotation_x(radians)
+
+
+@step("{:id} ← rotation_y({:rad})")
+def step_matrix_create_rotation_y(context, c, radians):
+    context.scenario_vars[c] = rotation_y(radians)
 
 
 @step("{:l} ← inverse({:w})")
@@ -82,10 +88,12 @@ def step_matrix_tuple_multiplication_equals(context, a, b, c):
 
 @then("{:id} * {:l} = {:op}({:g}, {:rn}, {:rn})")
 @then("{:l} * {:l} = {:op}({:g}, {:rn}, {:rn})")
+@then("{:id} * {:l} = {:op}({:rn}, {:g}, {:rn})")
 @then("{:id} * {:l} = {:op}({:g}, {:g}, {:g})")
 @then("{:l} * {:l} = {:op}({:g}, {:g}, {:g})")
 def step_matrix_point_multiplication_equals(context, a, b, dtype, x, y, z):
     assert_array_approximately_equal(dot(context.scenario_vars[a], context.scenario_vars[b]), dtype(x, y, z))
+
 
 @then("{:l} != {:l}")
 def step_matrix_not_equals(context, a, b):
