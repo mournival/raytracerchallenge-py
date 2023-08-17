@@ -180,11 +180,6 @@ def step_matrix_create_translation(context, a, x, y, z):
     context.scenario_vars[a] = translation(x, y, z)
 
 
-@then("{:l} * {:l} = point({:g}, {:g}, {:g})")
-def step_matrix_translate_point_equals(context, a, b, x, y, z):
-    assert_array_equal(dot(context.scenario_vars[a], context.scenario_vars[b]), point(x, y, z))
-
-
 @then("{:l}_{:l} * {:l} = point({:g}, {:rn}, {:rn})")
 def step_matrix_translate_with_radicals_point_approximately_equals(context, a_0, a_1, b, x, y, z):
     assert_array_approximately_equal(dot(context.scenario_vars[f"{a_0}_{a_1}"], context.scenario_vars[b]),

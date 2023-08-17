@@ -44,7 +44,7 @@ non-ascii symbols and rational numbers, e.g.:
 ```
 
 Creating a custom number parser probably makes sense, so that, if :rn is the 
-tag for the custom parse method, the stepf function that matches
+tag for the custom parse method, the step function that matches
 ```gherkin
    Then half_quarter * p = point(0, √2/2, √2/2)
     And full_quarter * p = point(0, 0, 1)
