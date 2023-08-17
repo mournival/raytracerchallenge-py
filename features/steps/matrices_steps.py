@@ -118,11 +118,6 @@ def step_matrix_tuple_dot_product_equals(context, a, b, x, y, z, w):
     assert_array_equal(dot(context.scenario_vars[a], context.scenario_vars[b]), Tuple(x, y, z, w))
 
 
-@given("{:l} ← transpose(identity_matrix)")
-def step_matrix_create_transpose(context, a):
-    context.scenario_vars[a] = transpose(eye(4))
-
-
 @then("identity_matrix * {:l} = {:l}")
 def step_matrix_identity_tuple_multiplication_equals(context, a, b):
     a_ = context.scenario_vars[a]
@@ -135,11 +130,6 @@ def step_matrix_submatrix_equals(context, a, m, n, _m, _n):
     assert_array_equal(submatrix(context.scenario_vars[a], m, n), create_table_from(context))
 
 
-@step("{:l} ← submatrix({:l}, {:d}, {:d})")
-def step_matrix_create_submatrix(context, b, a, m, n):
-    context.scenario_vars[b] = submatrix(context.scenario_vars[a], m, n)
-
-
 @step("{:l} is invertible")
 def step_matrix_is_invertible(context, a):
     assert (invertible(context.scenario_vars[a]))
@@ -150,17 +140,12 @@ def step_matrix_is_not_invertible(context, a):
     assert (not invertible(context.scenario_vars[a]))
 
 
-@step("{:l} ← inverse({:w})")
-def step_matrix_create_inverse(context, b, a):
-    context.scenario_vars[b] = inverse(context.scenario_vars[a])
-
-
 @step("{:l} ← {:l} * {:l}")
 def step_matrix_create_product(context, c, a, b):
     context.scenario_vars[c] = matmul(context.scenario_vars[a], context.scenario_vars[b])
 
 
-@step("{:w} ← rotation_x({:rn})")
+@step("{:id} ← rotation_x({:rn})")
 def step_matrix_create_rotation_x(context, c, radians):
     context.scenario_vars[c] = rotation_x(radians)
 
@@ -169,6 +154,16 @@ def step_matrix_create_rotation_x(context, c, radians):
 def step_matrix_inverse_multiplication_equals(context, c, b, a):
     assert_array_approximately_equal(matmul(context.scenario_vars[c], inverse(context.scenario_vars[b])),
                                      context.scenario_vars[a])
+
+
+@given("{:l} ← transpose(identity_matrix)")
+def step_matrix_create_transpose(context, a):
+    context.scenario_vars[a] = transpose(eye(4))
+
+
+@step("{:l} ← inverse({:w})")
+def step_matrix_create_inverse(context, b, a):
+    context.scenario_vars[b] = inverse(context.scenario_vars[a])
 
 
 @step("{:l} ← scaling({:g}, {:g}, {:g})")
@@ -181,17 +176,13 @@ def step_matrix_create_translation(context, a, x, y, z):
     context.scenario_vars[a] = translation(x, y, z)
 
 
+@step("{:l} ← submatrix({:l}, {:d}, {:d})")
+def step_matrix_create_submatrix(context, b, a, m, n):
+    context.scenario_vars[b] = submatrix(context.scenario_vars[a], m, n)
+
+
 @then("{:id} * {:l} = point({:g}, {:rn}, {:rn})")
-def step_matrix_translate_with_radicals_point_approximately_equals(context, a, b, x, y, z):
-    assert_array_approximately_equal(dot(context.scenario_vars[a], context.scenario_vars[b]),
-                                     point(x, y, z))
-
-
 @then("{:l} * {:l} = point({:g}, {:rn}, {:rn})")
-def step_matrix_translate_with_radicals_alt1_point_approximately_equals(context, a, b, x, y, z):
-    assert_array_approximately_equal(dot(context.scenario_vars[a], context.scenario_vars[b]), point(x, y, z))
-
-
 @then("{:id} * {:l} = point({:g}, {:g}, {:g})")
 def step_matrix_translate_point_approximately_equals(context, a, b, x, y, z):
     assert_array_approximately_equal(dot(context.scenario_vars[a], context.scenario_vars[b]),
