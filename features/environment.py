@@ -20,9 +20,6 @@ def assert_approximately_equal(actual, expected):
     assert abs((actual - expected)) < epsilon, f"{actual} !~ {expected}"
 
 
-# 1/√14, 2/√14, 3/√14
-# 0, √2/2, -√2/2
-# √14
 @with_pattern(r'-?√?\d*\s*/\s*\d+|\d+/√\d+|√\d+|\d+')
 def parse_ratio(text):
     m = re.match(r'^√(\d+)$', text)
