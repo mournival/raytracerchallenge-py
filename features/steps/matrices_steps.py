@@ -4,7 +4,7 @@ from color import Color, hadamard_product
 from features.environment import assert_equal, assert_approximately_equal, parse_ratio, parse_id, parse_matrix_name, \
     parse_operation, parse_radians, assert_array_equal, assert_array_approximately_equal, assert_array_not_equal, \
     create_table_from
-from matrix import transpose, dot, submatrix, invertible, inverse, rotation_x, rotation_y
+from matrix import transpose, dot, submatrix, invertible, inverse, rotation_x, rotation_y, rotation_z
 from tuple import Tuple
 
 use_step_matcher("parse")
@@ -49,6 +49,10 @@ def step_matrix_create_rotation_x(context, c, radians):
 def step_matrix_create_rotation_y(context, c, radians):
     context.scenario_vars[c] = rotation_y(radians)
 
+
+@step("{:id} ← rotation_z({:rad})")
+def step_matrix_create_rotation_z(context, c, radians):
+    context.scenario_vars[c] = rotation_z(radians)
 
 @step("{:id} ← inverse({:id})")
 def step_matrix_create_inverse(context, b, a):

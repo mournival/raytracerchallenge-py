@@ -57,6 +57,12 @@ def rotation_y(radians):
     ])
 
 
+def rotation_z(radians):
+    return np.array([
+        [cos(radians), -sin(radians), 0, 0], [sin(radians), cos(radians),0, 0], [0, 0, 1, 0], [0, 0, 0, 1]
+    ])
+
+
 def scaling(x, y, z):
     return np.array([[x, 0, 0, 0], [0, y, 0, 0], [0, 0, z, 0], [0, 0, 0, 1]])
 
