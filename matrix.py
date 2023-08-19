@@ -67,6 +67,10 @@ def scaling(x, y, z):
     return np.array([[x, 0, 0, 0], [0, y, 0, 0], [0, 0, z, 0], [0, 0, 0, 1]])
 
 
+def shearing(x_y, x_z, y_x, y_z, z_x, z_y):
+    return np.array([[1, x_y, x_z, 0], [y_x, 1, y_z, 0], [z_x, z_y, 1, 0], [0, 0, 0, 1]])
+
+
 def submatrix(a, m, n):
     return np.delete(np.delete(np.array(a), m, axis=0), n, axis=1)
 
