@@ -2,6 +2,7 @@ import math
 import re
 from math import sqrt
 
+import numpy
 import numpy as np
 from behave.model import Row
 from parse import with_pattern
@@ -15,12 +16,18 @@ def before_feature(context, feature):
 
 
 def assert_equal(actual, expected):
-    assert actual == expected, f"{actual} != {expected}"
+    if type (actual) == numpy.ndarray:
+        assert np.allclose(actual, expected), f"{actual} != {expected}"
+    else:
+        assert actual == expected, f"{actual} != {expected}"
 
 
 def assert_approximately_equal(actual, expected):
     epsilon = 0.0001
-    assert abs((actual - expected)) < epsilon, f"{actual} !~ {expected}"
+    if type (actual) == numpy.ndarray:
+        assert np.allclose(actual, expected, rtol=0.0001), f"{actual} != {expected}"
+    else:
+        assert abs((actual - expected)) < epsilon, f"{actual} !~ {expected}"
 
 
 def assert_array_equal(actual, expected):
