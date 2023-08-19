@@ -41,7 +41,7 @@ def step_matrix_create_product(context, c, a, b):
 
 
 @step("{:id} ← {:id} * {:id} * {:id}")
-def step_matrix_create_product(context, t, a, b, c):
+def step_matrix_create_chained_product(context, t, a, b, c):
     context.scenario_vars[t] = dot(dot(context.scenario_vars[a], context.scenario_vars[b]), context.scenario_vars[c])
 
 
