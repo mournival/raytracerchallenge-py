@@ -19,8 +19,22 @@ def w(v):
     return v[3]
 
 
+def point(x: float, y: float, z: float):
+    return np.array([x, y, z, 1.0])
+
+
 def tuple_trtc(x, y, z, w):
     return np.array([x, y, z, w])
+
+
+def vector(x: float, y: float, z: float):
+    return np.array([x, y, z, 0.0])
+
+
+def cross(lhs, rhs):
+    return vector(y(lhs) * z(rhs) - z(lhs) * y(rhs),
+                  z(lhs) * x(rhs) - x(lhs) * z(rhs),
+                  x(lhs) * y(rhs) - y(lhs) * x(rhs))
 
 
 def dot(lhs, rhs) -> float:
@@ -39,19 +53,5 @@ def magnitude(v) -> float:
     return math.sqrt(dot(v, v))
 
 
-def point(x: float, y: float, z: float):
-    return np.array([x, y, z, 1.0])
-
-
-def vector(x: float, y: float, z: float):
-    return np.array([x, y, z, 0.0])
-
-
 def normalize(v):
     return v / magnitude(v)
-
-
-def cross(lhs, rhs):
-    return vector(y(lhs) * z(rhs) - z(lhs) * y(rhs),
-                  z(lhs) * x(rhs) - x(lhs) * z(rhs),
-                  x(lhs) * y(rhs) - y(lhs) * x(rhs))

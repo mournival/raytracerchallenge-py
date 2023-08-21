@@ -1,6 +1,22 @@
 import numpy as np
 
 
+def color(r: float, g: float, b: float):
+    return np.array([r, g, b])
+
+
+def red(c):
+    return c[0]
+
+
+def green(c):
+    return c[1]
+
+
+def blue(c):
+    return c[2]
+
+
 def _clamp(c: float, min_val: int, max_val: int) -> str:
     v = round(c * max_val)
     if v < min_val:
@@ -16,20 +32,4 @@ def clamp_color(c, min_val, max_val):
             _clamp(c[2], min_val, max_val)]
 
 
-def color(r: float, g: float, b: float):
-    return np.array([r, g, b])
-
-
 BLACK = color(0, 0, 0)
-
-
-def red(c):
-    return c[0]
-
-
-def green(c):
-    return c[1]
-
-
-def blue(c):
-    return c[2]

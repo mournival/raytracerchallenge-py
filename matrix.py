@@ -4,7 +4,7 @@ import numpy as np
 
 
 def matrix(table_data):
-    return np.array(table_data, dtype='float')
+    return np.array(table_data)
 
 
 def eye(n):
@@ -27,8 +27,6 @@ def det(a):
     return np.linalg.det(a)
 
 
-# For 2D arrays, this subsumes def matmul(a,b) -> np.matmul(a, b), and allows scalar
-# products, so is more flexible
 def dot(a, b):
     return np.dot(a, b)
 

@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 
 from canvas import Canvas
 from color import color
-from tuple import point, normalize, vector
+from tuple import point, normalize, vector, x, y
 
 projectile = namedtuple('Projectile', 'position velocity')
 environment = namedtuple('Environment', 'gravity wind')
@@ -28,11 +28,11 @@ def main():
 
     t = 0
     ps = list()
-    while p.position.y > 0:
+    while y(p.position) > 0:
         ps.append(p.position)
-        if 499 - floor(p.position.y) == 502:
+        if 499 - floor(y(p.position)) == 502:
             pass
-        c[floor(p.position.x), 499 - floor(p.position.y)] = color(1, 1, 1)
+        c[floor(x(p.position)), 499 - floor(y(p.position))] = color(1, 1, 1)
         p = tick(e, p)
         t += 1
     print(c.to_ppm())
@@ -40,12 +40,12 @@ def main():
     # Plot
     plt.axes(projection='3d')
     time = range(t)
-    x = [p.x for p in ps]
+    px = [x(p) for p in ps]
     plt.xlabel('Tick')
     plt.ylabel('Distance')
-    y = [p.y for p in ps]
-    plt.plot(time, x, y)
-    plt.plot(time, x, 0)
+    py = [y(p) for p in ps]
+    plt.plot(time, px, py)
+    plt.plot(time, py, 0)
     plt.title('Projectile Path')
     plt.show()
 
