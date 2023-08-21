@@ -37,12 +37,12 @@ def step_tuple_is_point(context, name):
 
 @then("{:id} is not a vector")
 def step_tuple_is_not_vector(context, name):
-    assert ~is_vector(context.scenario_vars[name]), f"{context.scenario_vars[name]} is a vector"
+    assert not is_vector(context.scenario_vars[name]), f"{context.scenario_vars[name]} is a vector"
 
 
 @then("{:id} is not a point")
 def step_tuple_is_not_point(context, name):
-    assert ~is_point(context.scenario_vars[name]), f"{context.scenario_vars[name]} is a point"
+    assert not is_point(context.scenario_vars[name]), f"{context.scenario_vars[name]} is a point"
 
 
 @then("{:id} is a vector")
