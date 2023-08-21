@@ -1,6 +1,6 @@
 from behave import use_step_matcher, given, when, then, register_type
 
-from color import Color, color
+from color import color
 from features.environment import assert_equal, parse_ratio, parse_operation, assert_approximately_equal, parse_id
 from tuple import Tuple, vector
 
@@ -52,8 +52,14 @@ def step_tuple_is_vector(context, name):
 
 @then("{:id}.{:id} = {:g}")
 def step_tuple_field_equals(context, name, field, expected):
-    assert context.scenario_vars[name].__getattribute__(
-        field) == expected, f"{context.scenario_vars[name].__getattribute__(field).field} != {expected}"
+    if field == 'red':
+        assert_equal(context.scenario_vars[name][0], expected)
+    elif field == 'green':
+        assert_equal(context.scenario_vars[name][1], expected)
+    elif field == 'blue':
+        assert_equal(context.scenario_vars[name][2], expected)
+    else:
+        assert_equal(context.scenario_vars[name].__getattribute__(field), expected)
 
 
 @then("-{:id} = tuple({:g}, {:g}, {:g}, {:g})")
@@ -75,12 +81,7 @@ def step_tuple_addition(context, a, b, x, y, z, w):
 def step_tuple_subtraction_equals(context, a, b, dtype, x, y, z):
     expected = dtype(x, y, z)
     actual = context.scenario_vars[a] - context.scenario_vars[b]
-    difference = actual - expected
-    assert (difference[0] < 0.0001), f"{actual} !~ {expected}"
-    assert (difference[1] < 0.0001), f"{actual} !~ {expected}"
-    assert (difference[2] < 0.0001), f"{actual} !~ {expected}"
-    if dtype != color:
-        assert (difference[3] < 0.0001), f"{actual} !~ {expected}"
+    assert_approximately_equal(actual, expected)
 
 
 @then("{:id} * {:g} = tuple({:g}, {:g}, {:g}, {:g})")
@@ -110,10 +111,7 @@ def step_tuple_operations_equal(context, operation, v, dtype, x, y, z):
 
 @then("{:op}({:id}) = approximately vector({:g}, {:g}, {:g})")
 def step_tuple_normalized_approximately_equals(context, operation, v, x, y, z):
-    actual = operation(context.scenario_vars[v])
-    assert_approximately_equal(actual.x, x)
-    assert_approximately_equal(actual.y, y)
-    assert_approximately_equal(actual.z, z)
+    assert_approximately_equal(operation(context.scenario_vars[v]), vector(x, y, z))
 
 
 @then("{:op}({:id}, {:id}) = {:g}")
@@ -133,24 +131,14 @@ def step_tuple_equal(context, v, dtype, x, y, z):
 
 @then("{:id} = approximately {:op}({:g}, {:g}, {:g})")
 def step_tuple_approximately_equal(context, v, dtype, x, y, z):
-    expected = dtype(x, y, z)
-    actual = context.scenario_vars[v]
-    difference = actual - expected
-    assert (difference[0] < 0.0001), f"{actual} !~ {expected}"
-    assert (difference[1] < 0.0001), f"{actual} !~ {expected}"
-    assert (difference[2] < 0.0001), f"{actual} !~ {expected}"
-    if dtype != Color:
-        assert (difference[3] < 0.0001)
+    assert_approximately_equal(context.scenario_vars[v], dtype(x, y, z))
 
 
 @then("{:id} + {:id} = color({:g}, {:g}, {:g})")
-def step_tuple_color_addition(context, a, b, red, green, blue):
-    assert_equal(context.scenario_vars[a] + context.scenario_vars[b], Color(red, green, blue))
+def step_tuple_color_addition(context, a, b, r, g, bl):
+    assert_equal(context.scenario_vars[a] + context.scenario_vars[b], color(r, g, bl))
 
 
 @then("{:id} * {:g} = color({:g}, {:g}, {:g})")
-def step_tuple_color_scaling(context, a, b, red, green, blue):
-    actual = context.scenario_vars[a] * float(b)
-    assert_approximately_equal(actual.red, red)
-    assert_approximately_equal(actual.green, green)
-    assert_approximately_equal(actual.blue, blue)
+def step_tuple_color_scaling(context, a, c, r, g, b):
+    assert_equal(context.scenario_vars[a] * c, color(r, g, b))

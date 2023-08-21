@@ -24,11 +24,7 @@ def assert_equal(actual, expected):
 
 
 def assert_approximately_equal(actual, expected):
-    epsilon = 0.0001
-    if type(actual) == numpy.ndarray:
-        assert np.allclose(actual, expected, rtol=0.0001), f"{actual} != {expected}"
-    else:
-        assert abs((actual - expected)) < epsilon, f"{actual} !~ {expected}"
+    assert np.allclose(actual, expected, rtol=0.0001), f"{actual} != {expected}"
 
 
 def assert_array_equal(actual, expected):

@@ -1,6 +1,6 @@
 import numpy as np
 
-from color import Color, color
+from color import color, clamp_color, BLACK
 
 
 def clamp_line(line):
@@ -15,10 +15,8 @@ def clamp_line(line):
 class Canvas(object):
 
     def __init__(self, width, height):
-        self._data = np.empty((width, height), Color)
-        for row in range(width):
-            for col in range(height):
-                self._data[row, col] = color(0, 0, 0)
+        self._data = np.empty(shape=(width, height), dtype=type(BLACK))
+        self._data.fill(BLACK)
         self.width, self.height = self._data.shape
 
     def pixels(self):
@@ -37,19 +35,19 @@ class Canvas(object):
         pr = list()
         row = [self.pixels()[x: x + self.width] for x in range(0, self.width * self.height, self.width)]
         for pixels in row:
-            line = ' '.join([' '.join(p.clamp_color(0, 255)) for p in pixels])
+            line = ' '.join([' '.join(clamp_color(p, 0, 255)) for p in pixels])
             pr = pr + clamp_line(line)
         return pr
 
-    def fill(self, color: Color):
-        self._data.fill(color)
+    def fill(self, clr):
+        self._data.fill(clr)
 
 
 if __name__ == '__main__':
     c = Canvas(2, 2)
     # print(c.height)
     # print(c.width)
-    c.fill(Color(1, 2, 3))
+    c.fill(color(1, 2, 3))
     c[0, 0] = color(1, 1, 1)
     # print(c.pixels())
     print(c.to_ppm())

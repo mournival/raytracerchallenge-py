@@ -1,3 +1,4 @@
+import numpy as np
 from behave import use_step_matcher, given, when, then, step, register_type
 
 from canvas import Canvas
@@ -26,7 +27,7 @@ def step_canvas_height_equals(context, name, expected):
 @step("every pixel of {:id} is color({:g}, {:g}, {:g})")
 def step_canvas_pixels_are(context, c, r, g, b):
     for p in context.scenario_vars[c].pixels():
-        assert p == color(r, g, b), f"every pixel of {c} is NOT color({r}, {g}, {b})"
+        assert np.allclose(p, color(r, g, b)), f"every pixel of {c} is NOT color({r}, {g}, {b})"
 
 
 @when("write_pixel({:id}, {:d}, {:d}, {:id})")
@@ -36,8 +37,8 @@ def step_canvas_write_pixel(context, c, x, y, name):
 
 @then("pixel_at({:id}, {:d}, {:d}) = {:id}")
 def step_canvas_pixel_at(context, c, x, y, name):
-    assert context.scenario_vars[c][x, y] == context.scenario_vars[
-        name], f"pixel_at({c}, {x}, {y}) != {context.scenario_vars[c][x, y]}"
+    assert np.allclose(context.scenario_vars[c][x, y],
+                       context.scenario_vars[name]), f"pixel_at({c}, {x}, {y}) != {context.scenario_vars[c][x, y]}"
 
 
 @when("{:id} ← canvas_to_ppm({:id})")

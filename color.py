@@ -1,7 +1,7 @@
-from collections import namedtuple
+import numpy as np
 
 
-def _clamp(c, min_val, max_val):
+def _clamp(c: float, min_val: int, max_val: int) -> str:
     v = round(c * max_val)
     if v < min_val:
         return str(min_val)
@@ -10,25 +10,26 @@ def _clamp(c, min_val, max_val):
     return str(v)
 
 
-class Color(namedtuple('Color', 'red green blue')):
-    def __add__(self, other):
-        return Color(self.red + other.red, self.green + other.green, self.blue + other.blue)
-
-    def __sub__(self, other):
-        return Color(self.red - other.red, self.green - other.green, self.blue - other.blue)
-
-    def __mul__(self, other):
-        return Color(self.red * other, self.green * other, self.blue * other)
-
-    def clamp_color(self, min_val, max_val):
-        return [_clamp(self.red, min_val, max_val),
-                _clamp(self.green, min_val, max_val),
-                _clamp(self.blue, min_val, max_val)]
+def clamp_color(c, min_val, max_val):
+    return [_clamp(c[0], min_val, max_val),
+            _clamp(c[1], min_val, max_val),
+            _clamp(c[2], min_val, max_val)]
 
 
-def color(r, g, b):
-    return Color(r, g, b)
+def color(r: float, g: float, b: float):
+    return np.array([r, g, b])
 
 
-def hadamard_product(lhs: Color, rhs: Color) -> Color:
-    return Color(lhs.red * rhs.red, lhs.green * rhs.green, lhs.blue * rhs.blue)
+BLACK = color(0, 0, 0)
+
+
+def red(c):
+    return c[0]
+
+
+def green(c):
+    return c[1]
+
+
+def blue(c):
+    return c[2]
