@@ -1,6 +1,6 @@
 from behave import use_step_matcher, given, when, then, register_type
 
-from color import Color
+from color import Color, color
 from features.environment import assert_equal, parse_ratio, parse_operation, assert_approximately_equal, parse_id
 from tuple import Tuple, vector
 
@@ -79,7 +79,7 @@ def step_tuple_subtraction_equals(context, a, b, dtype, x, y, z):
     assert (difference[0] < 0.0001), f"{actual} !~ {expected}"
     assert (difference[1] < 0.0001), f"{actual} !~ {expected}"
     assert (difference[2] < 0.0001), f"{actual} !~ {expected}"
-    if dtype != Color:
+    if dtype != color:
         assert (difference[3] < 0.0001), f"{actual} !~ {expected}"
 
 

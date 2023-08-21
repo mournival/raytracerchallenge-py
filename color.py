@@ -26,5 +26,9 @@ class Color(namedtuple('Color', 'red green blue')):
                 _clamp(self.blue, min_val, max_val)]
 
 
+def color(r, g, b):
+    return Color(r, g, b)
+
+
 def hadamard_product(lhs: Color, rhs: Color) -> Color:
     return Color(lhs.red * rhs.red, lhs.green * rhs.green, lhs.blue * rhs.blue)

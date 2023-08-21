@@ -1,6 +1,6 @@
 from behave import use_step_matcher, given, then, step, register_type
 
-from color import Color, hadamard_product
+from color import hadamard_product, color
 from features.environment import assert_equal, assert_approximately_equal, parse_ratio, parse_id, parse_matrix_name, \
     parse_operation, parse_radians, assert_array_equal, assert_array_approximately_equal, assert_array_not_equal, \
     create_table_from
@@ -98,7 +98,7 @@ def step_matrix_tuple_multiplication_equals(context, a, b, c):
 @then("{:id} * {:id} = {:op}({:rn}, {:rn}, {:rn})")
 @then("{:id} * {:id} = {:op}({:g}, {:g}, {:g})")
 def step_matrix_point_multiplication_equals(context, a, b, dtype, x, y, z):
-    if dtype == Color:
+    if dtype == color:
         assert_array_approximately_equal(hadamard_product(context.scenario_vars[a], context.scenario_vars[b]),
                                          dtype(x, y, z))
     else:

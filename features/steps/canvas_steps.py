@@ -1,7 +1,7 @@
 from behave import use_step_matcher, given, when, then, step, register_type
 
 from canvas import Canvas
-from color import Color
+from color import color
 from features.environment import parse_id
 
 use_step_matcher("parse")
@@ -26,7 +26,7 @@ def step_canvas_height_equals(context, name, expected):
 @step("every pixel of {:id} is color({:g}, {:g}, {:g})")
 def step_canvas_pixels_are(context, c, r, g, b):
     for p in context.scenario_vars[c].pixels():
-        assert p == Color(r, g, b), f"every pixel of {c} is NOT color({r}, {g}, {b})"
+        assert p == color(r, g, b), f"every pixel of {c} is NOT color({r}, {g}, {b})"
 
 
 @when("write_pixel({:id}, {:d}, {:d}, {:id})")
@@ -57,7 +57,7 @@ def step_canvas_ppm_lines_are(context, a, b, ppm):
 
 @when("every pixel of {:id} is set to color({:g}, {:g}, {:g})")
 def step_canvas_fill(context, c, r, g, b):
-    context.scenario_vars[c].fill(Color(r, g, b))
+    context.scenario_vars[c].fill(color(r, g, b))
 
 
 @then("{:id} ends with a newline character")

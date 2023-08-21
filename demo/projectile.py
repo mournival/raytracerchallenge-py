@@ -4,7 +4,7 @@ from math import floor
 import matplotlib.pyplot as plt
 
 from canvas import Canvas
-from color import Color
+from color import color
 from tuple import point, normalize, vector
 
 projectile = namedtuple('Projectile', 'position velocity')
@@ -32,7 +32,7 @@ def main():
         ps.append(p.position)
         if 499 - floor(p.position.y) == 502:
             pass
-        c[floor(p.position.x), 499 - floor(p.position.y)] = Color(1, 1, 1)
+        c[floor(p.position.x), 499 - floor(p.position.y)] = color(1, 1, 1)
         p = tick(e, p)
         t += 1
     print(c.to_ppm())

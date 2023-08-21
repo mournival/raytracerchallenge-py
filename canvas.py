@@ -1,6 +1,6 @@
 import numpy as np
 
-from color import Color
+from color import Color, color
 
 
 def clamp_line(line):
@@ -18,7 +18,7 @@ class Canvas(object):
         self._data = np.empty((width, height), Color)
         for row in range(width):
             for col in range(height):
-                self._data[row, col] = Color(0, 0, 0)
+                self._data[row, col] = color(0, 0, 0)
         self.width, self.height = self._data.shape
 
     def pixels(self):
@@ -50,6 +50,6 @@ if __name__ == '__main__':
     # print(c.height)
     # print(c.width)
     c.fill(Color(1, 2, 3))
-    c[0, 0] = Color(1, 1, 1)
+    c[0, 0] = color(1, 1, 1)
     # print(c.pixels())
     print(c.to_ppm())

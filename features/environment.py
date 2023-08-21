@@ -7,6 +7,7 @@ import numpy as np
 from behave.model import Row
 from parse import with_pattern
 
+from color import color
 from matrix import array_equal, array_approximately_equal, matrix
 
 
@@ -104,8 +105,7 @@ def parse_operation(text):
         import matrix
         return matrix.cofactor
     if text == 'color':
-        from color import Color
-        return Color
+        return color
     if text == 'cross':
         from tuple import cross
         return cross
