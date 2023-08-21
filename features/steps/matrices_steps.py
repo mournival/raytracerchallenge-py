@@ -5,7 +5,7 @@ from features.environment import assert_equal, assert_approximately_equal, parse
     parse_operation, parse_radians, assert_array_equal, assert_array_approximately_equal, assert_array_not_equal, \
     create_table_from
 from matrix import transpose, dot, submatrix, invertible, inverse, rotation_x, rotation_y, rotation_z, shearing
-from tuple import Tuple
+from tuple import tuple_trtc
 
 use_step_matcher("parse")
 register_type(rad=parse_radians)
@@ -142,7 +142,7 @@ def step_matrix_determinant_equals(context, operation, a, expected):
 
 @then("{:id} * {:id} = tuple({:g}, {:g}, {:g}, {:g})")
 def step_matrix_tuple_dot_product_equals(context, a, b, x, y, z, w):
-    assert_array_equal(dot(context.scenario_vars[a], context.scenario_vars[b]), Tuple(x, y, z, w))
+    assert_array_equal(dot(context.scenario_vars[a], context.scenario_vars[b]), tuple_trtc(x, y, z, w))
 
 
 @then("submatrix({:id}, {:d}, {:d}) is the following {}x{} matrix")

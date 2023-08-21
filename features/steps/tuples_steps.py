@@ -2,7 +2,7 @@ from behave import use_step_matcher, given, when, then, register_type
 
 from color import color
 from features.environment import assert_equal, parse_ratio, parse_operation, assert_approximately_equal, parse_id
-from tuple import Tuple, vector
+from tuple import tuple_trtc, vector, is_point, is_vector
 
 use_step_matcher("parse")
 register_type(id=parse_id)
@@ -12,7 +12,7 @@ register_type(op=parse_operation)
 
 @given('{:id} ← tuple({:g}, {:g}, {:g}, {:g})')
 def step_tuple_create(context, a, x, y, z, w):
-    context.scenario_vars[a] = Tuple(x, y, z, w)
+    context.scenario_vars[a] = tuple_trtc(x, y, z, w)
 
 
 @given("{:id} ← {:op}({:rn}, {:rn}, {:rn})")
@@ -32,49 +32,42 @@ def step_tuple_create_derived(context, a, operation, v):
 
 @then("{:id} is a point")
 def step_tuple_is_point(context, name):
-    assert context.scenario_vars[name].is_point(), f"{context.scenario_vars[name]} is NOT a point"
+    assert is_point(context.scenario_vars[name]), f"{context.scenario_vars[name]} is NOT a point"
 
 
 @then("{:id} is not a vector")
 def step_tuple_is_not_vector(context, name):
-    assert ~context.scenario_vars[name].is_vector(), f"{context.scenario_vars[name]} is a vector"
+    assert ~is_vector(context.scenario_vars[name]), f"{context.scenario_vars[name]} is a vector"
 
 
 @then("{:id} is not a point")
 def step_tuple_is_not_point(context, name):
-    assert ~context.scenario_vars[name].is_point(), f"{context.scenario_vars[name]} is a point"
+    assert ~is_point(context.scenario_vars[name]), f"{context.scenario_vars[name]} is a point"
 
 
 @then("{:id} is a vector")
 def step_tuple_is_vector(context, name):
-    assert context.scenario_vars[name].is_vector(), f"{context.scenario_vars[name]} is NOT a vector"
+    assert is_vector(context.scenario_vars[name]), f"{context.scenario_vars[name]} is NOT a vector"
 
 
-@then("{:id}.{:id} = {:g}")
-def step_tuple_field_equals(context, name, field, expected):
-    if field == 'red':
-        assert_equal(context.scenario_vars[name][0], expected)
-    elif field == 'green':
-        assert_equal(context.scenario_vars[name][1], expected)
-    elif field == 'blue':
-        assert_equal(context.scenario_vars[name][2], expected)
-    else:
-        assert_equal(context.scenario_vars[name].__getattribute__(field), expected)
+@then("{:id}.{:op} = {:g}")
+def step_tuple_field_equals(context, name, op, expected):
+    assert_equal(op(context.scenario_vars[name]), expected)
 
 
 @then("-{:id} = tuple({:g}, {:g}, {:g}, {:g})")
 def step_tuple_negate(context, name, x, y, z, w):
-    assert_equal(-context.scenario_vars[name], Tuple(x, y, z, w))
+    assert_equal(-context.scenario_vars[name], tuple_trtc(x, y, z, w))
 
 
 @then("{:id} = tuple({:g}, {:g}, {:g}, {:g})")
 def step_tuple_equals(context, name, x, y, z, w):
-    assert_equal(context.scenario_vars[name], Tuple(x, y, z, w))
+    assert_equal(context.scenario_vars[name], tuple_trtc(x, y, z, w))
 
 
 @then("{:id} + {:id} = tuple({:g}, {:g}, {:g}, {:g})")
 def step_tuple_addition(context, a, b, x, y, z, w):
-    assert_equal(context.scenario_vars[a] + context.scenario_vars[b], Tuple(x, y, z, w))
+    assert_equal(context.scenario_vars[a] + context.scenario_vars[b], tuple_trtc(x, y, z, w))
 
 
 @then("{:id} - {:id} = {:op}({:g}, {:g}, {:g})")
@@ -86,12 +79,12 @@ def step_tuple_subtraction_equals(context, a, b, dtype, x, y, z):
 
 @then("{:id} * {:g} = tuple({:g}, {:g}, {:g}, {:g})")
 def step_tuple_scalar_multiplication(context, a, c, x, y, z, w):
-    assert_equal(context.scenario_vars[a] * c, Tuple(x, y, z, w))
+    assert_equal(context.scenario_vars[a] * c, tuple_trtc(x, y, z, w))
 
 
 @then("{:id} / {:g} = tuple({:g}, {:g}, {:g}, {:g})")
 def step_tuple_scalar_division(context, a, c, x, y, z, w):
-    assert_equal(context.scenario_vars[a] / c, Tuple(x, y, z, w))
+    assert_equal(context.scenario_vars[a] / c, tuple_trtc(x, y, z, w))
 
 
 @then("{:op}({:id}) = {:rn}")

@@ -97,6 +97,9 @@ def parse_id(text):
 
 @with_pattern(r'\w+')
 def parse_operation(text):
+    if text == 'blue':
+        from color import blue
+        return blue
     if text == 'cofactor':
         import matrix
         return matrix.cofactor
@@ -111,6 +114,9 @@ def parse_operation(text):
     if text == 'dot':
         from tuple import dot
         return dot
+    if text == 'green':
+        from color import green
+        return green
     if text == 'inverse':
         import matrix
         return matrix.inverse
@@ -126,6 +132,9 @@ def parse_operation(text):
     if text == 'point':
         from tuple import point
         return point
+    if text == 'red':
+        from color import red
+        return red
     if text == 'scaling':
         import matrix
         return matrix.scaling
@@ -138,6 +147,18 @@ def parse_operation(text):
     if text == 'vector':
         from tuple import vector
         return vector
+    if text == 'w':
+        from tuple import w
+        return w
+    if text == 'x':
+        from tuple import x
+        return x
+    if text == 'y':
+        from tuple import y
+        return y
+    if text == 'z':
+        from tuple import z
+        return z
     raise NotImplementedError(f"{text}")
 
 
