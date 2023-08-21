@@ -1,4 +1,4 @@
-This is the full language implementation in different lnaguages I intend to 
+This is the full language implementation in different languages I intend to 
 complete. I started a Java one, but got lost in the build system mini-game
 (I wanted to do mutation testing, unit test and, of course, Cucumber 
 testing, and I could not figure out how to do all three in using 

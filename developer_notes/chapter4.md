@@ -56,7 +56,7 @@ def step_matrix_translate_with_radicals_alt1_point_approximately_equals(context,
     assert_array_approximately_equal(dot(context.scenario_vars[a], context.scenario_vars[b]), point(x, y, z))
 ```
 
-## Finished Chapt 4
+## Finished Chapter 4
 Fairly large reworking of test code with a small number of new library code:
 ```python
 def rotation_x(radians):
