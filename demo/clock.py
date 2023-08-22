@@ -40,7 +40,7 @@ def clock(canvas, dots, dot_size):
 
 
 def main():
-    c = Canvas(600, 600)
+    c = Canvas(450, 450)
     axes(c)
     clock(c, 12, 16)
     clock(c, 60, 4)
