@@ -4,7 +4,7 @@ import numpy as np
 
 
 def matrix(table_data):
-    return np.array(table_data)
+    return np.array(table_data, dtype='float')
 
 
 def eye(n):
