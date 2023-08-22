@@ -208,3 +208,9 @@ def step_matrix_point_multiplication_equals(context, a, b, dtype, x, y, z):
 N.B., Color is implemented like Tuple/vector/point, and the steps have a huge structural similarity,
 but are not IS-A compatible in the code, so there is a bit of type hackery. May return to this later, but for now it 
 does not offend my senses overly much (it does, no simple solution has presented itself).
+
+# Major Refactor
+Yanked out custom tuple/color classes, just left api wrappers for np.array
+
+Also implemented the clock demo (thogh it looks more liking an aiming reticle.)
+![clock.ppm](..%2Fimages%2Fclock.ppm)
