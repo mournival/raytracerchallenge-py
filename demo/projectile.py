@@ -11,7 +11,7 @@ projectile = namedtuple('Projectile', 'position velocity')
 environment = namedtuple('Environment', 'gravity wind')
 
 
-def tick(env: environment, proj: projectile) -> projectile:
+def tick(env, proj):
     position = proj.position + proj.velocity
     velocity = proj.velocity + env.gravity + env.wind
     return projectile(position, velocity)

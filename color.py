@@ -17,7 +17,7 @@ def blue(c):
     return c[2]
 
 
-def _clamp(c: float, min_val: int, max_val: int) -> str:
+def _clamp(c: float, min_val, max_val):
     v = round(c * max_val)
     if v < min_val:
         return str(min_val)

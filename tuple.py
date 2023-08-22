@@ -41,11 +41,11 @@ def dot(lhs, rhs):
     return np.dot(lhs, rhs)
 
 
-def is_point(v) -> bool:
+def is_point(v):
     return w(v) == 1.0
 
 
-def is_vector(v) -> bool:
+def is_vector(v):
     return w(v) == 0.0
 
 
