@@ -78,7 +78,7 @@ def parse_ratio(text):
     m = re.match(r'^(\d*)$', text)
     if m:
         return int(m.groups()[0])
-    raise Exception(f"Error parsing {text}")
+    raise ValueError()
 
 
 @with_pattern(r'π\s/\s\d+')
@@ -87,7 +87,7 @@ def parse_radians(text):
     m = re.match(r'π / (\d+)$', a)
     if m:
         return math.pi / int(m.groups()[0])
-    raise Exception(f"Error parsing {text}")
+    raise ValueError()
 
 
 @with_pattern(r'[a-zA-Z]+_[a-zA-Z]+|[a-zA-Z]+|[acpv]\d')
@@ -159,7 +159,7 @@ def parse_operation(text):
     if text == 'z':
         from tuple import z
         return z
-    raise NotImplementedError(f"{text}")
+    raise ValueError()
 
 
 @with_pattern(r'the following (\dx\d )?matrix \w+:?')
