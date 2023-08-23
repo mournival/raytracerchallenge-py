@@ -20,7 +20,7 @@ class Canvas(object):
         self.width, self.height = self._data.shape
 
     def pixels(self):
-        return list(self._data.flatten(order='F'))
+        return self._data.flatten(order='F')
 
     def __getitem__(self, indices):
         return self._data[indices]
@@ -33,10 +33,11 @@ class Canvas(object):
 
     def _pixel_rows(self):
         pr = list()
-        row = [self.pixels()[x: x + self.width] for x in range(0, self.width * self.height, self.width)]
-        for pixels in row:
-            line = ' '.join([' '.join(clamp_color(p, 0, 255)) for p in pixels])
-            pr = pr + clamp_line(line)
+        pixels = self.pixels()
+        rows = [pixels[x: x + self.width] for x in range(0, self.width * self.height, self.width)]
+        for row in rows:
+            line = ' '.join([' '.join(clamp_color(p, 0, 255)) for p in row])
+            pr += clamp_line(line)
         return pr
 
     def fill(self, clr):

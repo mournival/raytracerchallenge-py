@@ -27,8 +27,9 @@ def clock(canvas, dots, dot_size):
     st = scaled_translation(canvas.width)
     sl = 2 * pi / dots
     half_dot = dot_size / 2
-    for i in range(dots):
-        p = dot(dot(st, rotation_z(sl * i)), point(0, 1, 0))
+    _12 = point(0, 1, 0)
+    for min in [ sl * d for d in range(dots) ]:
+        p = dot(dot(st, rotation_z(min)), _12)
         for _c in range(dot_size):
             dot__c = y(p) - half_dot + _c
             p_half_dot = x(p) - half_dot
@@ -40,7 +41,7 @@ def clock(canvas, dots, dot_size):
 
 
 def main():
-    c = Canvas(450, 450)
+    c = Canvas(1200, 1200)
     axes(c)
     clock(c, 12, 16)
     clock(c, 60, 4)
