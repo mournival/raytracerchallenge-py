@@ -129,9 +129,16 @@ def parse_operation(text):
     if text == 'normalize':
         from tuple import normalize
         return normalize
+    if text == 'origin':
+        from ray import ray
+        return ray.origin
+
     if text == 'point':
         from tuple import point
         return point
+    if text == 'ray':
+        from ray import ray
+        return ray
     if text == 'red':
         from color import red
         return red

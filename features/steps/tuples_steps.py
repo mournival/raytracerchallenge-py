@@ -54,6 +54,14 @@ def step_tuple_is_vector(context, name):
 def step_tuple_field_equals(context, name, op, expected):
     assert_equal(op(context.scenario_vars[name]), expected)
 
+@then("{:id}.origin = {:id}")
+def step_tuple_field_equals(context, name, expected):
+    assert_equal(context.scenario_vars[name].origin, context.scenario_vars[expected])
+
+
+@then("{:id}.origin = {:id}")
+def step_tuple_field_equals(context, name, expected):
+    assert_equal(context.scenario_vars[name].origin, context.scenario_vars[expected])
 
 @then("-{:id} = tuple({:g}, {:g}, {:g}, {:g})")
 def step_tuple_negate(context, name, x, y, z, w):
