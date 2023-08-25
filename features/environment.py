@@ -132,10 +132,12 @@ def parse_operation(text):
     if text == 'origin':
         from ray import ray
         return ray.origin
-
     if text == 'point':
         from tuple import point
-        return point
+        return point    
+    if text == 'position':
+        from ray import position
+        return position
     if text == 'ray':
         from ray import ray
         return ray

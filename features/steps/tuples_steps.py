@@ -19,6 +19,9 @@ def step_tuple_create(context, a, x, y, z, w):
 def step_tuple_create_vector_with_radicals(context, name, dtype, x, y, z):
     context.scenario_vars[name] = dtype(x, y, z)
 
+@given("{:id} ← {:op}({:op}({:rn}, {:rn}, {:rn}), {:op}({:rn}, {:rn}, {:rn}))")
+def step_tuple_create_vector_with_radicals(context, name, op1, op2,  x2, y2, z2, op3,  x3, y3, z3):
+    context.scenario_vars[name] = op1(op2(x2, y2, z2), op3(x3, y3, z3))
 
 @given("{:id} ← {:op}({:g}, {:g}, {:g})")
 def step_tuple_create_typed_tuple(context, c, dtype, r, g, b):
