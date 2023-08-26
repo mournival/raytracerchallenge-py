@@ -9,7 +9,7 @@ register_type(op=parse_operation)
 
 
 @when("{:id} ← {:op}({:id}, {:id})")
-def step_create_binary_opereration(context, r, operation, a, b):
+def step_create_binary_operation(context, r, operation, a, b):
     context.scenario_vars[r] = operation(context.scenario_vars[a], context.scenario_vars[b])
 
 

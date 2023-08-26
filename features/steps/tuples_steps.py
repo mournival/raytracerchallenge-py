@@ -19,9 +19,12 @@ def step_tuple_create(context, a, x, y, z, w):
 def step_tuple_create_vector_with_radicals(context, name, dtype, x, y, z):
     context.scenario_vars[name] = dtype(x, y, z)
 
+
 @given("{:id} ← {:op}({:op}({:rn}, {:rn}, {:rn}), {:op}({:rn}, {:rn}, {:rn}))")
-def step_tuple_create_vector_with_radicals(context, name, op1, op2,  x2, y2, z2, op3,  x3, y3, z3):
+@given("{:id} ← {:op}({:op}({:rn}, {:d}, {:d}), {:op}({:d}, {:d}, {:d}))")
+def step_tuple_create_vector_with_radicals(context, name, op1, op2, x2, y2, z2, op3, x3, y3, z3):
     context.scenario_vars[name] = op1(op2(x2, y2, z2), op3(x3, y3, z3))
+
 
 @given("{:id} ← {:op}({:g}, {:g}, {:g})")
 def step_tuple_create_typed_tuple(context, c, dtype, r, g, b):
@@ -57,6 +60,7 @@ def step_tuple_is_vector(context, name):
 def step_tuple_field_equals(context, name, op, expected):
     assert_equal(op(context.scenario_vars[name]), expected)
 
+
 @then("{:id}.origin = {:id}")
 def step_tuple_field_equals(context, name, expected):
     assert_equal(context.scenario_vars[name].origin, context.scenario_vars[expected])
@@ -65,6 +69,7 @@ def step_tuple_field_equals(context, name, expected):
 @then("{:id}.origin = {:id}")
 def step_tuple_field_equals(context, name, expected):
     assert_equal(context.scenario_vars[name].origin, context.scenario_vars[expected])
+
 
 @then("-{:id} = tuple({:g}, {:g}, {:g}, {:g})")
 def step_tuple_negate(context, name, x, y, z, w):

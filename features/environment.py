@@ -117,6 +117,9 @@ def parse_operation(text):
     if text == 'green':
         from color import green
         return green
+    if text == 'intersect':
+        import intersect
+        return intersect.intersect
     if text == 'inverse':
         import matrix
         return matrix.inverse
@@ -168,7 +171,7 @@ def parse_operation(text):
     if text == 'z':
         from tuple import z
         return z
-    raise ValueError()
+    raise ValueError(text)
 
 
 @with_pattern(r'the following (\dx\d )?matrix \w+:?')
