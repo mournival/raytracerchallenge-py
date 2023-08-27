@@ -120,6 +120,9 @@ def parse_operation(text):
     if text == 'intersect':
         import intersect
         return intersect.intersect
+    if text == 'intersection':
+        import intersect
+        return intersect.intersection
     if text == 'inverse':
         import matrix
         return matrix.inverse
@@ -132,6 +135,9 @@ def parse_operation(text):
     if text == 'normalize':
         from tuple import normalize
         return normalize
+    if text == 'object':
+        import intersect
+        return intersect.obj
     if text == 'origin':
         from ray import ray
         return ray.origin
@@ -150,6 +156,9 @@ def parse_operation(text):
     if text == 'scaling':
         import matrix
         return matrix.scaling
+    if text == 't':
+        import intersect
+        return intersect.t
     if text == 'translation':
         import matrix
         return matrix.translation
@@ -171,7 +180,7 @@ def parse_operation(text):
     if text == 'z':
         from tuple import z
         return z
-    raise ValueError(text)
+    raise ValueError()
 
 
 @with_pattern(r'the following (\dx\d )?matrix \w+:?')

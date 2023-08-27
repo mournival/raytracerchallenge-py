@@ -61,6 +61,11 @@ def step_tuple_field_equals(context, name, op, expected):
     assert_equal(op(context.scenario_vars[name]), expected)
 
 
+@then("{:id}.{:op} = {:id}")
+def step_tuple_field_equals(context, name, op, expected):
+    assert_equal(op(context.scenario_vars[name]), context.scenario_vars[expected])
+
+
 @then("{:id}.origin = {:id}")
 def step_tuple_field_equals(context, name, expected):
     assert_equal(context.scenario_vars[name].origin, context.scenario_vars[expected])

@@ -17,7 +17,13 @@ def step_matrix_create_transpose(context, a):
 @when("{:id} ← {:op}({:id}, {:id})")
 def step_tuple_create_derived(context, a, operation, u, v):
     context.scenario_vars[a] = operation(context.scenario_vars[u], context.scenario_vars[v])
-    
+
+
+@when("{:id} ← {:op}({:g}, {:id})")
+def step_tuple_create_derived(context, a, operation, u, v):
+    context.scenario_vars[a] = operation(u, context.scenario_vars[v])
+
+
 @then("{:id}.count = {:g}")
 def step_origin_equals(context, name, expected):
     assert_equal(len(context.scenario_vars[name]), expected)
