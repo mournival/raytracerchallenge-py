@@ -90,7 +90,7 @@ def parse_radians(text):
     raise ValueError()
 
 
-@with_pattern(r'[a-zA-Z]+_[a-zA-Z]+|[a-zA-Z]+|[acpv]\d')
+@with_pattern(r'[a-zA-Z]+_[a-zA-Z]+|[a-zA-Z]+|[aicpv]\d')
 def parse_id(text):
     return text
 
@@ -123,6 +123,9 @@ def parse_operation(text):
     if text == 'intersection':
         import intersect
         return intersect.intersection
+    if text == 'intersections':
+        import intersect
+        return intersect.intersections
     if text == 'inverse':
         import matrix
         return matrix.inverse

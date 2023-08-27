@@ -20,9 +20,14 @@ def step_tuple_create_vector_with_radicals(context, name, dtype, x, y, z):
     context.scenario_vars[name] = dtype(x, y, z)
 
 
+@given("{:id} ← {:op}({:g}, {:id})")
+def step_tuple_create_intersection(context, name, dtype, t, o):
+    context.scenario_vars[name] = dtype(t, context.scenario_vars[o])
+
+
 @given("{:id} ← {:op}({:op}({:rn}, {:rn}, {:rn}), {:op}({:rn}, {:rn}, {:rn}))")
 @given("{:id} ← {:op}({:op}({:rn}, {:d}, {:d}), {:op}({:d}, {:d}, {:d}))")
-def step_tuple_create_vector_with_radicals(context, name, op1, op2, x2, y2, z2, op3, x3, y3, z3):
+def step_tuple_create_vector_binary_op_with_radicals(context, name, op1, op2, x2, y2, z2, op3, x3, y3, z3):
     context.scenario_vars[name] = op1(op2(x2, y2, z2), op3(x3, y3, z3))
 
 
@@ -61,18 +66,18 @@ def step_tuple_field_equals(context, name, op, expected):
     assert_equal(op(context.scenario_vars[name]), expected)
 
 
+@then("{:id}[{:d}].{:op} = {:g}")
+def step_tuple_array_element_field_equals(context, name, i, op, expected):
+    assert_equal(op(context.scenario_vars[name][i]), expected)
+
+
 @then("{:id}.{:op} = {:id}")
-def step_tuple_field_equals(context, name, op, expected):
+def step_tuple_field_equals_by_id(context, name, op, expected):
     assert_equal(op(context.scenario_vars[name]), context.scenario_vars[expected])
 
 
 @then("{:id}.origin = {:id}")
-def step_tuple_field_equals(context, name, expected):
-    assert_equal(context.scenario_vars[name].origin, context.scenario_vars[expected])
-
-
-@then("{:id}.origin = {:id}")
-def step_tuple_field_equals(context, name, expected):
+def step_tuple_origin_equals(context, name, expected):
     assert_equal(context.scenario_vars[name].origin, context.scenario_vars[expected])
 
 

@@ -47,8 +47,8 @@ def main():
     clock(c, 60, 4)
 
     with open('../images/clock.ppm', 'w', encoding="ascii") as f:
-        for l in c.to_ppm():
-            f.write(l)
+        for line in c.to_ppm():
+            f.write(line)
 
 
 if __name__ == '__main__':

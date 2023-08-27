@@ -20,7 +20,7 @@ def step_tuple_create_derived(context, a, operation, u, v):
 
 
 @when("{:id} ← {:op}({:g}, {:id})")
-def step_tuple_create_derived(context, a, operation, u, v):
+def step_tuple_create_binary_derived(context, a, operation, u, v):
     context.scenario_vars[a] = operation(u, context.scenario_vars[v])
 
 
