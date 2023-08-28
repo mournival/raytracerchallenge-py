@@ -167,6 +167,9 @@ def parse_operation(text):
     if text == 'transpose':
         import matrix
         return matrix.transpose
+    if text == 'tuple':
+        import tuple
+        return tuple.tuple_trtc
     if text == 'vector':
         from tuple import vector
         return vector

@@ -1,8 +1,7 @@
-from behave import use_step_matcher, given, when, then, register_type
+from behave import use_step_matcher, given, when, then, step, register_type
 
-from color import color
 from features.environment import assert_equal, parse_ratio, parse_operation, assert_approximately_equal, parse_id
-from tuple import tuple_trtc, vector, is_point, is_vector
+from tuple import vector, is_point, is_vector
 
 use_step_matcher("parse")
 register_type(id=parse_id)
@@ -10,9 +9,9 @@ register_type(rn=parse_ratio)
 register_type(op=parse_operation)
 
 
-@given('{:id} ← tuple({:g}, {:g}, {:g}, {:g})')
-def step_tuple_create(context, a, x, y, z, w):
-    context.scenario_vars[a] = tuple_trtc(x, y, z, w)
+@given('{:id} ← {:op}({:g}, {:g}, {:g}, {:g})')
+def step_tuple_create(context, a, op, x, y, z, w):
+    context.scenario_vars[a] = op(x, y, z, w)
 
 
 @given("{:id} ← {:op}({:rn}, {:rn}, {:rn})")
@@ -20,7 +19,7 @@ def step_tuple_create_vector_with_radicals(context, name, dtype, x, y, z):
     context.scenario_vars[name] = dtype(x, y, z)
 
 
-@given("{:id} ← {:op}({:g}, {:id})")
+@step("{:id} ← {:op}({:g}, {:id})")
 def step_tuple_create_intersection(context, name, dtype, t, o):
     context.scenario_vars[name] = dtype(t, context.scenario_vars[o])
 
@@ -32,8 +31,8 @@ def step_tuple_create_vector_binary_op_with_radicals(context, name, op1, op2, x2
 
 
 @given("{:id} ← {:op}({:g}, {:g}, {:g})")
-def step_tuple_create_typed_tuple(context, c, dtype, r, g, b):
-    context.scenario_vars[c] = dtype(r, g, b)
+def step_tuple_create_typed_tuple(context, c, dtype, x, y, z):
+    context.scenario_vars[c] = dtype(x, y, z)
 
 
 @when("{:id} ← {:op}({:id})")
@@ -61,14 +60,14 @@ def step_tuple_is_vector(context, name):
     assert is_vector(context.scenario_vars[name]), f"{context.scenario_vars[name]} is NOT a vector"
 
 
-@then("{:id}.{:op} = {:g}")
-def step_tuple_field_equals(context, name, op, expected):
-    assert_equal(op(context.scenario_vars[name]), expected)
-
-
 @then("{:id}[{:d}].{:op} = {:g}")
 def step_tuple_array_element_field_equals(context, name, i, op, expected):
     assert_equal(op(context.scenario_vars[name][i]), expected)
+
+
+@then("{:id}.{:op} = {:g}")
+def step_tuple_field_equals(context, name, op, expected):
+    assert_equal(op(context.scenario_vars[name]), expected)
 
 
 @then("{:id}.{:op} = {:id}")
@@ -76,24 +75,29 @@ def step_tuple_field_equals_by_id(context, name, op, expected):
     assert_equal(op(context.scenario_vars[name]), context.scenario_vars[expected])
 
 
-@then("{:id}.origin = {:id}")
-def step_tuple_origin_equals(context, name, expected):
-    assert_equal(context.scenario_vars[name].origin, context.scenario_vars[expected])
+@then("-{:id} = {:op}({:g}, {:g}, {:g}, {:g})")
+def step_tuple_negate(context, name, op, x, y, z, w):
+    assert_equal(-context.scenario_vars[name], op(x, y, z, w))
 
 
-@then("-{:id} = tuple({:g}, {:g}, {:g}, {:g})")
-def step_tuple_negate(context, name, x, y, z, w):
-    assert_equal(-context.scenario_vars[name], tuple_trtc(x, y, z, w))
+@then("{:id} = {:op}({:g}, {:g}, {:g}, {:g})")
+def step_tuple_equals(context, name, op, x, y, z, w):
+    assert_equal(context.scenario_vars[name], op(x, y, z, w))
 
 
-@then("{:id} = tuple({:g}, {:g}, {:g}, {:g})")
-def step_tuple_equals(context, name, x, y, z, w):
-    assert_equal(context.scenario_vars[name], tuple_trtc(x, y, z, w))
+@then("{:id} + {:id} = {:op}({:g}, {:g}, {:g})")
+def step_tuple_color_addition(context, a, b, op, x, y, zl):
+    assert_equal(context.scenario_vars[a] + context.scenario_vars[b], op(x, y, zl))
 
 
-@then("{:id} + {:id} = tuple({:g}, {:g}, {:g}, {:g})")
-def step_tuple_addition(context, a, b, x, y, z, w):
-    assert_equal(context.scenario_vars[a] + context.scenario_vars[b], tuple_trtc(x, y, z, w))
+@then("{:id} + {:id} = {:op}({:g}, {:g}, {:g}, {:g})")
+def step_tuple_addition(context, a, b, op, x, y, z, w):
+    assert_equal(context.scenario_vars[a] + context.scenario_vars[b], op(x, y, z, w))
+
+
+@then("{:id} * {:g} = {:op}({:g}, {:g}, {:g})")
+def step_tuple_color_scaling(context, a, c, op, x, y, z):
+    assert_equal(context.scenario_vars[a] * c, op(x, y, z))
 
 
 @then("{:id} - {:id} = {:op}({:g}, {:g}, {:g})")
@@ -103,14 +107,14 @@ def step_tuple_subtraction_equals(context, a, b, dtype, x, y, z):
     assert_approximately_equal(actual, expected)
 
 
-@then("{:id} * {:g} = tuple({:g}, {:g}, {:g}, {:g})")
-def step_tuple_scalar_multiplication(context, a, c, x, y, z, w):
-    assert_equal(context.scenario_vars[a] * c, tuple_trtc(x, y, z, w))
+@then("{:id} * {:g} = {:op}({:g}, {:g}, {:g}, {:g})")
+def step_tuple_scalar_multiplication(context, a, c, op, x, y, z, w):
+    assert_equal(context.scenario_vars[a] * c, op(x, y, z, w))
 
 
-@then("{:id} / {:g} = tuple({:g}, {:g}, {:g}, {:g})")
-def step_tuple_scalar_division(context, a, c, x, y, z, w):
-    assert_equal(context.scenario_vars[a] / c, tuple_trtc(x, y, z, w))
+@then("{:id} / {:g} = {:op}({:g}, {:g}, {:g}, {:g})")
+def step_tuple_scalar_division(context, a, c, op, x, y, z, w):
+    assert_equal(context.scenario_vars[a] / c, op(x, y, z, w))
 
 
 @then("{:op}({:id}) = {:rn}")
@@ -151,13 +155,3 @@ def step_tuple_equal(context, v, dtype, x, y, z):
 @then("{:id} = approximately {:op}({:g}, {:g}, {:g})")
 def step_tuple_approximately_equal(context, v, dtype, x, y, z):
     assert_approximately_equal(context.scenario_vars[v], dtype(x, y, z))
-
-
-@then("{:id} + {:id} = color({:g}, {:g}, {:g})")
-def step_tuple_color_addition(context, a, b, r, g, bl):
-    assert_equal(context.scenario_vars[a] + context.scenario_vars[b], color(r, g, bl))
-
-
-@then("{:id} * {:g} = color({:g}, {:g}, {:g})")
-def step_tuple_color_scaling(context, a, c, r, g, b):
-    assert_equal(context.scenario_vars[a] * c, color(r, g, b))
