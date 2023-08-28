@@ -111,6 +111,8 @@ def parse_operation(text):
     if text == 'determinant':
         import matrix
         return matrix.det
+    if text == 'direction':
+        return lambda r: r.direction
     if text == 'dot':
         from tuple import dot
         return dot
@@ -139,11 +141,9 @@ def parse_operation(text):
         from tuple import normalize
         return normalize
     if text == 'object':
-        import intersect
-        return intersect.obj
+        return lambda intersection: intersection.object
     if text == 'origin':
-        from ray import ray
-        return ray.origin
+        return lambda r: r.origin
     if text == 'point':
         from tuple import point
         return point    
@@ -160,8 +160,7 @@ def parse_operation(text):
         import matrix
         return matrix.scaling
     if text == 't':
-        import intersect
-        return intersect.t
+        return lambda i: i.t
     if text == 'translation':
         import matrix
         return matrix.translation
