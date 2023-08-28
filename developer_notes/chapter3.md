@@ -13,13 +13,13 @@ actions, and other miscellaneous skills.
 ## Behave
 A bit of oddity here. The parser for JetBrains PyCharm and
 Behave don't agree. Perhaps because I use 
-```
+```gherkin
 use_step_matcher("parse")
 ```
 ?
 
 Anyway, for 
-```
+```gherkin
 Given the following 4x4 matrix M:
   | 1    | 2    | 3    | 4    |
   | 5.5  | 6.5  | 7.5  | 8.5  |
@@ -27,18 +27,18 @@ Given the following 4x4 matrix M:
   | 13.5 | 14.5 | 15.5 | 16.5 |
 ```
 
-```
+```gherkin
 @then("inverse({:id}) is the following 4x4 matrix")
 ```
 matches for Behave, but 
-```
+```gherkin
 @then("inverse({:id}) is the following 4x4 matrix:")
 ```
 matches for PyCharm (no warning nag)
 
 By putting both annotations on the step, both are happy.
 It looks wierd though:
-```
+```gherkin
 @then("inverse({:id}) is the following 4x4 matrix")
 @then("inverse({:id}) is the following 4x4 matrix:")
 def step_impl(context, a):
