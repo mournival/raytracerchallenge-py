@@ -32,3 +32,8 @@ def position(r, t):
     return r.origin + r.direction * t
 
 ```
+
+#
+Hmm, just learned about [data classes](https://peps.python.org/pep-0557/#abstract) (vs. named tuple ... )
+
+Probably should have used those for color / tuple. Well, color at least. Using the numpy.array types for tuple and matrix probably makes the most since due to the dot / cross / matmul / mat div / det / yada that numpy provides.
