@@ -15,6 +15,3 @@ def intersections(t1, t2):
 def t(x):
     return x[0]
 
-
-def obj(x):
-    return x[1]

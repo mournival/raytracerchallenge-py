@@ -15,6 +15,10 @@ Scenario: Translation does not affect vectors
 the 'Then' step def is
 
 ```python
+from behave import then
+from features.environment import assert_array_equal
+from matrix import dot
+
 @then("{:id} * {:id} = {:id}")
 def step_impl(context, a, b, c):
     assert_array_equal(dot(context.scenario_vars[a], context.scenario_vars[b]), context.scenario_vars[c])
@@ -59,6 +63,9 @@ def step_matrix_translate_with_radicals_alt1_point_approximately_equals(context,
 ## Finished Chapter 4
 Fairly large reworking of test code with a small number of new library code:
 ```python
+from math import cos, sin
+import numpy as np
+
 def rotation_x(radians):
     return np.array([
         [1, 0, 0, 0], [0, cos(radians), -sin(radians), 0], [0, sin(radians), cos(radians), 0], [0, 0, 0, 1]
@@ -96,6 +103,10 @@ def translation(x, y, z):
 The (test) environment file had the largest change, as the custom type parsers was a rabbit's warren of paths. Finally got
 a settled at:
 ```python
+import math
+import re
+from parse import with_pattern
+
 @with_pattern(r'π\s/\s\d+')
 def parse_radians(text):
     a = text
@@ -166,6 +177,9 @@ def parse_matrix_name(text):
 The idea was to make the pattern look close to the domain (matrix / vector algebra) in the step file. It looks okay (with some compromises). 
 The assignment steps are quite nice:
 ```python
+from behave import step
+from matrix import dot, rotation_x
+
 @step("{:id} ← {:id} * {:id}")
 def step_matrix_create_product(context, c, a, b):
     context.scenario_vars[c] = dot(context.scenario_vars[a], context.scenario_vars[b])
@@ -185,6 +199,10 @@ def step_matrix_create_rotation_x(context, c, radians):
 
 And the operation based ones also seem to work out:
 ```python
+from behave import then
+from features.environment import assert_array_equal, assert_array_approximately_equal
+from matrix import dot
+    
 @then("{:id} = {:id}")
 def step_matrix_equals(context, a, b):
     assert_array_equal(context.scenario_vars[a], context.scenario_vars[b])
@@ -195,6 +213,7 @@ def step_matrix_tuple_multiplication_equals(context, a, b, c):
     assert_array_equal(dot(context.scenario_vars[a], context.scenario_vars[b]), context.scenario_vars[c])
 
 
+# OBSOLETE: Refactored out of existence
 @then("{:id} * {:id} = {:op}({:rn}, {:rn}, {:rn})")
 @then("{:id} * {:id} = {:op}({:g}, {:g}, {:g})")
 def step_matrix_point_multiplication_equals(context, a, b, dtype, x, y, z):
@@ -213,4 +232,4 @@ does not offend my senses overly much (it does, no simple solution has presented
 Yanked out custom tuple/color classes, just left api wrappers for np.array
 
 Also implemented the clock demo (thogh it looks more liking an aiming reticle.)
-![clock.ppm](..%2Fimages%2Fclock.ppm)
+![clock.png](..%2Fimages%2Fclock.png)

@@ -1,4 +1,4 @@
-from behave import use_step_matcher, given, when, then, register_type
+from behave import use_step_matcher, given, when, then, step, register_type
 
 from color import color
 from features.environment import assert_equal, parse_ratio, parse_operation, assert_approximately_equal, parse_id
@@ -20,7 +20,7 @@ def step_tuple_create_vector_with_radicals(context, name, dtype, x, y, z):
     context.scenario_vars[name] = dtype(x, y, z)
 
 
-@given("{:id} ← {:op}({:g}, {:id})")
+@step("{:id} ← {:op}({:g}, {:id})")
 def step_tuple_create_intersection(context, name, dtype, t, o):
     context.scenario_vars[name] = dtype(t, context.scenario_vars[o])
 
@@ -69,6 +69,11 @@ def step_tuple_field_equals(context, name, op, expected):
 @then("{:id}[{:d}].{:op} = {:g}")
 def step_tuple_array_element_field_equals(context, name, i, op, expected):
     assert_equal(op(context.scenario_vars[name][i]), expected)
+
+
+@then("{:id}[{:d}].{:op} = {:id}")
+def step_tuple_array_element_field_equals(context, name, i, op, expected):
+    assert_equal(op(context.scenario_vars[name][i]), context.scenario_vars[expected])
 
 
 @then("{:id}[{:d}].{:op} = {:id}")
