@@ -71,6 +71,11 @@ def step_tuple_array_element_field_equals(context, name, i, op, expected):
     assert_equal(op(context.scenario_vars[name][i]), expected)
 
 
+@then("{:id}[{:d}].{:op} = {:id}")
+def step_tuple_array_element_field_equals(context, name, i, op, expected):
+    assert_equal(op(context.scenario_vars[name][i]), context.scenario_vars[expected])
+
+
 @then("{:id}.{:op} = {:id}")
 def step_tuple_field_equals_by_id(context, name, op, expected):
     assert_equal(op(context.scenario_vars[name]), context.scenario_vars[expected])

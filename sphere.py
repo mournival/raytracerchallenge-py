@@ -1,5 +1,6 @@
 import math
 
+from intersect import intersection
 from ray import ray
 from tuple import point, dot
 
@@ -15,7 +16,7 @@ class Sphere(object):
         if discriminant < 0:
             return []
         d = math.sqrt(discriminant)
-        return [(-b - d) / (2 * a), (-b + d) / (2 * a)]
+        return [intersection((-b - d) / (2 * a),self),  intersection((-b + d) / (2 * a),self)]
 
 
 sphere = Sphere
