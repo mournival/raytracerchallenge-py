@@ -119,6 +119,9 @@ def parse_operation(text):
     if text == 'green':
         from color import green
         return green
+    if text == 'hit':
+        import intersect
+        return intersect.hit
     if text == 'intersect':
         import intersect
         return intersect.intersect

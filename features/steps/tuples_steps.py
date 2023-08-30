@@ -41,6 +41,11 @@ def step_tuple_create_derived(context, a, operation, v):
     context.scenario_vars[a] = operation(context.scenario_vars[v])
 
 
+@then("{:id} is nothing")
+def step_item_is_none(context, id):
+    assert context.scenario_vars[id] is None, f"Actual {context.scenario_vars[id] =}, expeted None"
+
+
 @then("{:id} is a point")
 def step_tuple_is_point(context, name):
     assert is_point(context.scenario_vars[name]), f"{context.scenario_vars[name]} is NOT a point"

@@ -8,10 +8,9 @@ def intersect(o, r) -> List[float]:
     return o.intersect(r)
 
 
-def intersections(t1, t2):
-    return [i for i in sorted([t1, t2], key=t)]
+def intersections(*t1):
+    return [i for i in sorted(t1, key=lambda i: i.t)]
 
 
-def t(x):
-    return x[0]
-
+def hit(xs: List[intersection]):
+    return next((x for x in xs if x.t >= 0), None)
