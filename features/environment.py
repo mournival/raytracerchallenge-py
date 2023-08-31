@@ -90,7 +90,7 @@ def parse_radians(text):
     raise ValueError()
 
 
-@with_pattern(r'[a-zA-Z]+_[a-zA-Z]+|[a-zA-Z]+|[aicpv]\d')
+@with_pattern(r'[a-zA-Z]+_[a-zA-Z]+|[a-zA-Z]+|[aicprv]\d')
 def parse_id(text):
     return text
 
@@ -164,6 +164,9 @@ def parse_operation(text):
         return matrix.scaling
     if text == 't':
         return lambda i: i.t
+    if text == 'transform':
+        import ray
+        return ray.transform
     if text == 'translation':
         import matrix
         return matrix.translation
