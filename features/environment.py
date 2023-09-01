@@ -98,75 +98,46 @@ def parse_id(text):
     return text
 
 
-@with_pattern(r'\w+')
+operation_mapping = {
+    'blue': blue,
+    'cofactor': cofactor,
+    'color': color,
+    'cross': cross,
+    'determinant': det,
+    'direction': lambda r: r.direction,
+    'dot': dot,
+    'green': green,
+    'hit': hit,
+    'intersect': intersect,
+    'intersection': intersection,
+    'intersections': intersections,
+    'inverse': inverse,
+    'magnitude': magnitude,
+    'minor': minor,
+    'normalize': normalize,
+    'object': lambda ob: ob.object,
+    'origin': lambda r: r.origin,
+    'point': point,
+    'position': position,
+    'ray': ray,
+    'red': red,
+    'scaling': scaling,
+    't': lambda i: i.t,
+    'transform': transform,
+    'translation': translation,
+    'transpose': transpose,
+    'tuple': tuple_trtc,
+    'vector': vector,
+    'w': w,
+    'x': o,
+    'y': y,
+    'z': z,
+}
+
+
+@with_pattern(r"|".join(operation_mapping))
 def parse_operation(text):
-    if text == 'blue':
-        return blue
-    if text == 'cofactor':
-        return cofactor
-    if text == 'color':
-        return color
-    if text == 'cross':
-        return cross
-    if text == 'determinant':
-        return det
-    if text == 'direction':
-        return lambda r: r.direction
-    if text == 'dot':
-        return dot
-    if text == 'green':
-        return green
-    if text == 'hit':
-        return hit
-    if text == 'intersect':
-        return intersect
-    if text == 'intersection':
-        return intersection
-    if text == 'intersections':
-        return intersections
-    if text == 'inverse':
-        return inverse
-    if text == 'magnitude':
-        return magnitude
-    if text == 'minor':
-        return minor
-    if text == 'normalize':
-        return normalize
-    if text == 'object':
-        return lambda ob: ob.object
-    if text == 'origin':
-        return lambda r: r.origin
-    if text == 'point':
-        return point    
-    if text == 'position':
-        return position
-    if text == 'ray':
-        return ray
-    if text == 'red':
-        return red
-    if text == 'scaling':
-        return scaling
-    if text == 't':
-        return lambda i: i.t
-    if text == 'transform':
-        return transform
-    if text == 'translation':
-        return translation
-    if text == 'transpose':
-        return transpose
-    if text == 'tuple':
-        return tuple_trtc
-    if text == 'vector':
-        return vector
-    if text == 'w':
-        return w
-    if text == 'x':
-        return o
-    if text == 'y':
-        return y
-    if text == 'z':
-        return z
-    raise ValueError()
+    return operation_mapping[text.lower()]
 
 
 @with_pattern(r'the following (\dx\d )?matrix \w+:?')
