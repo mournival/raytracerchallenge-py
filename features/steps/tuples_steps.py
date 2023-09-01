@@ -17,14 +17,10 @@ def step_tuple_create(context, a, op, x, y, z, w):
     context.scenario_vars[a] = op(x, y, z, w)
 
 
+@given("{:id} ← {:op}({:g}, {:g}, {:g})")
 @given("{:id} ← {:op}({:rn}, {:rn}, {:rn})")
 def step_tuple_create_vector_with_radicals(context, name, dtype, x, y, z):
     context.scenario_vars[name] = dtype(x, y, z)
-
-
-@step("{:id} ← {:op}({:g}, {:id})")
-def step_tuple_create_intersection(context, name, dtype, t, o):
-    context.scenario_vars[name] = dtype(t, context.scenario_vars[o])
 
 
 @given("{:id} ← {:op}({:op}({:rn}, {:rn}, {:rn}), {:op}({:rn}, {:rn}, {:rn}))")
@@ -33,9 +29,20 @@ def step_tuple_create_vector_binary_op_with_radicals(context, name, op1, op2, x2
     context.scenario_vars[name] = op1(op2(x2, y2, z2), op3(x3, y3, z3))
 
 
-@given("{:id} ← {:op}({:g}, {:g}, {:g})")
-def step_tuple_create_typed_tuple(context, c, dtype, r, g, b):
-    context.scenario_vars[c] = dtype(r, g, b)
+@step("{:id} ← {:op}({:g}, {:id})")
+def step_tuple_create_intersection(context, name, dtype, t, o):
+    context.scenario_vars[name] = dtype(t, context.scenario_vars[o])
+
+
+@step("{:id} ← {:op}({:id}, {:id})")
+def step_tuple_create_derived(context, a, op, u, v):
+    context.scenario_vars[a] = op(context.scenario_vars[u], context.scenario_vars[v])
+
+
+@step("{:id} ← {:op}({:id}, {:id}, {:id}, {:id})")
+def step_tuple_create_derived_tuple(context, a, op, w, x, y, z):
+    context.scenario_vars[a] = op(context.scenario_vars[w], context.scenario_vars[x], context.scenario_vars[y],
+                                  context.scenario_vars[z])
 
 
 @then("{:id} is nothing")
@@ -158,14 +165,3 @@ def step_tuple_color_addition(context, a, b, op, r, g, bl):
 @then("{:id} * {:g} = {:op}({:g}, {:g}, {:g})")
 def step_tuple_color_scaling(context, a, c, op, r, g, b):
     assert_equal(context.scenario_vars[a] * c, op(r, g, b))
-
-
-@step("{:id} ← {:op}({:id}, {:id})")
-def step_tuple_create_derived(context, a, op, u, v):
-    context.scenario_vars[a] = op(context.scenario_vars[u], context.scenario_vars[v])
-
-
-@step("{:id} ← {:op}({:id}, {:id}, {:id}, {:id})")
-def step_tuple_create_derived_tuple(context, a, op, w, x, y, z):
-    context.scenario_vars[a] = op(context.scenario_vars[w], context.scenario_vars[x], context.scenario_vars[y],
-                                  context.scenario_vars[z])
