@@ -1,6 +1,5 @@
 from behave import use_step_matcher, given, then, step, register_type
 
-from color import color
 from features.environment import assert_equal, parse_ratio, parse_operation, assert_approximately_equal, parse_id, \
     parse_is_is_not, parse_field
 from tuple import tuple_trtc, vector, is_point, is_vector
@@ -151,14 +150,14 @@ def step_tuple_approximately_equal(context, v, dtype, x, y, z):
     assert_approximately_equal(context.scenario_vars[v], dtype(x, y, z))
 
 
-@then("{:id} + {:id} = color({:g}, {:g}, {:g})")
-def step_tuple_color_addition(context, a, b, r, g, bl):
-    assert_equal(context.scenario_vars[a] + context.scenario_vars[b], color(r, g, bl))
+@then("{:id} + {:id} = {:op}({:g}, {:g}, {:g})")
+def step_tuple_color_addition(context, a, b, op, r, g, bl):
+    assert_equal(context.scenario_vars[a] + context.scenario_vars[b], op(r, g, bl))
 
 
-@then("{:id} * {:g} = color({:g}, {:g}, {:g})")
-def step_tuple_color_scaling(context, a, c, r, g, b):
-    assert_equal(context.scenario_vars[a] * c, color(r, g, b))
+@then("{:id} * {:g} = {:op}({:g}, {:g}, {:g})")
+def step_tuple_color_scaling(context, a, c, op, r, g, b):
+    assert_equal(context.scenario_vars[a] * c, op(r, g, b))
 
 
 @step("{:id} ← {:op}({:id}, {:id})")
@@ -170,8 +169,3 @@ def step_tuple_create_derived(context, a, operation, u, v):
 def step_tuple_create_derived_tuple(context, a, operation, w, x, y, z):
     context.scenario_vars[a] = operation(context.scenario_vars[w], context.scenario_vars[x], context.scenario_vars[y],
                                          context.scenario_vars[z])
-
-
-@then("{:id}[{:d}] = {:g}")
-def step_matrix_equals(context, name, i, expected):
-    assert_equal(context.scenario_vars[name][i], expected)
