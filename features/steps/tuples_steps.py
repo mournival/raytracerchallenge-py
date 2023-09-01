@@ -1,11 +1,13 @@
 from behave import use_step_matcher, given, when, then, step, register_type
 
 from color import color
-from features.environment import assert_equal, parse_ratio, parse_operation, assert_approximately_equal, parse_id
+from features.environment import assert_equal, parse_ratio, parse_operation, assert_approximately_equal, parse_id, \
+    parse_is_is_not
 from tuple import tuple_trtc, vector, is_point, is_vector
 
 use_step_matcher("parse")
 register_type(id=parse_id)
+register_type(is_is_not_a=parse_is_is_not)
 register_type(rn=parse_ratio)
 register_type(op=parse_operation)
 
@@ -43,27 +45,17 @@ def step_tuple_create_derived(context, a, operation, v):
 
 @then("{:id} is nothing")
 def step_item_is_none(context, id):
-    assert context.scenario_vars[id] is None, f"Actual {context.scenario_vars[id] =}, expeted None"
+    assert context.scenario_vars[id] is None, f"Actual {context.scenario_vars[id] =}, expected None"
 
 
-@then("{:id} is a point")
-def step_tuple_is_point(context, name):
-    assert is_point(context.scenario_vars[name]), f"{context.scenario_vars[name]} is NOT a point"
+@then("{:id} {:is_is_not_a} point")
+def step_tuple_test_is_point(context, name, is_or_not):
+    assert_equal(is_point(context.scenario_vars[name]), is_or_not)
 
 
-@then("{:id} is not a vector")
-def step_tuple_is_not_vector(context, name):
-    assert not is_vector(context.scenario_vars[name]), f"{context.scenario_vars[name]} is a vector"
-
-
-@then("{:id} is not a point")
-def step_tuple_is_not_point(context, name):
-    assert not is_point(context.scenario_vars[name]), f"{context.scenario_vars[name]} is a point"
-
-
-@then("{:id} is a vector")
-def step_tuple_is_vector(context, name):
-    assert is_vector(context.scenario_vars[name]), f"{context.scenario_vars[name]} is NOT a vector"
+@then("{:id} {:is_is_not_a} vector")
+def step_tuple_test_is_vector(context, name, is_or_not):
+    assert_equal(is_vector(context.scenario_vars[name]), is_or_not)
 
 
 @then("{:id}.{:op} = {:g}")
@@ -79,11 +71,6 @@ def step_tuple_field_equals_op(context, name, op1, op2, x, y, z):
 @then("{:id}[{:d}].{:op} = {:g}")
 def step_tuple_array_element_field_equals(context, name, i, op, expected):
     assert_equal(op(context.scenario_vars[name][i]), expected)
-
-
-@then("{:id}[{:d}].{:op} = {:id}")
-def step_tuple_array_element_field_equals(context, name, i, op, expected):
-    assert_equal(op(context.scenario_vars[name][i]), context.scenario_vars[expected])
 
 
 @then("{:id}[{:d}].{:op} = {:id}")

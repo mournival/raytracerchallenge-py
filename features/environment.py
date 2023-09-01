@@ -198,3 +198,12 @@ def parse_operation(text):
 def parse_matrix_name(text):
     m = re.match(r'the following \d?x?\d? ?matrix (\w):?', text)
     return m.groups()[0]
+
+
+is_is_not_mapping = {'is a': True,
+                     'is not a': False}
+
+
+@with_pattern(r"|".join(is_is_not_mapping))
+def parse_is_is_not(text):
+    return is_is_not_mapping[text.lower()]
