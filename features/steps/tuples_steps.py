@@ -7,7 +7,7 @@ from tuple import tuple_trtc, vector, is_point, is_vector
 
 use_step_matcher("parse")
 register_type(id=parse_id)
-register_type(is_is_not_a=parse_is_is_not)
+register_type(isnota=parse_is_is_not)
 register_type(rn=parse_ratio)
 register_type(op=parse_operation)
 
@@ -44,16 +44,16 @@ def step_tuple_create_derived(context, a, operation, v):
 
 
 @then("{:id} is nothing")
-def step_item_is_none(context, id):
-    assert context.scenario_vars[id] is None, f"Actual {context.scenario_vars[id] =}, expected None"
+def step_item_is_none(context, name):
+    assert context.scenario_vars[name] is None, f"Actual {context.scenario_vars[name] =}, expected None"
 
 
-@then("{:id} {:is_is_not_a} point")
+@then("{:id} {:isnota} point")
 def step_tuple_test_is_point(context, name, is_or_not):
     assert_equal(is_point(context.scenario_vars[name]), is_or_not)
 
 
-@then("{:id} {:is_is_not_a} vector")
+@then("{:id} {:isnota} vector")
 def step_tuple_test_is_vector(context, name, is_or_not):
     assert_equal(is_vector(context.scenario_vars[name]), is_or_not)
 
@@ -69,12 +69,12 @@ def step_tuple_field_equals_op(context, name, op1, op2, x, y, z):
 
 
 @then("{:id}[{:d}].{:op} = {:g}")
-def step_tuple_array_element_field_equals(context, name, i, op, expected):
+def step_tuple_array_element_field_equals_val(context, name, i, op, expected):
     assert_equal(op(context.scenario_vars[name][i]), expected)
 
 
 @then("{:id}[{:d}].{:op} = {:id}")
-def step_tuple_array_element_field_equals(context, name, i, op, expected):
+def step_tuple_array_element_field_equals_var(context, name, i, op, expected):
     assert_equal(op(context.scenario_vars[name][i]), context.scenario_vars[expected])
 
 

@@ -20,7 +20,7 @@ def step_tuple_create_derived(context, a, operation, u, v):
 
 
 @step("{:id} ← {:op}({:id}, {:id}, {:id}, {:id})")
-def step_tuple_create_derived(context, a, operation, w, x, y, z):
+def step_tuple_create_derived_tuple(context, a, operation, w, x, y, z):
     context.scenario_vars[a] = operation(context.scenario_vars[w], context.scenario_vars[x], context.scenario_vars[y],
                                          context.scenario_vars[z])
 
@@ -31,5 +31,5 @@ def step_origin_equals(context, name, expected):
 
 
 @then("{:id}[{:d}] = {:g}")
-def step_matrix_equals(context, id, i, expected):
-    assert_equal(context.scenario_vars[id][i], expected)
+def step_matrix_equals(context, name, i, expected):
+    assert_equal(context.scenario_vars[name][i], expected)
