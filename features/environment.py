@@ -13,7 +13,7 @@ from intersect import intersections, hit, intersection, intersect
 from matrix import array_equal, array_approximately_equal, matrix, transpose, translation, scaling, minor, inverse, \
     cofactor, det, rotation_x, rotation_y, rotation_z
 from ray import transform, ray, position
-from tuple import o, y, vector, tuple_trtc, point, normalize, magnitude, cross, dot, z, w
+from tuple import y, vector, tuple_trtc, point, normalize, magnitude, cross, dot, z, w, x
 
 
 def before_feature(context, _feature):
@@ -151,18 +151,18 @@ def parse_is_is_not(text):
 
 fields_mapping = {
     '.blue': blue,
-    '.count': lambda l: len(l),
+    '.count': lambda lx: len(lx),
     '.direction': lambda r: r.direction,
     '.green': green,
     '.height': lambda c: c.height,
     '.object': lambda ob: ob.object,
-    '.origin': lambda x: x.origin,
+    '.origin': lambda ob: ob.origin,
     '.red': red,
     '.t': lambda i: i.t,
     '.transform': lambda o: o.transform,
     '.w': w,
     '.width': lambda c: c.width,
-    '.x': o,
+    '.x': x,
     '.y': y,
     '.z': z,
 }
