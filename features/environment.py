@@ -7,10 +7,11 @@ import numpy as np
 from behave.model import Row
 from parse import with_pattern
 
+import canvas
 from color import color, red, blue, green
 from intersect import intersections, hit, intersection, intersect
 from matrix import array_equal, array_approximately_equal, matrix, transpose, translation, scaling, minor, inverse, \
-    cofactor, det
+    cofactor, det, rotation_x, rotation_y, rotation_z
 from ray import transform, ray, position
 from tuple import o, y, vector, tuple_trtc, point, normalize, magnitude, cross, dot, z, w
 
@@ -99,6 +100,7 @@ def parse_id(text):
 
 
 operation_mapping = {
+    'canvas': canvas.Canvas,
     'cofactor': cofactor,
     'color': color,
     'cross': cross,
@@ -115,6 +117,9 @@ operation_mapping = {
     'point': point,
     'position': position,
     'ray': ray,
+    'rotation_x': rotation_x,
+    'rotation_y': rotation_y,
+    'rotation_z': rotation_z,
     'scaling': scaling,
     'transform': transform,
     'translation': translation,
@@ -149,12 +154,14 @@ fields_mapping = {
     '.count': lambda l: len(l),
     '.direction': lambda r: r.direction,
     '.green': green,
+    '.height': lambda c: c.height,
     '.object': lambda ob: ob.object,
     '.origin': lambda x: x.origin,
     '.red': red,
     '.t': lambda i: i.t,
     '.transform': lambda o: o.transform,
     '.w': w,
+    '.width': lambda c: c.width,
     '.x': o,
     '.y': y,
     '.z': z,

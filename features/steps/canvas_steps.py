@@ -1,27 +1,17 @@
 import numpy as np
 from behave import use_step_matcher, given, when, then, step, register_type
 
-from canvas import Canvas
 from color import color
-from features.environment import parse_id
+from features.environment import parse_id, parse_operation
 
 use_step_matcher("parse")
 register_type(id=parse_id)
+register_type(op=parse_operation)
 
 
-@given("{:id} ← canvas({:d}, {:d})")
-def step_canvas_create(context, c, h, w):
-    context.scenario_vars[c] = Canvas(h, w)
-
-
-@then("{:id}.width = {:g}")
-def step_canvas_width_equals(context, name, expected):
-    assert context.scenario_vars[name].__getattribute__("width") == expected, f"{name}.width = {expected}"
-
-
-@then("{:id}.height = {:g}")
-def step_canvas_height_equals(context, name, expected):
-    assert context.scenario_vars[name].__getattribute__("height") == expected, f"{name}.height = {expected}"
+@given("{:id} ← {:op}({:d}, {:d})")
+def step_canvas_create(context, c, op, h, w):
+    context.scenario_vars[c] = op(h, w)
 
 
 @step("every pixel of {:id} is color({:g}, {:g}, {:g})")

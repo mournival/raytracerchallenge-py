@@ -1,10 +1,10 @@
 from behave import use_step_matcher, given, then, step, register_type
 
 from color import color
-from features.environment import assert_equal, assert_approximately_equal, parse_ratio, parse_id, parse_matrix_name, \
+from features.environment import assert_approximately_equal, parse_ratio, parse_id, parse_matrix_name, \
     parse_operation, parse_radians, assert_array_equal, assert_array_approximately_equal, assert_array_not_equal, \
     create_table_from
-from matrix import transpose, dot, submatrix, invertible, inverse, rotation_x, rotation_y, rotation_z, shearing
+from matrix import dot, submatrix, invertible, shearing
 
 use_step_matcher("parse")
 register_type(rad=parse_radians)
@@ -17,11 +17,6 @@ register_type(rn=parse_ratio)
 @given("{:mn}")
 def step_matrix_create_empty_n_m(context, name):
     context.scenario_vars[name] = create_table_from(context)
-
-
-@given("{:id} ← transpose({:id})")
-def step_matrix_create_transpose(context, a, b):
-    context.scenario_vars[a] = transpose(context.scenario_vars[b])
 
 
 @step("{:id} is invertible")
@@ -44,19 +39,9 @@ def step_matrix_create_chained_product(context, t, a, b, c):
     context.scenario_vars[t] = dot(dot(context.scenario_vars[a], context.scenario_vars[b]), context.scenario_vars[c])
 
 
-@step("{:id} ← rotation_x({:rad})")
-def step_matrix_create_rotation_x(context, c, radians):
-    context.scenario_vars[c] = rotation_x(radians)
-
-
-@step("{:id} ← rotation_y({:rad})")
-def step_matrix_create_rotation_y(context, c, radians):
-    context.scenario_vars[c] = rotation_y(radians)
-
-
-@step("{:id} ← rotation_z({:rad})")
-def step_matrix_create_rotation_z(context, c, radians):
-    context.scenario_vars[c] = rotation_z(radians)
+@step("{:id} ← {:op}({:rad})")
+def step_matrix_create_rotation_x(context, c, op, radians):
+    context.scenario_vars[c] = op(radians)
 
 
 @step("{:id} ← shearing({:g}, {:g}, {:g}, {:g}, {:g}, {:g})")
@@ -64,9 +49,9 @@ def step_matrix_create_shearing(context, c, x_y, x_z, y_x, y_z, z_x, z_y):
     context.scenario_vars[c] = shearing(x_y, x_z, y_x, y_z, z_x, z_y)
 
 
-@step("{:id} ← inverse({:id})")
-def step_matrix_create_inverse(context, b, a):
-    context.scenario_vars[b] = inverse(context.scenario_vars[a])
+@step("{:id} ← {:op}({:id})")
+def step_matrix_create_inverse(context, b, op, a):
+    context.scenario_vars[b] = op(context.scenario_vars[a])
 
 
 @step("{:id} ← submatrix({:id}, {:d}, {:d})")
@@ -75,10 +60,6 @@ def step_matrix_create_submatrix(context, b, a, m, n):
 
 
 @then("{:id}[{:d},{:d}] = {:g}")
-def step_matrix_element_equals(context, name, r, c, expected):
-    assert_equal(context.scenario_vars[name][r, c], expected)
-
-
 @then("{:id}[{:d},{:d}] = {:rn}")
 def step_matrix_element_approximately_equals(context, name, r, c, expected):
     assert_approximately_equal(context.scenario_vars[name][r, c], expected)
