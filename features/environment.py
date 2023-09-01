@@ -87,8 +87,7 @@ def parse_ratio(text):
 
 @with_pattern(r'π\s/\s\d+')
 def parse_radians(text):
-    a = text
-    m = re.match(r'π / (\d+)$', a)
+    m = re.match(r'π / (\d+)$', text)
     if m:
         return math.pi / int(m.groups()[0])
     raise ValueError()
