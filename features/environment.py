@@ -7,11 +7,15 @@ import numpy as np
 from behave.model import Row
 from parse import with_pattern
 
-from color import color
-from matrix import array_equal, array_approximately_equal, matrix
+from color import color, red, blue, green
+from intersect import intersections, hit, intersection, intersect
+from matrix import array_equal, array_approximately_equal, matrix, transpose, translation, scaling, minor, inverse, \
+    cofactor, det
+from ray import transform, ray, position
+from tuple import o, y, z, w, vector, tuple_trtc, point, normalize, magnitude, cross, dot
 
 
-def before_feature(context, feature):
+def before_feature(context, _feature):
     context.scenario_vars = dict()
     context.scenario_vars['identity_matrix'] = np.eye(4)
 
@@ -98,98 +102,70 @@ def parse_id(text):
 @with_pattern(r'\w+')
 def parse_operation(text):
     if text == 'blue':
-        from color import blue
         return blue
     if text == 'cofactor':
-        import matrix
-        return matrix.cofactor
+        return cofactor
     if text == 'color':
         return color
     if text == 'cross':
-        from tuple import cross
         return cross
     if text == 'determinant':
-        import matrix
-        return matrix.det
+        return det
     if text == 'direction':
         return lambda r: r.direction
     if text == 'dot':
-        from tuple import dot
         return dot
     if text == 'green':
-        from color import green
         return green
     if text == 'hit':
-        import intersect
-        return intersect.hit
+        return hit
     if text == 'intersect':
-        import intersect
-        return intersect.intersect
+        return intersect
     if text == 'intersection':
-        import intersect
-        return intersect.intersection
+        return intersection
     if text == 'intersections':
-        import intersect
-        return intersect.intersections
+        return intersections
     if text == 'inverse':
-        import matrix
-        return matrix.inverse
+        return inverse
     if text == 'magnitude':
-        from tuple import magnitude
         return magnitude
     if text == 'minor':
-        import matrix
-        return matrix.minor
+        return minor
     if text == 'normalize':
-        from tuple import normalize
         return normalize
     if text == 'object':
-        return lambda intersection: intersection.object
+        return lambda ob: ob.object
     if text == 'origin':
         return lambda r: r.origin
     if text == 'point':
-        from tuple import point
         return point    
     if text == 'position':
-        from ray import position
         return position
     if text == 'ray':
-        from ray import ray
         return ray
     if text == 'red':
-        from color import red
         return red
     if text == 'scaling':
-        import matrix
-        return matrix.scaling
+        return scaling
     if text == 't':
         return lambda i: i.t
     if text == 'transform':
-        import ray
-        return ray.transform
+        return transform
     if text == 'translation':
-        import matrix
-        return matrix.translation
+        return translation
     if text == 'transpose':
-        import matrix
-        return matrix.transpose
+        return transpose
     if text == 'tuple':
-        import tuple
-        return tuple.tuple_trtc
+        return tuple_trtc
     if text == 'vector':
-        from tuple import vector
         return vector
     if text == 'w':
-        from tuple import w
         return w
     if text == 'x':
-        from tuple import x
-        return x
+        return o
     if text == 'y':
-        from tuple import y
         return y
     if text == 'z':
-        from tuple import z
         return z
     raise ValueError()
 

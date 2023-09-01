@@ -3,7 +3,7 @@ import math
 import numpy as np
 
 
-def x(v):
+def o(v):
     return v[0]
 
 
@@ -33,8 +33,8 @@ def vector(_x, _y, _z):
 
 def cross(lhs, rhs):
     return vector(y(lhs) * z(rhs) - z(lhs) * y(rhs),
-                  z(lhs) * x(rhs) - x(lhs) * z(rhs),
-                  x(lhs) * y(rhs) - y(lhs) * x(rhs))
+                  z(lhs) * o(rhs) - o(lhs) * z(rhs),
+                  o(lhs) * y(rhs) - y(lhs) * o(rhs))
 
 
 def dot(lhs, rhs):
