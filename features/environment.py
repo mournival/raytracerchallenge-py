@@ -12,7 +12,7 @@ from intersect import intersections, hit, intersection, intersect
 from matrix import array_equal, array_approximately_equal, matrix, transpose, translation, scaling, minor, inverse, \
     cofactor, det
 from ray import transform, ray, position
-from tuple import o, y, z, w, vector, tuple_trtc, point, normalize, magnitude, cross, dot
+from tuple import o, y, vector, tuple_trtc, point, normalize, magnitude, cross, dot, z, w
 
 
 def before_feature(context, _feature):
@@ -99,14 +99,11 @@ def parse_id(text):
 
 
 operation_mapping = {
-    'blue': blue,
     'cofactor': cofactor,
     'color': color,
     'cross': cross,
     'determinant': det,
-    'direction': lambda r: r.direction,
     'dot': dot,
-    'green': green,
     'hit': hit,
     'intersect': intersect,
     'intersection': intersection,
@@ -115,29 +112,21 @@ operation_mapping = {
     'magnitude': magnitude,
     'minor': minor,
     'normalize': normalize,
-    'object': lambda ob: ob.object,
-    'origin': lambda r: r.origin,
     'point': point,
     'position': position,
     'ray': ray,
-    'red': red,
     'scaling': scaling,
-    't': lambda i: i.t,
     'transform': transform,
     'translation': translation,
     'transpose': transpose,
     'tuple': tuple_trtc,
     'vector': vector,
-    'w': w,
-    'x': o,
-    'y': y,
-    'z': z,
 }
 
 
 @with_pattern(r"|".join(operation_mapping))
 def parse_operation(text):
-    return operation_mapping[text.lower()]
+    return operation_mapping[text]
 
 
 @with_pattern(r'the following (\dx\d )?matrix \w+:?')
@@ -152,4 +141,26 @@ is_is_not_mapping = {'is a': True,
 
 @with_pattern(r"|".join(is_is_not_mapping))
 def parse_is_is_not(text):
-    return is_is_not_mapping[text.lower()]
+    return is_is_not_mapping[text]
+
+
+fields_mapping = {
+    '.blue': blue,
+    '.count': lambda l: len(l),
+    '.direction': lambda r: r.direction,
+    '.green': green,
+    '.object': lambda ob: ob.object,
+    '.origin': lambda x: x.origin,
+    '.red': red,
+    '.t': lambda i: i.t,
+    '.transform': lambda o: o.transform,
+    '.w': w,
+    '.x': o,
+    '.y': y,
+    '.z': z,
+}
+
+
+@with_pattern(r"|".join(fields_mapping))
+def parse_field(text):
+    return fields_mapping[text]
