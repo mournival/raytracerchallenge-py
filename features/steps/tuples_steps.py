@@ -2,7 +2,7 @@ from behave import use_step_matcher, given, then, step, register_type
 
 from features.environment import assert_equal, parse_ratio, parse_operation, assert_approximately_equal, parse_id, \
     parse_is_is_not, parse_field
-from tuple import tuple_trtc, vector, is_point, is_vector
+from tuple import is_point, is_vector
 
 use_step_matcher("parse")
 register_type(field=parse_field)
@@ -85,9 +85,9 @@ def step_tuple_field_equals_literal(context, name, field, expected):
     assert_equal(field(context.scenario_vars[name]), expected)
 
 
-@then("-{:id} = tuple({:g}, {:g}, {:g}, {:g})")
-def step_tuple_negate(context, name, x, y, z, w):
-    assert_equal(-context.scenario_vars[name], tuple_trtc(x, y, z, w))
+@then("-{:id} = {:op}({:g}, {:g}, {:g}, {:g})")
+def step_tuple_negate(context, name, op, x, y, z, w):
+    assert_equal(-context.scenario_vars[name], op(x, y, z, w))
 
 
 @then("{:id} = {:op}({:g}, {:g}, {:g}, {:g})")
@@ -132,9 +132,9 @@ def step_tuple_operations_equal(context, op, v, dtype, x, y, z):
     assert_equal(op(context.scenario_vars[v]), dtype(x, y, z))
 
 
-@then("{:op}({:id}) = approximately vector({:g}, {:g}, {:g})")
-def step_tuple_normalized_approximately_equals(context, op, v, x, y, z):
-    assert_approximately_equal(op(context.scenario_vars[v]), vector(x, y, z))
+@then("{:op}({:id}) = approximately {:op}({:g}, {:g}, {:g})")
+def step_tuple_normalized_approximately_equals(context, op, v, dtype, x, y, z):
+    assert_approximately_equal(op(context.scenario_vars[v]), dtype(x, y, z))
 
 
 @then("{:op}({:id}, {:id}) = {:g}")

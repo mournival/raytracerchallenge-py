@@ -13,7 +13,7 @@ from intersect import intersections, hit, intersection, intersect
 from matrix import array_equal, array_approximately_equal, matrix, transpose, translation, scaling, minor, inverse, \
     cofactor, det, rotation_x, rotation_y, rotation_z
 from ray import transform, ray, position
-from tuple import y, vector, tuple_trtc, point, normalize, magnitude, cross, dot, z, w, x
+from tuple import y, vector, tuple_trtc, point, normalize, magnitude, cross, dot, z, w, x, is_point
 
 
 def before_feature(context, _feature):
@@ -111,6 +111,8 @@ operation_mapping = {
     'intersection': intersection,
     'intersections': intersections,
     'inverse': inverse,
+    'is_point': is_point,
+    'is_vector': is_point,
     'magnitude': magnitude,
     'minor': minor,
     'normalize': normalize,
