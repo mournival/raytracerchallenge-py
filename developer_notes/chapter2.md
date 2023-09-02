@@ -1,3 +1,5 @@
+# Chapter 2: Drawing on a Canvas
+
 The canvas class. This is the big compromise. I made the canvas mutable.
 My rationale  is that the application is
 1. Read the scene model

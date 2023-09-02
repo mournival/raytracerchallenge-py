@@ -1,4 +1,5 @@
-# Introduction
+# Chapter 3: Matrices
+## Introduction
 Biggest diversion from the intent of the book: I am using numpy for
 the matrix operations. Two reasons:
 1. I have done matrix implementations many times, in C++, Java, Typescript

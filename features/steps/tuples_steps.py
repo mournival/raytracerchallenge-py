@@ -76,7 +76,7 @@ def step_tuple_array_element_field_equals_var(context, name, i, field, expected)
 
 
 @then("{:id}{:field} = {:id}")
-def step_tuple_origin_equals_var(context, name, field, expected):
+def step_tuple_field_equals_var(context, name, field, expected):
     assert_equal(field(context.scenario_vars[name]), context.scenario_vars[expected])
 
 

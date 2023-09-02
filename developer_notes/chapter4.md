@@ -1,4 +1,4 @@
-# Translation
+# Chapter 4: Matrix Translation
 This looks it is going to be the first big refactor. Due to how matrix vector
 multiplication works using numpy, using namedtuples for the Tuples (vector & point) 
 may be a poor design choice.
