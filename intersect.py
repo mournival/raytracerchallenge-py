@@ -4,7 +4,7 @@ from typing import List
 intersection = namedtuple('Intersection', 't object')
 
 
-def intersect(o, r) -> List[float]:
+def intersect(o, r) -> List[intersection]:
     return o.intersect(r)
 
 

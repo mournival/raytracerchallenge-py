@@ -1,22 +1,22 @@
 import math
 
+import tuple as tp
 from intersect import intersection
-from matrix import eye, inverse
+from matrix import inverse, eye
 from ray import ray, transform
-from tuple import point, dot
 
 
 class Sphere(object):
 
-    def __init__(self, transform=eye(4)):
-        self.transform = transform
+    def __init__(self, transform_matrix=eye(4)):
+        self.transform = transform_matrix
 
     def intersect(self, r: ray):
         tray = transform(r, inverse(self.transform))
-        sphere_to_ray = tray.origin - point(0, 0, 0)
-        a = dot(tray.direction, tray.direction)
-        b = 2 * dot(tray.direction, sphere_to_ray)
-        c = dot(sphere_to_ray, sphere_to_ray) - 1
+        sphere_to_ray = tray.origin - tp.point(0, 0, 0)
+        a = tp.dot(tray.direction, tray.direction)
+        b = 2 * tp.dot(tray.direction, sphere_to_ray)
+        c = tp.dot(sphere_to_ray, sphere_to_ray) - 1
         discriminant = b * b - 4 * a * c
 
         if discriminant < 0:

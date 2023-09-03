@@ -232,4 +232,4 @@ does not offend my senses overly much (it does, no simple solution has presented
 Yanked out custom tuple/color classes, just left api wrappers for np.array
 
 Also implemented the clock demo (thogh it looks more liking an aiming reticle.)
-![clock.png](..%2Fimages%2Fclock.png)
+![chatper4.png](..%2Fimages%2Fchapter4.png)
