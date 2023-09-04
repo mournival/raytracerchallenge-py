@@ -173,3 +173,13 @@ fields_mapping = {
 @with_pattern(r"|".join(fields_mapping))
 def parse_field(text):
     return fields_mapping[text]
+
+
+methods_mapping = {
+    "normal_at": lambda s, p: s.normal_at(p)
+}
+
+
+@with_pattern(r"|".join(methods_mapping))
+def parse_method(text):
+    return methods_mapping[text]

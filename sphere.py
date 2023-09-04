@@ -25,6 +25,9 @@ class Sphere(object):
         d = math.sqrt(discriminant)
         return [intersection((-b - d) / (2 * a), self), intersection((-b + d) / (2 * a), self)]
 
+    def normal_at(self, p):
+        return tp.normalize(p - tp.point(0, 0, 0))
+
 
 sphere = Sphere
 

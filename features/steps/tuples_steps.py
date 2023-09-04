@@ -147,6 +147,12 @@ def step_tuple_binary_operation_equals(context, op1, a, b, op2, x, y, z):
     assert_equal(op1(context.scenario_vars[a], context.scenario_vars[b]), op2(x, y, z))
 
 
+@then("{:id} = {:op}({:id})")
+def step_tuple_equal(context, a, op, b):
+    assert_equal(context.scenario_vars[a], op(context.scenario_vars[b]))
+
+
+@then("{:id} = {:op}({:rn}, {:rn}, {:rn})")
 @then("{:id} = {:op}({:g}, {:g}, {:g})")
 def step_tuple_equal(context, v, dtype, x, y, z):
     assert_equal(context.scenario_vars[v], dtype(x, y, z))
