@@ -23,18 +23,18 @@ def point(_x, _y, _z):
     return np.array([_x, _y, _z, 1.0])
 
 
-def tuple_trtc(_x, _y, _z, _w):
+def vector4(_x, _y, _z, _w):
     return np.array([_x, _y, _z, _w])
 
 
-def vector(_x, _y, _z):
+def vector3(_x, _y, _z):
     return np.array([_x, _y, _z, 0.0])
 
 
-def cross(lhs, rhs):
-    return vector(y(lhs) * z(rhs) - z(lhs) * y(rhs),
-                  z(lhs) * x(rhs) - x(lhs) * z(rhs),
-                  x(lhs) * y(rhs) - y(lhs) * x(rhs))
+def cross3(lhs, rhs):
+    return vector3(y(lhs) * z(rhs) - z(lhs) * y(rhs),
+                   z(lhs) * x(rhs) - x(lhs) * z(rhs),
+                   x(lhs) * y(rhs) - y(lhs) * x(rhs))
 
 
 def dot(lhs, rhs):

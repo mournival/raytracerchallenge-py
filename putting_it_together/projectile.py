@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 
 from canvas import Canvas
 from color import color
-from tuple import point, normalize, vector, x, y
+from tuple import point, normalize, vector3, x, y
 
 projectile = namedtuple('Projectile', 'position velocity')
 environment = namedtuple('Environment', 'gravity wind')
@@ -19,10 +19,10 @@ def tick(env, proj):
 
 def main():
     start = point(0, 1, 0)
-    velocity = normalize(vector(1, 1.8, 0)) * 11.25
+    velocity = normalize(vector3(1, 1.8, 0)) * 11.25
     p = projectile(start, velocity)
-    gravity = vector(0, -0.1, 0)
-    wind = vector(-0.01, 0, 0)
+    gravity = vector3(0, -0.1, 0)
+    wind = vector3(-0.01, 0, 0)
     e = environment(gravity, wind)
     c = Canvas(900, 500)
 

@@ -13,7 +13,7 @@ from intersect import intersections, hit, intersection, intersect
 from matrix import array_equal, array_approximately_equal, matrix, transpose, translation, scaling, minor, inverse, \
     cofactor, det, rotation_x, rotation_y, rotation_z
 from ray import transform, ray, position
-from tuple import y, vector, tuple_trtc, point, normalize, magnitude, cross, dot, z, w, x, is_point, reflect
+from tuple import y, vector3, vector4, point, normalize, magnitude, cross3, dot, z, w, x, is_point, reflect
 
 
 def before_feature(context, _feature):
@@ -103,7 +103,7 @@ operation_mapping = {
     'canvas': canvas.Canvas,
     'cofactor': cofactor,
     'color': color,
-    'cross': cross,
+    'cross': cross3,
     'determinant': det,
     'dot': dot,
     'hit': hit,
@@ -127,8 +127,8 @@ operation_mapping = {
     'transform': transform,
     'translation': translation,
     'transpose': transpose,
-    'tuple': tuple_trtc,
-    'vector': vector,
+    'tuple': vector4,
+    'vector': vector3,
 }
 
 

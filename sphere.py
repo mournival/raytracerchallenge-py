@@ -30,7 +30,7 @@ class Sphere(object):
         object_point = matrix.dot(self._inverse_transform, world_point)
         object_normal = object_point - tp.point(0, 0, 0)
         world_normal = matrix.dot(matrix.transpose(self._inverse_transform), object_normal)
-        return tp.normalize(tp.vector(tp.x(world_normal), tp.y(world_normal), tp.z(world_normal)))
+        return tp.normalize(tp.vector3(tp.x(world_normal), tp.y(world_normal), tp.z(world_normal)))
 
 
 sphere = Sphere

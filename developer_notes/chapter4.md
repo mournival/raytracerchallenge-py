@@ -102,10 +102,12 @@ def translation(x, y, z):
 
 The (test) environment file had the largest change, as the custom type parsers was a rabbit's warren of paths. Finally got
 a settled at:
+
 ```python
 import math
 import re
 from parse import with_pattern
+
 
 @with_pattern(r'π\s/\s\d+')
 def parse_radians(text):
@@ -130,8 +132,8 @@ def parse_operation(text):
         from color import Color
         return Color
     if text == 'cross':
-        from tuple import cross
-        return cross
+        from tuple import cross3
+        return cross3
     if text == 'determinant':
         import matrix
         return matrix.det
@@ -163,8 +165,8 @@ def parse_operation(text):
         import matrix
         return matrix.transpose
     if text == 'vector':
-        from tuple import vector
-        return vector
+        from tuple import vector3
+        return vector3
     raise NotImplementedError(f"{text}")
 
 
