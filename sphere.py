@@ -1,5 +1,6 @@
 import math
 
+import matrix
 import tuple as tp
 from intersect import intersection
 from matrix import inverse, eye
@@ -25,8 +26,11 @@ class Sphere(object):
         d = math.sqrt(discriminant)
         return [intersection((-b - d) / (2 * a), self), intersection((-b + d) / (2 * a), self)]
 
-    def normal_at(self, p):
-        return tp.normalize(p - tp.point(0, 0, 0))
+    def normal_at(self, world_point):
+        object_point = matrix.dot(self._inverse_transform, world_point)
+        object_normal = object_point - tp.point(0, 0, 0)
+        world_normal = matrix.dot(matrix.transpose(self._inverse_transform), object_normal)
+        return tp.normalize(tp.vector(tp.x(world_normal), tp.y(world_normal), tp.z(world_normal)))
 
 
 sphere = Sphere

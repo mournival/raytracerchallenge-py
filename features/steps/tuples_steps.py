@@ -1,5 +1,6 @@
 from behave import use_step_matcher, given, then, step, register_type
 
+import matrix
 from features.environment import assert_equal, parse_ratio, parse_operation, assert_approximately_equal, parse_id, \
     parse_is_is_not, parse_field
 from tuple import is_point, is_vector
@@ -21,6 +22,11 @@ def step_tuple_create(context, a, op, x, y, z, w):
 @given("{:id} ← {:op}({:rn}, {:rn}, {:rn})")
 def step_tuple_create_vector_with_radicals(context, name, dtype, x, y, z):
     context.scenario_vars[name] = dtype(x, y, z)
+
+
+@given("{:id} ← {:op}({:g}, {:g}, {:g}) * {:op}({:rad})")
+def step_tuple_create_vector_with_radicals(context, name, op1, x1, y1, z1, op2, rad):
+    context.scenario_vars[name] = matrix.dot(op1(x1, y1, z1), op2(rad))
 
 
 @given("{:id} ← {:op}({:op}({:rn}, {:rn}, {:rn}), {:op}({:rn}, {:rn}, {:rn}))")
@@ -155,7 +161,7 @@ def step_tuple_equal(context, a, op, b):
 @then("{:id} = {:op}({:rn}, {:rn}, {:rn})")
 @then("{:id} = {:op}({:g}, {:g}, {:g})")
 def step_tuple_equal(context, v, dtype, x, y, z):
-    assert_equal(context.scenario_vars[v], dtype(x, y, z))
+    assert_approximately_equal(context.scenario_vars[v], dtype(x, y, z))
 
 
 @then("{:id} = approximately {:op}({:g}, {:g}, {:g})")
