@@ -15,6 +15,7 @@ def main():
     half = wall_size / 2
 
     c = Canvas(canvas_pixels, canvas_pixels)
+    
     red = color(1, 0, 0)
     shape = sphere()
 
@@ -26,9 +27,11 @@ def main():
             r = ray(ray_origin, normalize(p - ray_origin))
 
             xs = intersect(shape, r)
-
+            
             if hit(xs):
                 c[x, y] = red
+            else:
+                c[x, y] = color(y / canvas_pixels, y / canvas_pixels, y / canvas_pixels)
 
     with open('../images/chapter5.ppm', 'w', encoding="ascii") as f:
         for line in c.to_ppm():
