@@ -177,3 +177,4 @@ def step_tuple_color_addition(context, a, b, op, r, g, bl):
 @then("{:id} * {:g} = {:op}({:g}, {:g}, {:g})")
 def step_tuple_color_scaling(context, a, c, op, r, g, b):
     assert_equal(context.scenario_vars[a] * c, op(r, g, b))
+

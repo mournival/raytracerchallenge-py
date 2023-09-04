@@ -55,3 +55,7 @@ def magnitude(v):
 
 def normalize(v):
     return v / magnitude(v)
+
+
+def reflect(a, b):
+    return a - b * 2 * dot(a, b)
