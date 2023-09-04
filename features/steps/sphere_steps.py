@@ -1,7 +1,7 @@
 from behave import use_step_matcher, given, when, step, register_type
 
 from features.environment import parse_ratio, parse_operation, parse_id, parse_field, parse_method
-from sphere import sphere, set_transform
+from sphere import set_transform
 
 use_step_matcher("parse")
 register_type(field=parse_field)
@@ -11,9 +11,9 @@ register_type(rn=parse_ratio)
 register_type(op=parse_operation)
 
 
-@given("{:id} ← sphere()")
-def step_matrix_create_transpose(context, a):
-    context.scenario_vars[a] = sphere()
+@given("{:id} ← {:op}()")
+def step_create(context, a, op):
+    context.scenario_vars[a] = op()
 
 
 @step("set_transform({:id}, {:id})")

@@ -1,5 +1,6 @@
 from collections import namedtuple
 
+from color import color
 from matrix import dot
 
 ray = namedtuple('Ray', 'origin direction')
@@ -14,3 +15,12 @@ def transform(r, m):
 
 
 point_light = namedtuple('PointLight', 'position, intensity')
+material = namedtuple('Material',
+                      'color ambient diffuse specular shininess',
+                      defaults=(
+                          color(1, 1, 1),
+                          0.1,
+                          0.9,
+                          0.9,
+                          200.0
+                      ))
