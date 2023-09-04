@@ -11,3 +11,6 @@ def position(r, t):
 
 def transform(r, m):
     return ray(dot(m, r.origin), dot(m, r.direction))
+
+
+point_light = namedtuple('PointLight', 'position, intensity')

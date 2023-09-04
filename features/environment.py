@@ -12,7 +12,7 @@ from color import color, red, blue, green
 from intersect import intersections, hit, intersection, intersect
 from matrix import array_equal, array_approximately_equal, matrix, transpose, translation, scaling, minor, inverse, \
     cofactor, det, rotation_x, rotation_y, rotation_z
-from ray import transform, ray, position
+from ray import transform, ray, position, point_light
 from tuple import y, vector3, vector4, point, normalize, magnitude, cross3, dot, z, w, x, is_point, reflect
 
 
@@ -117,6 +117,7 @@ operation_mapping = {
     'minor': minor,
     'normalize': normalize,
     'point': point,
+    'point_light': point_light,
     'position': position,
     'ray': ray,
     'reflect': reflect,
@@ -158,8 +159,10 @@ fields_mapping = {
     '.direction': lambda r: r.direction,
     '.green': green,
     '.height': lambda c: c.height,
+    '.intensity': lambda r: r.intensity,
     '.object': lambda ob: ob.object,
     '.origin': lambda ob: ob.origin,
+    '.position': lambda ob: ob.position,
     '.red': red,
     '.t': lambda i: i.t,
     '.transform': lambda o: o.transform,
