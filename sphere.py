@@ -10,9 +10,10 @@ class Sphere(object):
 
     def __init__(self, transform_matrix=eye(4)):
         self.transform = transform_matrix
+        self._inverse_transform = inverse(self.transform)
 
     def intersect(self, r: ray):
-        tray = transform(r, inverse(self.transform))
+        tray = transform(r, self._inverse_transform)
         sphere_to_ray = tray.origin - tp.point(0, 0, 0)
         a = tp.dot(tray.direction, tray.direction)
         b = 2 * tp.dot(tray.direction, sphere_to_ray)
