@@ -1,18 +1,14 @@
 import numpy as np
-from behave import use_step_matcher, given, when, then, step, register_type
+from behave import use_step_matcher, when, then, step, register_type
 
 from color import color
 from features.environment import parse_id, parse_operation, parse_user_g
+from sphere import set_transform
 
 use_step_matcher("parse")
 register_type(id=parse_id)
 register_type(op=parse_operation)
 register_type(rn=parse_user_g)
-
-
-@given("{:id} ← {:op}({:rn}, {:rn})")
-def step_canvas_create(context, c, op, h, w):
-    context.scenario_vars[c] = op(h, w)
 
 
 @step("every pixel of {:id} is color({:rn}, {:rn}, {:rn})")
@@ -55,3 +51,13 @@ def step_canvas_fill(context, c, r, g, b):
 @then("{:id} ends with a newline character")
 def step_canvas_ppm_end_newline(context, ppm):
     assert context.scenario_vars[ppm][-1] == '\n', f"{ppm} does not end with a newline character"
+
+
+@step("set_transform({:id}, {:id})")
+def step_set_transform(context, s, t):
+    context.scenario_vars[s] = set_transform(context.scenario_vars[s], context.scenario_vars[t])
+
+
+@step("set_transform({:id}, {:op}({:rn}, {:rn}, {:rn}))")
+def step_set_transform_from_op(context, s, op, x, y, z):
+    context.scenario_vars[s] = set_transform(context.scenario_vars[s], op(x, y, z))
