@@ -12,7 +12,7 @@ from color import color, red, blue, green
 from intersect import intersections, hit, intersection, intersect
 from matrix import array_equal, array_approximately_equal, matrix, transpose, translation, scaling, minor, inverse, \
     cofactor, det, rotation_x, rotation_y, rotation_z
-from ray import transform, ray, position, point_light, material
+from ray import transform, ray, position, point_light, material, lighting
 from sphere import sphere
 from tuple import y, vector3, vector4, point, normalize, magnitude, cross3, dot, z, w, x, is_point, reflect
 
@@ -109,6 +109,7 @@ operation_mapping = {
     'inverse': inverse,
     'is_point': is_point,
     'is_vector': is_point,
+    'lighting': lighting,
     'magnitude': magnitude,
     'material': material,
     'minor': minor,
@@ -152,34 +153,34 @@ def parse_is_is_not(text):
 
 
 fields_mapping = {
-    '.ambient': lambda ob: ob.ambient,
-    '.blue': blue,
-    '.count': lambda lx: len(lx),
-    '.color': lambda ob: ob.color,
-    '.direction': lambda r: r.direction,
-    '.diffuse': lambda r: r.diffuse,
-    '.green': green,
-    '.height': lambda c: c.height,
-    '.intensity': lambda r: r.intensity,
-    '.object': lambda ob: ob.object,
-    '.origin': lambda ob: ob.origin,
-    '.position': lambda ob: ob.position,
-    '.red': red,
-    '.specular': lambda o: o.specular,
-    '.shininess': lambda o: o.shininess,
-    '.t': lambda i: i.t,
-    '.transform': lambda o: o.transform,
-    '.w': w,
-    '.width': lambda c: c.width,
-    '.x': x,
-    '.y': y,
-    '.z': z,
+    '\.ambient': lambda ob: ob.ambient,
+    '\.blue': blue,
+    '\.count': lambda lx: len(lx),
+    '\.color': lambda ob: ob.color,
+    '\.direction': lambda r: r.direction,
+    '\.diffuse': lambda r: r.diffuse,
+    '\.green': green,
+    '\.height': lambda c: c.height,
+    '\.intensity': lambda r: r.intensity,
+    '\.object': lambda ob: ob.object,
+    '\.origin': lambda ob: ob.origin,
+    '\.position': lambda ob: ob.position,
+    '\.red': red,
+    '\.specular': lambda o: o.specular,
+    '\.shininess': lambda o: o.shininess,
+    '\.t': lambda i: i.t,
+    '\.transform': lambda o: o.transform,
+    '\.w': w,
+    '\.width': lambda c: c.width,
+    '\.x': x,
+    '\.y': y,
+    '\.z': z,
 }
 
 
 @with_pattern(r"|".join(fields_mapping))
 def parse_field(text):
-    return fields_mapping[text]
+    return fields_mapping[f"\{text}"]
 
 
 methods_mapping = {

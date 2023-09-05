@@ -52,14 +52,20 @@ def step_create_op2_val_val(context, c, op, h, w):
     context.scenario_vars[c] = op(h, w)
 
 
-@given("{:id} ← {:op}({:rn}, {:rn}, {:rn})")
+@step("{:id} ← {:op}({:rn}, {:rn}, {:rn})")
 def step_create_op3_vals(context, name, dtype, x, y, z):
     context.scenario_vars[name] = dtype(x, y, z)
 
 
 @given('{:id} ← {:op}({:rn}, {:rn}, {:rn}, {:rn})')
-def step_create_op4(context, a, op, x, y, z, w):
+def step_create_op4_vals(context, a, op, x, y, z, w):
     context.scenario_vars[a] = op(x, y, z, w)
+
+
+@step('{:id} ← {:op}({:id}, {:id}, {:id}, {:id}, {:id})')
+def step_create_op5_ids(context, a, op, v, w, x, y, z):
+    context.scenario_vars[a] = op(context.scenario_vars[v], context.scenario_vars[w], context.scenario_vars[x],
+                                  context.scenario_vars[y], context.scenario_vars[z])
 
 
 @given("{:id} ← {:op}({:rn}, {:rn}, {:rn}) * {:op}({:rn})")

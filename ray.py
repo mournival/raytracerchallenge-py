@@ -24,3 +24,7 @@ material = namedtuple('Material',
                           0.9,
                           200.0
                       ))
+
+
+def lighting(m, light, position, eyev, normalv):
+    return color(1.9, 1.9, 1.9)
