@@ -43,7 +43,7 @@ def step_matrix_create_rotation_x(context, c, op, radians):
     context.scenario_vars[c] = op(radians)
 
 
-@step("{:id} ← shearing({:g}, {:g}, {:g}, {:g}, {:g}, {:g})")
+@step("{:id} ← shearing({:rn}, {:rn}, {:rn}, {:rn}, {:rn}, {:rn})")
 def step_matrix_create_shearing(context, c, x_y, x_z, y_x, y_z, z_x, z_y):
     context.scenario_vars[c] = shearing(x_y, x_z, y_x, y_z, z_x, z_y)
 
@@ -53,13 +53,12 @@ def step_matrix_create_inverse(context, b, op, a):
     context.scenario_vars[b] = op(context.scenario_vars[a])
 
 
-@step("{:id} ← submatrix({:id}, {:d}, {:d})")
+@step("{:id} ← submatrix({:id}, {:rn}, {:rn})")
 def step_matrix_create_submatrix(context, b, a, m, n):
     context.scenario_vars[b] = submatrix(context.scenario_vars[a], m, n)
 
 
-@then("{:id}[{:d},{:d}] = {:g}")
-@then("{:id}[{:d},{:d}] = {:rn}")
+@then("{:id}[{:rn},{:rn}] = {:rn}")
 def step_matrix_element_approximately_equals(context, name, r, c, expected):
     assert_approximately_equal(context.scenario_vars[name][r, c], expected)
 
@@ -75,7 +74,6 @@ def step_matrix_tuple_multiplication_equals(context, a, b, c):
 
 
 @then("{:id} * {:id} = {:op}({:rn}, {:rn}, {:rn})")
-@then("{:id} * {:id} = {:op}({:g}, {:g}, {:g})")
 def step_matrix_point_multiplication_equals(context, a, b, dtype, x, y, z):
     if dtype == color:
         actual = context.scenario_vars[a] * context.scenario_vars[b]
@@ -109,18 +107,18 @@ def step_matrix_transpose_approximately_equal(context, operation, a):
     assert_array_approximately_equal(operation(context.scenario_vars[a]), create_table_from(context))
 
 
-@then("{:op}({:id}, {:d}, {:d}) = {:g}")
+@then("{:op}({:id}, {:rn}, {:rn}) = {:rn}")
 def step_matrix_factor_equals(context, operation, a, r, c, expected):
     assert_approximately_equal(operation(context.scenario_vars[a], r, c), expected)
 
 
-@then("{:id} * {:id} = {:op}({:g}, {:g}, {:g}, {:g})")
+@then("{:id} * {:id} = {:op}({:rn}, {:rn}, {:rn}, {:rn})")
 def step_matrix_tuple_dot_product_equals(context, a, b, op, x, y, z, w):
     assert_array_equal(dot(context.scenario_vars[a], context.scenario_vars[b]), op(x, y, z, w))
 
 
-@then("submatrix({:id}, {:d}, {:d}) is the following {}x{} matrix")
-@then("submatrix({:id}, {:d}, {:d}) is the following {}x{} matrix:")
+@then("submatrix({:id}, {:rn}, {:rn}) is the following {}x{} matrix")
+@then("submatrix({:id}, {:rn}, {:rn}) is the following {}x{} matrix:")
 def step_matrix_submatrix_equals(context, a, m, n, _m, _n):
     assert_array_equal(submatrix(context.scenario_vars[a], m, n), create_table_from(context))
 

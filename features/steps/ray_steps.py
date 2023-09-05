@@ -8,6 +8,6 @@ register_type(rn=parse_user_g)
 register_type(op=parse_operation)
 
 
-@then("{:op}({:id}, {:g}) = {:op}({:g}, {:g}, {:g})")
+@then("{:op}({:id}, {:rn}) = {:op}({:rn}, {:rn}, {:rn})")
 def step_binary_operations_equal(context, operation, r, t, dtype, x, y, z):
     assert_equal(operation(context.scenario_vars[r], t), dtype(x, y, z))

@@ -52,7 +52,7 @@ def create_table_from(context):
     return matrix(table_data)
 
 
-@with_pattern(r'-?√?\d*\s*/\s*\d+|\d+/√\d+|√\d+|π\s*/\s*\d+|-?\d+')
+@with_pattern(r'-?√?\d*\s*/\s*\d+|\d+/√\d+|√\d+|π\s*/\s*\d+|-?\d+|-?\d+.\d+')
 def parse_user_g(text):
     m = re.match(r'^√(\d+)$', text)
     if m:
@@ -87,7 +87,7 @@ def parse_user_g(text):
     m = re.match(r'^(-?\d*)$', text)
     if m:
         return int(m.groups()[0])
-    raise ValueError()
+    return float(text)
 
 
 @with_pattern(r'[a-zA-Z]+_[a-zA-Z]+|[a-zA-Z]+|[a-z]\d')

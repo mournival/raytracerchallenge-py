@@ -21,12 +21,11 @@ def step_set_transform(context, s, t):
     context.scenario_vars[s] = set_transform(context.scenario_vars[s], context.scenario_vars[t])
 
 
-@step("set_transform({:id}, {:op}({:g}, {:g}, {:g}))")
+@step("set_transform({:id}, {:op}({:rn}, {:rn}, {:rn}))")
 def step_set_transform_from_op(context, s, op, x, y, z):
     context.scenario_vars[s] = set_transform(context.scenario_vars[s], op(x, y, z))
 
 
 @when("{:id} ← {:mthd}({:id}, {:op}({:rn}, {:rn}, {:rn}))")
-@when("{:id} ← {:mthd}({:id}, {:op}({:g}, {:g}, {:g}))")
 def step_impl(context, n, method, s, dtype, x, y, z):
     context.scenario_vars[n] = method(context.scenario_vars[s], dtype(x, y, z))
