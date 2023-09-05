@@ -6,12 +6,13 @@ import numpy
 import numpy as np
 from behave.model import Row
 from parse import with_pattern
+from parse_type import TypeBuilder
 
 import canvas
 from color import color, red, blue, green
 from intersect import intersections, hit, intersection, intersect
 from matrix import array_equal, array_approximately_equal, matrix, transpose, translation, scaling, minor, inverse, \
-    cofactor, det, rotation_x, rotation_y, rotation_z
+    cofactor, det, rotation_x, rotation_y, rotation_z, shearing
 from ray import transform, ray, position, point_light, material, lighting
 from sphere import sphere
 from tuple import y, vector3, vector4, point, normalize, magnitude, cross3, dot, z, w, x, is_point, reflect
@@ -95,6 +96,9 @@ def parse_id(text):
     return text
 
 
+parse_user_g_many = TypeBuilder.with_many(parse_user_g)
+parse_id_many = TypeBuilder.with_many(parse_id)
+
 operation_mapping = {
     'canvas': canvas.Canvas,
     'cofactor': cofactor,
@@ -123,6 +127,7 @@ operation_mapping = {
     'rotation_y': rotation_y,
     'rotation_z': rotation_z,
     'scaling': scaling,
+    'shearing': shearing,
     'sphere': sphere,
     'transform': transform,
     'translation': translation,
