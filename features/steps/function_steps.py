@@ -16,7 +16,7 @@ register_type(mn=parse_matrix_name)
 register_type(mthd=parse_method)
 register_type(op=parse_operation)
 register_type(rn=parse_user_g)
-register_type(rna=parse_user_g_many)
+register_type(rns=parse_user_g_many)
 
 
 @given("{:id} ← {:op}()")
@@ -39,22 +39,22 @@ def step_create_op_ids(context, a, op, ids):
     context.scenario_vars[a] = op(*[context.scenario_vars[i] for i in ids])
 
 
-@given("{:id} ← {:op}({:rna})")
+@given("{:id} ← {:op}({:rns})")
 def step_create_op_vals(context, c, op, params):
     context.scenario_vars[c] = op(*params)
 
 
-@given("{:id} ← {:op}({:rna}) * {:op}({:rn})")
+@given("{:id} ← {:op}({:rns}) * {:op}({:rn})")
 def step_create_op_dot_op1(context, name, op1, params, op2, rad):
     context.scenario_vars[name] = matrix.dot(op1(*params), op2(rad))
 
 
-@given("{:id} ← {:op}({:op}({:rna}), {:op}({:rna}))")
+@given("{:id} ← {:op}({:op}({:rns}), {:op}({:rns}))")
 def step_create_op2_with_op_op(context, name, op1, op2, params2, op3, params3):
     context.scenario_vars[name] = op1(op2(*params2), op3(*params3))
 
 
-@step("{:id} ← {:mthd}({:id}, {:op}({:rna}))")
+@step("{:id} ← {:mthd}({:id}, {:op}({:rns}))")
 def step_create_method_id_op_vals(context, n, method, s, dtype, params):
     context.scenario_vars[n] = method(context.scenario_vars[s], dtype(*params))
 
@@ -100,7 +100,7 @@ def step_is_not_invertible(context, a):
     assert (not matrix.invertible(context.scenario_vars[a]))
 
 
-@then("{:id}{:field} = {:op}({:rna})")
+@then("{:id}{:field} = {:op}({:rns})")
 def step_field_equals_op3(context, name, field, op, params):
     assert_equal(field(context.scenario_vars[name]), op(*params))
 
@@ -125,12 +125,12 @@ def step_field_equals_val(context, name, field, expected):
     assert_equal(field(context.scenario_vars[name]), expected)
 
 
-@then("-{:id} = {:op}({:rna})")
+@then("-{:id} = {:op}({:rns})")
 def step_negate_equals_op4_vals(context, name, op, params):
     assert_equal(-context.scenario_vars[name], op(*params))
 
 
-@then("{:id} = {:op}({:rna})")
+@then("{:id} = {:op}({:rns})")
 def step_id_equals_op4_vals(context, name, op, params):
     assert_approximately_equal(context.scenario_vars[name], op(*params))
 
@@ -140,12 +140,12 @@ def step_subtraction_equals_op3_vals(context, a, b, dtype, x, y, z):
     assert_approximately_equal(context.scenario_vars[a] - context.scenario_vars[b], dtype(x, y, z))
 
 
-@then("{:id} * {:rn} = {:op}({:rna})")
+@then("{:id} * {:rn} = {:op}({:rns})")
 def step_scalar_multiplication_equals_op4_vals(context, a, c, op, params):
     assert_equal(context.scenario_vars[a] * c, op(*params))
 
 
-@then("{:id} / {:rn} = {:op}({:rna})")
+@then("{:id} / {:rn} = {:op}({:rns})")
 def step_scalar_division_equals_op4_vals(context, a, c, op, params):
     assert_equal(context.scenario_vars[a] / c, op(*params))
 
@@ -160,12 +160,12 @@ def step_operation_approximately_equals_val(context, op, a, expected):
     assert_equal(op(context.scenario_vars[a]), expected)
 
 
-@then("{:op}({:id}) = {:op}({:rna})")
+@then("{:op}({:id}) = {:op}({:rns})")
 def step_op1_id_equals_op3_val(context, op, v, dtype, params):
     assert_equal(op(context.scenario_vars[v]), dtype(*params))
 
 
-@then("{:op}({:id}) = approximately {:op}({:rna})")
+@then("{:op}({:id}) = approximately {:op}({:rns})")
 def step_op1_id_approximate_equals_op3_val(context, op, v, dtype, params):
     assert_approximately_equal(op(context.scenario_vars[v]), dtype(*params))
 
@@ -175,7 +175,7 @@ def step_op2_ids_equals_val(context, op, a, b, expected):
     assert_equal(op(context.scenario_vars[a], context.scenario_vars[b]), expected)
 
 
-@then("{:op}({:id}, {:id}) = {:op}({:rna})")
+@then("{:op}({:id}, {:id}) = {:op}({:rns})")
 def step_op2_ids_equals_op3_vals(context, op1, a, b, op2, params):
     assert_equal(op1(context.scenario_vars[a], context.scenario_vars[b]), op2(*params))
 
@@ -185,17 +185,17 @@ def step_id_equals_op1_id(context, a, op, b):
     assert_equal(context.scenario_vars[a], op(context.scenario_vars[b]))
 
 
-@then("{:id} = approximately {:op}({:rna})")
+@then("{:id} = approximately {:op}({:rns})")
 def step_id_approximately_equal_op3_vals(context, v, dtype, params):
     assert_approximately_equal(context.scenario_vars[v], dtype(*params))
 
 
-@then("{:id} + {:id} = {:op}({:rna})")
+@then("{:id} + {:id} = {:op}({:rns})")
 def step_addition_equals_op3_vals(context, a, b, op, params):
     assert_equal(context.scenario_vars[a] + context.scenario_vars[b], op(*params))
 
 
-@then("{:op}({:id}, {:rn}) = {:op}({:rna})")
+@then("{:op}({:id}, {:rn}) = {:op}({:rns})")
 def step_op2_id_val_equals_op3_vals(context, operation, r, t, dtype, params):
     assert_equal(operation(context.scenario_vars[r], t), dtype(*params))
 
@@ -215,7 +215,7 @@ def step_multiplication_equals_id(context, a, b, c):
     assert_array_equal(matrix.dot(context.scenario_vars[a], context.scenario_vars[b]), context.scenario_vars[c])
 
 
-@then("{:id} * {:id} = {:op}({:rna})")
+@then("{:id} * {:id} = {:op}({:rns})")
 def step_point_multiplication_equals_op3_vals(context, a, b, dtype, params):
     if dtype == color:
         actual = context.scenario_vars[a] * context.scenario_vars[b]
