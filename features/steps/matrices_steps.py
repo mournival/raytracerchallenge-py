@@ -1,17 +1,16 @@
 from behave import use_step_matcher, given, then, step, register_type
 
 from color import color
-from features.environment import assert_approximately_equal, parse_ratio, parse_id, parse_matrix_name, \
-    parse_operation, parse_radians, assert_array_equal, assert_array_approximately_equal, assert_array_not_equal, \
+from features.environment import assert_approximately_equal, parse_user_g, parse_id, parse_matrix_name, \
+    parse_operation, assert_array_equal, assert_array_approximately_equal, assert_array_not_equal, \
     create_table_from
 from matrix import dot, submatrix, invertible, shearing
 
 use_step_matcher("parse")
-register_type(rad=parse_radians)
 register_type(id=parse_id)
 register_type(mn=parse_matrix_name)
 register_type(op=parse_operation)
-register_type(rn=parse_ratio)
+register_type(rn=parse_user_g)
 
 
 @given("{:mn}")
@@ -39,7 +38,7 @@ def step_matrix_create_chained_product(context, t, a, b, c):
     context.scenario_vars[t] = dot(dot(context.scenario_vars[a], context.scenario_vars[b]), context.scenario_vars[c])
 
 
-@step("{:id} ← {:op}({:rad})")
+@step("{:id} ← {:op}({:rn})")
 def step_matrix_create_rotation_x(context, c, op, radians):
     context.scenario_vars[c] = op(radians)
 
@@ -113,11 +112,6 @@ def step_matrix_transpose_approximately_equal(context, operation, a):
 @then("{:op}({:id}, {:d}, {:d}) = {:g}")
 def step_matrix_factor_equals(context, operation, a, r, c, expected):
     assert_approximately_equal(operation(context.scenario_vars[a], r, c), expected)
-
-
-@then("{:op}({:id}) = {:g}")
-def step_matrix_determinant_equals(context, operation, a, expected):
-    assert_approximately_equal(operation(context.scenario_vars[a]), expected)
 
 
 @then("{:id} * {:id} = {:op}({:g}, {:g}, {:g}, {:g})")

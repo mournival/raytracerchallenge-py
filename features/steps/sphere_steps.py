@@ -1,13 +1,13 @@
 from behave import use_step_matcher, given, when, step, register_type
 
-from features.environment import parse_ratio, parse_operation, parse_id, parse_field, parse_method
+from features.environment import parse_user_g, parse_operation, parse_id, parse_field, parse_method
 from sphere import set_transform
 
 use_step_matcher("parse")
 register_type(field=parse_field)
 register_type(mthd=parse_method)
 register_type(id=parse_id)
-register_type(rn=parse_ratio)
+register_type(rn=parse_user_g)
 register_type(op=parse_operation)
 
 

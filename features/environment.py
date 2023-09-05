@@ -52,8 +52,8 @@ def create_table_from(context):
     return matrix(table_data)
 
 
-@with_pattern(r'-?√?\d*\s*/\s*\d+|\d+/√\d+|√\d+|\d+')
-def parse_ratio(text):
+@with_pattern(r'-?√?\d*\s*/\s*\d+|\d+/√\d+|√\d+|π\s*/\s*\d+|-?\d+')
+def parse_user_g(text):
     m = re.match(r'^√(\d+)$', text)
     if m:
         return sqrt(int(m.groups()[0]))
@@ -81,21 +81,16 @@ def parse_ratio(text):
     if m:
         g = m.groups()
         return int(g[0]) / int(g[1])
-    m = re.match(r'^(\d*)$', text)
+    m = re.match(r'π\s*/\s*(\d+)$', text)
+    if m:
+        return math.pi / int(m.groups()[0])
+    m = re.match(r'^(-?\d*)$', text)
     if m:
         return int(m.groups()[0])
     raise ValueError()
 
 
-@with_pattern(r'π\s*/\s*\d+')
-def parse_radians(text):
-    m = re.match(r'π\s*/\s*(\d+)$', text)
-    if m:
-        return math.pi / int(m.groups()[0])
-    raise ValueError()
-
-
-@with_pattern(r'[a-zA-Z]+_[a-zA-Z]+|[a-zA-Z]+|[aicprv]\d')
+@with_pattern(r'[a-zA-Z]+_[a-zA-Z]+|[a-zA-Z]+|[a-z]\d')
 def parse_id(text):
     return text
 

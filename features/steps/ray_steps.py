@@ -1,10 +1,10 @@
 from behave import use_step_matcher, then, register_type
 
-from features.environment import parse_ratio, parse_operation, parse_id, assert_equal
+from features.environment import parse_user_g, parse_operation, parse_id, assert_equal
 
 use_step_matcher("parse")
 register_type(id=parse_id)
-register_type(rn=parse_ratio)
+register_type(rn=parse_user_g)
 register_type(op=parse_operation)
 
 

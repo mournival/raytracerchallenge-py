@@ -1,7 +1,7 @@
 from behave import use_step_matcher, given, then, step, register_type
 
 import matrix
-from features.environment import assert_equal, parse_ratio, parse_operation, assert_approximately_equal, parse_id, \
+from features.environment import assert_equal, parse_user_g, parse_operation, assert_approximately_equal, parse_id, \
     parse_is_is_not, parse_field
 from tuple import is_point, is_vector
 
@@ -9,7 +9,7 @@ use_step_matcher("parse")
 register_type(field=parse_field)
 register_type(id=parse_id)
 register_type(isnota=parse_is_is_not)
-register_type(rn=parse_ratio)
+register_type(rn=parse_user_g)
 register_type(op=parse_operation)
 
 
@@ -24,13 +24,12 @@ def step_tuple_create_vector_with_radicals(context, name, dtype, x, y, z):
     context.scenario_vars[name] = dtype(x, y, z)
 
 
-@given("{:id} ← {:op}({:g}, {:g}, {:g}) * {:op}({:rad})")
+@given("{:id} ← {:op}({:g}, {:g}, {:g}) * {:op}({:rn})")
 def step_tuple_create_vector_with_radicals(context, name, op1, x1, y1, z1, op2, rad):
     context.scenario_vars[name] = matrix.dot(op1(x1, y1, z1), op2(rad))
 
 
 @given("{:id} ← {:op}({:op}({:rn}, {:rn}, {:rn}), {:op}({:rn}, {:rn}, {:rn}))")
-@given("{:id} ← {:op}({:op}({:rn}, {:d}, {:d}), {:op}({:d}, {:d}, {:d}))")
 def step_tuple_create_vector_binary_op_with_radicals(context, name, op1, op2, x2, y2, z2, op3, x3, y3, z3):
     context.scenario_vars[name] = op1(op2(x2, y2, z2), op3(x3, y3, z3))
 
@@ -123,9 +122,10 @@ def step_tuple_scalar_division(context, a, c, op, x, y, z, w):
     assert_equal(context.scenario_vars[a] / c, op(x, y, z, w))
 
 
+@then("{:op}({:id}) = {:g}")
 @then("{:op}({:id}) = {:rn}")
 def step_tuple_operation_equals(context, op, a, expected):
-    assert_equal(op(context.scenario_vars[a]), expected)
+    assert_approximately_equal(op(context.scenario_vars[a]), expected)
 
 
 @then("{:op}({:id}) = approximately {:g}")
