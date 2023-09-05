@@ -185,7 +185,7 @@ fields_mapping = {
 
 @with_pattern(r"|".join(fields_mapping))
 def parse_field(text):
-    return fields_mapping[f"\{text}"]
+    return fields_mapping[f"\\{text}"]
 
 
 methods_mapping = {
