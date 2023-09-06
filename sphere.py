@@ -4,15 +4,16 @@ import matrix
 import tuple as tp
 from intersect import intersection
 from matrix import inverse, eye
-from ray import ray, transform
+from ray import ray, transform, material
 
 
 class Sphere(object):
 
-    def __init__(self, transform_matrix=eye(4)):
+    def __init__(self, transform_matrix=eye(4), material=material()):
         self.transform = transform_matrix
         self._inverse_transform = inverse(self.transform)
-
+        self.material = material
+        
     def intersect(self, r: ray):
         tray = transform(r, self._inverse_transform)
         sphere_to_ray = tray.origin - tp.point(0, 0, 0)

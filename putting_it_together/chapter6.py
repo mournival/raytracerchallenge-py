@@ -43,7 +43,7 @@ def main():
                 c[x, y] = color(0,0,0)
                 # c[x, y] = color(y / canvas_pixels, y / canvas_pixels, y / canvas_pixels)
 
-    with open('./images/chapter6.ppm', 'w', encoding="ascii") as f:
+    with open('../images/chapter6.ppm', 'w', encoding="ascii") as f:
         for line in c.to_ppm():
             f.write(line)
 
