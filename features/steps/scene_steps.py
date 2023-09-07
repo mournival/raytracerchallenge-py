@@ -2,7 +2,7 @@ import numpy as np
 from behave import use_step_matcher, when, then, step, register_type
 
 from color import color
-from features.environment import parse_id, parse_operation, parse_user_g
+from features.environment import parse_id, parse_operation, parse_user_g, assert_equal
 from sphere import set_transform
 
 use_step_matcher("parse")
@@ -61,3 +61,13 @@ def step_set_transform(context, s, t):
 @step("set_transform({:id}, {:op}({:rn}, {:rn}, {:rn}))")
 def step_set_transform_from_op(context, s, op, x, y, z):
     context.scenario_vars[s] = set_transform(context.scenario_vars[s], op(x, y, z))
+
+
+@step("{:id} has no light source")
+def step_test_no_light_source(context, w):
+    assert context.scenario_vars[w].light is None
+
+
+@then("{:id} contains no objects")
+def step_test_no_objects(context, w):
+    assert_equal(len(context.scenario_vars[w].entities), 0)

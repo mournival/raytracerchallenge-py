@@ -16,6 +16,7 @@ from matrix import array_equal, array_approximately_equal, matrix, transpose, tr
 from ray import transform, ray, position, point_light, material, lighting
 from sphere import sphere
 from tuple import y, vector3, vector4, point, normalize, magnitude, cross3, dot, z, w, x, is_point, reflect
+from world import world
 
 
 def before_feature(context, _feature):
@@ -134,6 +135,7 @@ operation_mapping = {
     'transpose': transpose,
     'tuple': vector4,
     'vector': vector3,
+    'world': world,
 }
 
 
