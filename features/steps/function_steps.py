@@ -19,7 +19,7 @@ register_type(rn=parse_user_g)
 register_type(rns=parse_user_g_many)
 
 
-@given("{:id} ← {:op}()")
+@step("{:id} ← {:op}()")
 def step_create_default(context, a, op):
     context.scenario_vars[a] = op()
 

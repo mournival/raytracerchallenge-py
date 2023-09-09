@@ -17,7 +17,8 @@ def world():
     return World(None, [])
 
 
-default_world = World(
+def default_world():
+    return World(
     point_light(point(-10, 10, -10), color(1, 1, 1)),
     [
         sphere(

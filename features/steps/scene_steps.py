@@ -1,9 +1,13 @@
+
 import numpy as np
-from behave import use_step_matcher, when, then, step, register_type
+from behave import use_step_matcher, given, when, then, step, register_type
+from behave.model import Row
 
 from color import color
-from features.environment import parse_id, parse_operation, parse_user_g, assert_equal
-from sphere import set_transform
+from features.environment import parse_id, parse_operation, parse_user_g, assert_equal, operation_mapping
+from matrix import eye
+from ray import material
+from sphere import set_transform, sphere
 
 use_step_matcher("parse")
 register_type(id=parse_id)
@@ -71,3 +75,41 @@ def step_test_no_light_source(context, w):
 @then("{:id} contains no objects")
 def step_test_no_objects(context, w):
     assert_equal(len(context.scenario_vars[w].entities), 0)
+
+
+@given("{:id} ← sphere() with")
+@given("{:id} ← sphere() with:")
+def step_create_entity(context, id):
+    heading_row = Row(context.table.headings, context.table.headings)
+    table_data = context.table.rows
+    table_data.insert(0, heading_row)
+    d = {
+        'material': material(),
+        'transform' : eye(4)
+    }
+    for op, args in table_data:
+        if '.' in op:
+            dtype, field = op.split('.')
+            print(dtype, field)
+            if '(' in args:
+                args = args.translate(str.maketrans('', '', '(),')).split(' ')
+            a = d.get(dtype, operation_mapping[dtype]())._asdict()
+            a[field] = args
+            print(a)
+            d[dtype] = operation_mapping[dtype](a)
+            # a = operation_mapping[op](field, args)
+            print(d[dtype])
+        else:
+            print(op, args)
+    
+    context.scenario_vars[id] = sphere(transform_matrix=d['transform'], material=d['material'])
+
+
+@step("{:id} contains {:id}")
+def step_impl(context, w, o):
+    contains =False
+    obj = context.scenario_vars[o]
+    for e in context.scenario_vars[w].entities:
+        if np.allclose(e.transform, obj.transform) :
+            contains = True
+    assert contains

@@ -16,7 +16,7 @@ from matrix import array_equal, array_approximately_equal, matrix, transpose, tr
 from ray import transform, ray, position, point_light, material, lighting
 from sphere import sphere
 from tuple import y, vector3, vector4, point, normalize, magnitude, cross3, dot, z, w, x, is_point, reflect
-from world import world
+from world import world, default_world
 
 
 def before_feature(context, _feature):
@@ -27,6 +27,8 @@ def before_feature(context, _feature):
 def assert_equal(actual, expected):
     if type(actual) == numpy.ndarray:
         assert np.allclose(actual, expected), f"{actual} != {expected}"
+    elif type(actual) ==  point_light:
+        assert  np.allclose(actual.position, expected.position) and np.allclose(actual.intensity, expected.intensity)
     else:
         assert actual == expected, f"{actual} != {expected}"
 
@@ -105,6 +107,7 @@ operation_mapping = {
     'cofactor': cofactor,
     'color': color,
     'cross': cross3,
+    'default_world': default_world,
     'determinant': det,
     'dot': dot,
     'hit': hit,
@@ -117,6 +120,9 @@ operation_mapping = {
     'lighting': lighting,
     'magnitude': magnitude,
     'material': material,
+    'material.color': lambda prop, val: material(color(*[float(c) for c in val])),
+    'material.diffuse': lambda prop, val: material(diffuse=float(val)),
+    'material.specular': lambda prop, val: material(specular=float(val)),
     'minor': minor,
     'normalize': normalize,
     'point': point,
@@ -169,6 +175,7 @@ fields_mapping = {
     '\.green': green,
     '\.height': lambda c: c.height,
     '\.intensity': lambda r: r.intensity,
+    '\.light': lambda w: w.light,
     '\.object': lambda ob: ob.object,
     '\.origin': lambda ob: ob.origin,
     '\.position': lambda ob: ob.position,
