@@ -264,3 +264,8 @@ def step_submatrix_equals(context, a, m, n, _m, _n):
 def step_inverse_multiplication_equals(context, c, operation, b, a):
     actual = matrix.dot(context.scenario_vars[c], operation(context.scenario_vars[b]))
     assert_array_approximately_equal(actual, context.scenario_vars[a])
+
+
+@step("{:id} ← {:mthd}({:id}, {:id})")
+def set_functional_method(context, a, mthd, o, b):
+    context.scenario_vars[a] = mthd(context.scenario_vars[o], context.scenario_vars[b])

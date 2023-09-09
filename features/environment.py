@@ -10,7 +10,7 @@ from parse_type import TypeBuilder
 
 import canvas
 from color import color, red, blue, green
-from intersect import intersections, hit, intersection, intersect
+from intersect import intersections, hit, intersection
 from matrix import array_equal, array_approximately_equal, matrix, transpose, translation, scaling, minor, inverse, \
     cofactor, det, rotation_x, rotation_y, rotation_z, shearing
 from ray import transform, ray, position, point_light, material, lighting
@@ -111,7 +111,7 @@ operation_mapping = {
     'determinant': det,
     'dot': dot,
     'hit': hit,
-    'intersect': intersect,
+    # 'intersect': intersect,
     'intersection': intersection,
     'intersections': intersections,
     'inverse': inverse,
@@ -197,11 +197,12 @@ def parse_field(text):
     return fields_mapping[f"\\{text}"]
 
 
-methods_mapping = {
-    "normal_at": lambda s, p: s.normal_at(p)
+method_mapping = {
+    "normal_at": lambda s, p: s.normal_at(p),
+    "intersect": lambda s, p: s.intersect(p)
 }
 
 
-@with_pattern(r"|".join(methods_mapping))
+@with_pattern(r"|".join(method_mapping))
 def parse_method(text):
-    return methods_mapping[text]
+    return method_mapping[text]
