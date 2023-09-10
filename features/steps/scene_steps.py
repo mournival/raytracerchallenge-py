@@ -1,13 +1,13 @@
-
 import numpy as np
 from behave import use_step_matcher, given, when, then, step, register_type
 from behave.model import Row
 
 from color import color
-from features.environment import parse_id, parse_operation, parse_user_g, assert_equal, operation_mapping
+from features.environment import parse_id, parse_operation, parse_user_g, assert_equal, method_mapping, \
+    operation_mapping
 from matrix import eye
 from ray import material
-from sphere import set_transform, sphere
+from sphere import sphere
 
 use_step_matcher("parse")
 register_type(id=parse_id)
@@ -57,14 +57,14 @@ def step_canvas_ppm_end_newline(context, ppm):
     assert context.scenario_vars[ppm][-1] == '\n', f"{ppm} does not end with a newline character"
 
 
-@step("set_transform({:id}, {:id})")
-def step_set_transform(context, s, t):
-    context.scenario_vars[s] = set_transform(context.scenario_vars[s], context.scenario_vars[t])
+@step("{:mthd}({:id}, {:id})")
+def step_set_transform(context, mthd, s, t):
+    context.scenario_vars[s] = mthd(context.scenario_vars[s], context.scenario_vars[t])
 
 
-@step("set_transform({:id}, {:op}({:rn}, {:rn}, {:rn}))")
-def step_set_transform_from_op(context, s, op, x, y, z):
-    context.scenario_vars[s] = set_transform(context.scenario_vars[s], op(x, y, z))
+@step("{:mthd}({:id}, {:op}({:rn}, {:rn}, {:rn}))")
+def step_set_transform_from_op(context, mthd, s, op, x, y, z):
+    context.scenario_vars[s] = mthd(context.scenario_vars[s], op(x, y, z))
 
 
 @step("{:id} has no light source")
@@ -85,31 +85,29 @@ def step_create_entity(context, id):
     table_data.insert(0, heading_row)
     d = {
         'material': material(),
-        'transform' : eye(4)
+        'transform': eye(4)
     }
-    for op, args in table_data:
-        if '.' in op:
-            dtype, field = op.split('.')
-            print(dtype, field)
+    for test_cmd, args in table_data:
+        if '.' in test_cmd:
+            dtype, field = test_cmd.split('.')
             if '(' in args:
-                args = args.translate(str.maketrans('', '', '(),')).split(' ')
-            a = d.get(dtype, operation_mapping[dtype]())._asdict()
-            a[field] = args
-            print(a)
-            d[dtype] = operation_mapping[dtype](a)
-            # a = operation_mapping[op](field, args)
-            print(d[dtype])
-        else:
-            print(op, args)
-    
+                args = [float(n) for n in (args.translate(str.maketrans('', '', '(),')).split(' '))]
+            else:
+                args = float(args)
+            d[dtype] = method_mapping[test_cmd](d[dtype], args)
+        elif 'transform' == test_cmd:
+            op, field = args.split('(')
+            args = [float(n) for n in (field.translate(str.maketrans('', '', '(),')).split(' '))]
+            d[test_cmd] = np.matmul(operation_mapping[op](*args), d[test_cmd])
+
     context.scenario_vars[id] = sphere(transform_matrix=d['transform'], material=d['material'])
 
 
 @step("{:id} contains {:id}")
 def step_impl(context, w, o):
-    contains =False
+    contains = False
     obj = context.scenario_vars[o]
     for e in context.scenario_vars[w].entities:
-        if np.allclose(e.transform, obj.transform) :
+        if e == obj:
             contains = True
     assert contains

@@ -1,5 +1,7 @@
 import math
 
+import numpy as np
+
 import matrix
 import tuple as tp
 from intersect import intersection
@@ -13,9 +15,9 @@ class Sphere(object):
         self.transform = transform_matrix
         self._inverse_transform = inverse(self.transform)
         self.material = material
-        
+
     def intersect(self, r: ray):
-        tray = r.transform(self._inverse_transform)
+        tray = r.set_transform(self._inverse_transform)
         sphere_to_ray = tray.origin - tp.point(0, 0, 0)
         a = tp.dot(tray.direction, tray.direction)
         b = 2 * tp.dot(tray.direction, sphere_to_ray)
@@ -33,9 +35,11 @@ class Sphere(object):
         world_normal = matrix.dot(matrix.transpose(self._inverse_transform), object_normal)
         return tp.normalize(tp.vector3(tp.x(world_normal), tp.y(world_normal), tp.z(world_normal)))
 
+    def set_transform(self, t):
+        return sphere(t)
+    
+    def __eq__(self, other):
+        return self.material == other.material and np.allclose(self.transform, other.transform)
+
 
 sphere = Sphere
-
-
-def set_transform(o, t):
-    return sphere(t)

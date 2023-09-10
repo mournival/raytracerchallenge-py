@@ -27,8 +27,6 @@ def before_feature(context, _feature):
 def assert_equal(actual, expected):
     if type(actual) == numpy.ndarray:
         assert np.allclose(actual, expected), f"{actual} != {expected}"
-    elif type(actual) ==  point_light:
-        assert  np.allclose(actual.position, expected.position) and np.allclose(actual.intensity, expected.intensity)
     else:
         assert actual == expected, f"{actual} != {expected}"
 
@@ -199,7 +197,12 @@ method_mapping = {
     "normal_at": lambda s, p: s.normal_at(p),
     "intersect": lambda s, p: s.intersect(p),
     "position": lambda s, p: s.position(p),
-    "transform": lambda s, p: s.transform(p),
+    "transform": lambda s, p: s.set_transform(p),
+    "material.color": lambda s, p: s.set_color(p),
+    "material.diffuse": lambda s, p: s.set_diffuse(p),
+    "material.specular": lambda s, p: s.set_specular(p),
+    "set_transform": lambda s, p: s.set_transform(p),
+
 }
 
 
