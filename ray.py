@@ -22,7 +22,14 @@ class Ray:
 
 ray = Ray
 
-point_light = namedtuple('PointLight', 'position, intensity')
+@dataclass
+class PointLight:
+    position: tuple
+    intensity: color
+    
+    
+point_light = PointLight
+# point_light = namedtuple('PointLight', 'position, intensity')
 material = namedtuple('Material',
                       'color ambient diffuse specular shininess',
                       defaults=(
