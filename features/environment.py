@@ -13,7 +13,7 @@ from color import color, red, blue, green
 from intersect import intersections, hit, intersection
 from matrix import array_equal, array_approximately_equal, matrix, transpose, translation, scaling, minor, inverse, \
     cofactor, det, rotation_x, rotation_y, rotation_z, shearing
-from ray import transform, ray, position, point_light, material, lighting
+from ray import ray, point_light, material, lighting
 from sphere import sphere
 from tuple import y, vector3, vector4, point, normalize, magnitude, cross3, dot, z, w, x, is_point, reflect
 from world import world, default_world
@@ -127,7 +127,6 @@ operation_mapping = {
     'normalize': normalize,
     'point': point,
     'point_light': point_light,
-    'position': position,
     'ray': ray,
     'reflect': reflect,
     'rotation_x': rotation_x,
@@ -136,7 +135,6 @@ operation_mapping = {
     'scaling': scaling,
     'shearing': shearing,
     'sphere': sphere,
-    'transform': transform,
     'translation': translation,
     'transpose': transpose,
     'tuple': vector4,
@@ -199,7 +197,9 @@ def parse_field(text):
 
 method_mapping = {
     "normal_at": lambda s, p: s.normal_at(p),
-    "intersect": lambda s, p: s.intersect(p)
+    "intersect": lambda s, p: s.intersect(p),
+    "position": lambda s, p: s.position(p),
+    "transform": lambda s, p: s.transform(p),
 }
 
 

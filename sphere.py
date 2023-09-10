@@ -4,7 +4,7 @@ import matrix
 import tuple as tp
 from intersect import intersection
 from matrix import inverse, eye
-from ray import ray, transform, material
+from ray import ray, material
 
 
 class Sphere(object):
@@ -15,7 +15,7 @@ class Sphere(object):
         self.material = material
         
     def intersect(self, r: ray):
-        tray = transform(r, self._inverse_transform)
+        tray = r.transform(self._inverse_transform)
         sphere_to_ray = tray.origin - tp.point(0, 0, 0)
         a = tp.dot(tray.direction, tray.direction)
         b = 2 * tp.dot(tray.direction, sphere_to_ray)

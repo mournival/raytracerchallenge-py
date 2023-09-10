@@ -195,7 +195,7 @@ def step_addition_equals_op3_vals(context, a, b, op, params):
     assert_equal(context.scenario_vars[a] + context.scenario_vars[b], op(*params))
 
 
-@then("{:op}({:id}, {:rn}) = {:op}({:rns})")
+@then("{:mthd}({:id}, {:rn}) = {:op}({:rns})")
 def step_op2_id_val_equals_op3_vals(context, operation, r, t, dtype, params):
     assert_equal(operation(context.scenario_vars[r], t), dtype(*params))
 

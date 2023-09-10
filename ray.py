@@ -1,21 +1,26 @@
 import math
 from collections import namedtuple
+from dataclasses import dataclass
 
 import tuple
 from color import color
 from matrix import dot
 from tuple import normalize
 
-ray = namedtuple('Ray', 'origin direction')
+
+@dataclass
+class Ray:
+    origin: tuple
+    direction: tuple
+
+    def position(self, t):
+        return self.origin + self.direction * t
+
+    def transform(self, m):
+        return ray(dot(m, self.origin), dot(m, self.direction))
 
 
-def position(r, t):
-    return r.origin + r.direction * t
-
-
-def transform(r, m):
-    return ray(dot(m, r.origin), dot(m, r.direction))
-
+ray = Ray
 
 point_light = namedtuple('PointLight', 'position, intensity')
 material = namedtuple('Material',
