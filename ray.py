@@ -1,6 +1,5 @@
 import math
-from collections import namedtuple
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 import numpy as np
 
@@ -36,15 +35,21 @@ class PointLight:
 
 point_light = PointLight
 
-material = namedtuple('Material',
-                      'color ambient diffuse specular shininess',
-                      defaults=(
-                          color(1, 1, 1),
-                          0.1,
-                          0.9,
-                          0.9,
-                          200.0
-                      ))
+
+@dataclass
+class Material:
+    color: np.array = field(default_factory=list)
+    ambient: float = 0.1
+    diffuse: float = 0.9
+    specular: float = 0.9
+    shininess: float = 200.0
+
+    def __post_init__(self):
+        if not self.color:
+            self.color = color(1, 1, 1)
+
+
+material = Material
 
 
 def lighting(m, light, pos, eye_v, normal_v):

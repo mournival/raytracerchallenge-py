@@ -1,7 +1,7 @@
 import numpy as np
 
 
-def color(r: float, g: float, b: float):
+def color(r: float = 1.0, g: float= 1.0, b: float= 1.0):
     return np.array([r, g, b])
 
 
