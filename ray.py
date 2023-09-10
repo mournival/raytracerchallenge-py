@@ -2,6 +2,8 @@ import math
 from collections import namedtuple
 from dataclasses import dataclass
 
+import numpy as np
+
 import tuple
 from color import color
 from matrix import dot
@@ -22,14 +24,18 @@ class Ray:
 
 ray = Ray
 
+
 @dataclass
 class PointLight:
     position: tuple
     intensity: color
-    
-    
+
+    def __eq__(self, other):
+        return np.allclose(self.position, other.position) and np.allclose(self.color, other.color)
+
+
 point_light = PointLight
-# point_light = namedtuple('PointLight', 'position, intensity')
+
 material = namedtuple('Material',
                       'color ambient diffuse specular shininess',
                       defaults=(
