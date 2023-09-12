@@ -10,7 +10,9 @@ class Intersection:
     def intersect(self, r):
         return self.object.intersect(r)
 
+
 intersection = Intersection
+
 
 def intersections(*t1):
     return [i for i in sorted(t1, key=lambda i: i.t)]
