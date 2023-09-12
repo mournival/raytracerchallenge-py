@@ -120,6 +120,11 @@ def step_field_equals_id(context, name, field, expected):
     assert_equal(field(context.scenario_vars[name]), context.scenario_vars[expected])
 
 
+@then("{:id}{:field} = {:id}{:field}")
+def step_field_equals_field(context, name, field, expected_name, expected_field):
+    assert_equal(field(context.scenario_vars[name]), expected_field(context.scenario_vars[expected_name]))
+
+
 @then("{:id}{:field} = {:rn}")
 def step_field_equals_val(context, name, field, expected):
     assert_equal(field(context.scenario_vars[name]), expected)
@@ -245,7 +250,7 @@ def step_create_4x4_matrix(context, a):
 @then("{:op}({:id}) is the following matrix:")
 @then("{:op}({:id}) is the following 4x4 matrix")
 @then("{:op}({:id}) is the following 4x4 matrix:")
-def step_marix_operations_approximately_equal(context, operation, a):
+def step_matrix_operations_approximately_equal(context, operation, a):
     assert_array_approximately_equal(operation(context.scenario_vars[a]), create_table_from(context))
 
 

@@ -10,7 +10,7 @@ from parse_type import TypeBuilder
 
 import canvas
 from color import color, red, blue, green
-from intersect import intersections, hit, intersection
+from intersect import intersections, hit, intersection, Computations
 from matrix import array_equal, array_approximately_equal, matrix, transpose, translation, scaling, minor, inverse, \
     cofactor, det, rotation_x, rotation_y, rotation_z, shearing
 from ray import ray, point_light, material, lighting
@@ -86,7 +86,7 @@ def parse_user_g(text):
     m = re.match(r'π\s*/\s*(\d+)$', text)
     if m:
         return math.pi / int(m.groups()[0])
-    m = re.match(r'^(-?\d*)$', text)
+    m = re.match(r'^(-?\d+)$', text)
     if m:
         return int(m.groups()[0])
     return float(text)
@@ -104,6 +104,7 @@ operation_mapping = {
     'canvas': canvas.Canvas,
     'cofactor': cofactor,
     'color': color,
+    'prepare_computations': Computations,
     'cross': cross3,
     'default_world': default_world,
     'determinant': det,
@@ -168,12 +169,15 @@ fields_mapping = {
     '\.color': lambda ob: ob.color,
     '\.direction': lambda r: r.direction,
     '\.diffuse': lambda r: r.diffuse,
+    '\.eyev': lambda r: r.eyev,
     '\.green': green,
     '\.height': lambda c: c.height,
     '\.intensity': lambda r: r.intensity,
-    '\.light': lambda w: w.light,
+    '\.light': lambda ob: ob.light,
+    '\.normalv': lambda ob: ob.normalv,
     '\.object': lambda ob: ob.object,
     '\.origin': lambda ob: ob.origin,
+    '\.point': lambda ob: ob.point,
     '\.position': lambda ob: ob.position,
     '\.red': red,
     '\.specular': lambda o: o.specular,

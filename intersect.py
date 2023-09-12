@@ -1,6 +1,10 @@
 from dataclasses import dataclass
 from typing import List
 
+import numpy as np
+
+from ray import Ray
+
 
 @dataclass
 class Intersection:
@@ -9,6 +13,21 @@ class Intersection:
 
     def intersect(self, r):
         return self.object.intersect(r)
+
+
+class Computations:
+    t: float
+    object: any
+    point: np.array
+    eyev: np.array
+    normalv: np.array
+
+    def __init__(self, i: Intersection, r: Ray):
+        self.t = i.t
+        self.object = i.object
+        self.point = r.position(i.t)
+        self.eyev = -r.direction
+        self.normalv = i.object.normal_at(self.point)
 
 
 intersection = Intersection
