@@ -92,7 +92,7 @@ def parse_user_g(text):
     return float(text)
 
 
-@with_pattern(r'[a-zA-Z]+_[a-zA-Z]+|[a-zA-Z]+|[a-z]\d')
+@with_pattern(r'[a-zA-Z]+_[a-zA-Z]+|[a-zA-Z]{1,3}|[a-zA-Z]{6,}|(?!false)[a-zA-Z]{5}|(?!true)[a-zA-Z]{4}|[a-z]\d')
 def parse_id(text):
     return text
 
@@ -172,6 +172,7 @@ fields_mapping = {
     '\.eyev': lambda r: r.eyev,
     '\.green': green,
     '\.height': lambda c: c.height,
+    '\.inside': lambda i: i.inside,
     '\.intensity': lambda r: r.intensity,
     '\.light': lambda ob: ob.light,
     '\.normalv': lambda ob: ob.normalv,

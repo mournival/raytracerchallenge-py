@@ -120,6 +120,15 @@ def step_field_equals_id(context, name, field, expected):
     assert_equal(field(context.scenario_vars[name]), context.scenario_vars[expected])
 
 
+@then("{:id}{:field} = false")
+def step_field_equals_id(context, name, field):
+    assert_equal(field(context.scenario_vars[name]), False)
+
+
+@then("{:id}{:field} = true")
+def step_field_equals_id(context, name, field):
+    assert_equal(field(context.scenario_vars[name]), True)
+    
 @then("{:id}{:field} = {:id}{:field}")
 def step_field_equals_field(context, name, field, expected_name, expected_field):
     assert_equal(field(context.scenario_vars[name]), expected_field(context.scenario_vars[expected_name]))

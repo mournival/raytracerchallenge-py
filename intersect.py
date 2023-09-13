@@ -4,6 +4,7 @@ from typing import List
 import numpy as np
 
 from ray import Ray
+from tuple import dot
 
 
 @dataclass
@@ -21,14 +22,17 @@ class Computations:
     point: np.array
     eyev: np.array
     normalv: np.array
-
+    inside: bool
+    
     def __init__(self, i: Intersection, r: Ray):
         self.t = i.t
         self.object = i.object
         self.point = r.position(i.t)
         self.eyev = -r.direction
         self.normalv = i.object.normal_at(self.point)
-
+        self.inside = dot(self.normalv, self.eyev) < 0
+        if self.inside:
+            self.normalv = -self.normalv
 
 intersection = Intersection
 
