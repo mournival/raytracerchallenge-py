@@ -6,6 +6,7 @@ from features.environment import assert_equal, parse_user_g, parse_operation, as
     parse_is_is_not, parse_field, parse_method, parse_matrix_name, create_table_from, assert_array_equal, \
     assert_array_approximately_equal, assert_array_not_equal, parse_id_many, parse_user_g_many
 from tuple import is_point, is_vector
+from world import World
 
 use_step_matcher("parse")
 register_type(field=parse_field)
@@ -139,13 +140,17 @@ def step_field_equals_val(context, name, field, expected):
     assert_equal(field(context.scenario_vars[name]), expected)
 
 
+@given("{:id}.light ← {:op}({:op}({:rns}), {:op}({:rns}))")
+def step_create_op2_with_op_op(context, name, op1, op2, params2, op3, params3):
+    context.scenario_vars[name] = World(op1(op2(*params2), op3(*params3)), context.scenario_vars[name].entities)
+
 @then("-{:id} = {:op}({:rns})")
 def step_negate_equals_op4_vals(context, name, op, params):
     assert_equal(-context.scenario_vars[name], op(*params))
 
 
 @then("{:id} = {:op}({:rns})")
-def step_id_equals_op4_vals(context, name, op, params):
+def step_id_equals_op_vals(context, name, op, params):
     assert_approximately_equal(context.scenario_vars[name], op(*params))
 
 
@@ -281,5 +286,15 @@ def step_inverse_multiplication_equals(context, c, operation, b, a):
 
 
 @step("{:id} ← {:mthd}({:id}, {:id})")
-def set_functional_method(context, a, mthd, o, b):
+def step_set_functional_method(context, a, mthd, o, b):
     context.scenario_vars[a] = mthd(context.scenario_vars[o], context.scenario_vars[b])
+
+
+@step("{:id} ← the first object in {:id}")
+def step_first_object(context, shape, w):
+    context.scenario_vars[shape] = context.scenario_vars[w].entities[0]
+
+
+@step("{:id} ← the second object in {:id}")
+def step_first_object(context, shape, w):
+    context.scenario_vars[shape] = context.scenario_vars[w].entities[1]

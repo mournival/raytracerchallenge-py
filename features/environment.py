@@ -16,7 +16,7 @@ from matrix import array_equal, array_approximately_equal, matrix, transpose, tr
 from ray import ray, point_light, material, lighting
 from sphere import sphere
 from tuple import y, vector3, vector4, point, normalize, magnitude, cross3, dot, z, w, x, is_point, reflect
-from world import world, default_world
+from world import world, default_world, color_at, shade_hit
 
 
 def before_feature(context, _feature):
@@ -54,7 +54,7 @@ def create_table_from(context):
     return matrix(table_data)
 
 
-@with_pattern(r'-?√?\d*\s*/\s*\d+|\d+/√\d+|√\d+|π\s*/\s*\d+|-?\d+|-?\d+.\d+')
+@with_pattern(r'-?√?\d*\s*/\s*\d+|\d+/√\d+|√\d+|π\s*/\s*\d+|-?\d+|-?\d+\.\d+')
 def parse_user_g(text):
     m = re.match(r'^√(\d+)$', text)
     if m:
@@ -104,6 +104,7 @@ operation_mapping = {
     'canvas': canvas.Canvas,
     'cofactor': cofactor,
     'color': color,
+    'color_at': color_at,
     'prepare_computations': Computations,
     'cross': cross3,
     'default_world': default_world,
@@ -132,6 +133,7 @@ operation_mapping = {
     'rotation_y': rotation_y,
     'rotation_z': rotation_z,
     'scaling': scaling,
+    'shade_hit': shade_hit,
     'shearing': shearing,
     'sphere': sphere,
     'translation': translation,

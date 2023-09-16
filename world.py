@@ -4,7 +4,7 @@ from typing import List
 from color import color
 from intersect import intersections
 from matrix import scaling
-from ray import point_light, material
+from ray import point_light, material, lighting
 from sphere import sphere
 from tuple import point
 
@@ -37,3 +37,11 @@ def default_world():
                 transform_matrix=scaling(0.5, 0.5, 0.5))
         ]
     )
+
+
+def color_at(w, c):
+    return None
+
+
+def shade_hit(w, comps):
+    return lighting(comps.object.material, w.light, comps.point, comps.eyev, comps.normalv)
