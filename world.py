@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from typing import List
 
 from color import color
-from intersect import intersections
+from intersect import intersections, hit, Computations
 from matrix import scaling
 from ray import point_light, material, lighting
 from sphere import sphere
@@ -39,8 +39,9 @@ def default_world():
     )
 
 
-def color_at(w, c):
-    return None
+def color_at(w, r):
+    h = hit(w.intersect(r))
+    return shade_hit(w, Computations(h, r)) if h is not None else color(0, 0, 0)
 
 
 def shade_hit(w, comps):
