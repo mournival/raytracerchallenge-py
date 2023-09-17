@@ -31,8 +31,8 @@ def step_create__empty_n_m(context, name):
 
 
 @step("{:id} ← {:op}({:rn}, {:id})")
-def step_create_op2_val_id(context, name, dtype, t, o):
-    context.scenario_vars[name] = dtype(t, context.scenario_vars[o])
+def step_create_op2_val_id(context, name, op, t, o):
+    context.scenario_vars[name] = op(t, context.scenario_vars[o])
 
 
 @step("{:id} ← {:op}({:ids})")

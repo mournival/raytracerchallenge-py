@@ -12,7 +12,7 @@ import canvas
 from color import color, red, blue, green
 from intersect import intersections, hit, intersection, Computations
 from matrix import array_equal, array_approximately_equal, matrix, transpose, translation, scaling, minor, inverse, \
-    cofactor, det, rotation_x, rotation_y, rotation_z, shearing
+    cofactor, det, rotation_x, rotation_y, rotation_z, shearing, view_transform
 from ray import ray, point_light, material, lighting
 from sphere import sphere
 from tuple import y, vector3, vector4, point, normalize, magnitude, cross3, dot, z, w, x, is_point, reflect
@@ -140,6 +140,7 @@ operation_mapping = {
     'transpose': transpose,
     'tuple': vector4,
     'vector': vector3,
+    'view_transform': view_transform,
     'world': world,
 }
 
