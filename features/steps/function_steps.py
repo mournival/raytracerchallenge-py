@@ -20,6 +20,11 @@ register_type(rn=parse_user_g)
 register_type(rns=parse_user_g_many)
 
 
+@step("{:id} ← {:rn}")
+def step_create_default(context, a, val):
+    context.scenario_vars[a] = val
+
+
 @step("{:id} ← {:op}()")
 def step_create_default(context, a, op):
     context.scenario_vars[a] = op()
@@ -129,7 +134,8 @@ def step_field_equals_id(context, name, field):
 @then("{:id}{:field} = true")
 def step_field_equals_id(context, name, field):
     assert_equal(field(context.scenario_vars[name]), True)
-    
+
+
 @then("{:id}{:field} = {:id}{:field}")
 def step_field_equals_field(context, name, field, expected_name, expected_field):
     assert_equal(field(context.scenario_vars[name]), expected_field(context.scenario_vars[expected_name]))
@@ -143,6 +149,7 @@ def step_field_equals_val(context, name, field, expected):
 @given("{:id}.light ← {:op}({:op}({:rns}), {:op}({:rns}))")
 def step_create_op2_with_op_op(context, name, op1, op2, params2, op3, params3):
     context.scenario_vars[name] = World(op1(op2(*params2), op3(*params3)), context.scenario_vars[name].entities)
+
 
 @then("-{:id} = {:op}({:rns})")
 def step_negate_equals_op4_vals(context, name, op, params):

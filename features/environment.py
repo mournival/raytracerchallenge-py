@@ -8,6 +8,7 @@ from behave.model import Row
 from parse import with_pattern
 from parse_type import TypeBuilder
 
+import camera
 import canvas
 from color import color, red, blue, green
 from intersect import intersections, hit, intersection, Computations
@@ -92,7 +93,18 @@ def parse_user_g(text):
     return float(text)
 
 
-@with_pattern(r'[a-zA-Z]+_[a-zA-Z]+|[a-zA-Z]{1,3}|[a-zA-Z]{6,}|(?!false)[a-zA-Z]{5}|(?!true)[a-zA-Z]{4}|[a-z]\d')
+id_patterns = [
+    '[a-zA-Z]+_[a-zA-Z]+',
+    '[a-zA-Z]+_[a-zA-Z]+_[a-zA-Z]+',
+    '[a-zA-Z]{1,3}',
+    '(?!true)[a-zA-Z]{4}',
+    '(?!false)[a-zA-Z]{5}',
+    '[a-zA-Z]{1,3}|[a-zA-Z]{6,}',
+    '[a-z]\d'
+]
+
+
+@with_pattern(r"|".join(id_patterns))
 def parse_id(text):
     return text
 
@@ -101,6 +113,7 @@ parse_user_g_many = TypeBuilder.with_many(parse_user_g)
 parse_id_many = TypeBuilder.with_many(parse_id)
 
 operation_mapping = {
+    'camera': camera.Camera,
     'canvas': canvas.Canvas,
     'cofactor': cofactor,
     'color': color,
@@ -173,8 +186,10 @@ fields_mapping = {
     '\.direction': lambda r: r.direction,
     '\.diffuse': lambda r: r.diffuse,
     '\.eyev': lambda r: r.eyev,
+    '\.field_of_view': lambda c: c.field_of_view,
     '\.green': green,
     '\.height': lambda c: c.height,
+    '\.hsize': lambda c: c.hsize,
     '\.inside': lambda i: i.inside,
     '\.intensity': lambda r: r.intensity,
     '\.light': lambda ob: ob.light,
@@ -188,6 +203,7 @@ fields_mapping = {
     '\.shininess': lambda o: o.shininess,
     '\.t': lambda i: i.t,
     '\.transform': lambda o: o.transform,
+    '\.vsize': lambda c: c.vsize,
     '\.w': w,
     '\.width': lambda c: c.width,
     '\.x': x,

@@ -117,26 +117,26 @@ Feature: Matrix Transformations
     When T ← C * B * A
     Then T * p = point(15, 0, 7)
 
-Scenario: The transformation matrix for the default orientation
-  Given from ← point(0, 0, 0)
+  Scenario: The transformation matrix for the default orientation
+    Given from ← point(0, 0, 0)
     And to ← point(0, 0, -1)
     And up ← vector(0, 1, 0)
-  When t ← view_transform(from, to, up)
-  Then t = identity_matrix
+    When t ← view_transform(from, to, up)
+    Then t = identity_matrix
 
-Scenario: A view transformation matrix looking in positive z direction
-  Given from ← point(0, 0, 0)
+  Scenario: A view transformation matrix looking in positive z direction
+    Given from ← point(0, 0, 0)
     And to ← point(0, 0, 1)
     And up ← vector(0, 1, 0)
-  When t ← view_transform(from, to, up)
-  Then t = scaling(-1, 1, -1)
+    When t ← view_transform(from, to, up)
+    Then t = scaling(-1, 1, -1)
 
-Scenario: The view transformation moves the world
-  Given from ← point(0, 0, 8)
+  Scenario: The view transformation moves the world
+    Given from ← point(0, 0, 8)
     And to ← point(0, 0, 0)
     And up ← vector(0, 1, 0)
-  When t ← view_transform(from, to, up)
-  Then t = translation(0, 0, -8)
+    When t ← view_transform(from, to, up)
+    Then t = translation(0, 0, -8)
 
 #Scenario: An arbitrary view transformation
 #  Given from ← point(1, 3, 2)
