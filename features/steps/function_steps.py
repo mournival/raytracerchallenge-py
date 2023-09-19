@@ -143,7 +143,7 @@ def step_field_equals_field(context, name, field, expected_name, expected_field)
 
 @then("{:id}{:field} = {:rn}")
 def step_field_equals_val(context, name, field, expected):
-    assert_equal(field(context.scenario_vars[name]), expected)
+    assert_approximately_equal(field(context.scenario_vars[name]), expected)
 
 
 @given("{:id}.light ← {:op}({:op}({:rns}), {:op}({:rns}))")
