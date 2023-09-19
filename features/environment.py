@@ -55,36 +55,50 @@ def create_table_from(context):
     return matrix(table_data)
 
 
-@with_pattern(r'-?√?\d*\s*/\s*\d+|\d+/√\d+|√\d+|π\s*/\s*\d+|-?\d+|-?\d+\.\d+')
+number_patterns = [
+    '√\d+',
+    '-\d*\s*/√\s*\d+',
+    '\d*/√\d+',
+    '-√\d*\s*/\s*\d+',
+    '√\d*\s*/\s*\d+',
+    '-\d*\s*/\s*\d+',
+    '\d*\s*/\s*\d+',
+    'π\s*/\s*\d+',
+    '-?\d+',
+    '-?\d+\.\d+'
+]
+
+
+@with_pattern(r"|".join(number_patterns))
 def parse_user_g(text):
     m = re.match(r'^√(\d+)$', text)
     if m:
         return sqrt(int(m.groups()[0]))
-    m = re.match('-(\d*)\s*/√\s*(\d+)', text)
+    m = re.match('^-(\d*)\s*/√\s*(\d+)$', text)
     if m:
         g = m.groups()
         return -int(g[0]) / sqrt(int(g[1]))
-    m = re.match('(\d*)/√(\d+)', text)
+    m = re.match('^(\d*)/√(\d+)$', text)
     if m:
         g = m.groups()
         return int(g[0]) / sqrt(int(g[1]))
-    m = re.match('-√(\d*)\s*/\s*(\d+)', text)
+    m = re.match('^-√(\d*)\s*/\s*(\d+)$', text)
     if m:
         g = m.groups()
         return -sqrt(int(g[0])) / int(g[1])
-    m = re.match(r'√(\d*)\s*/\s*(\d+)', text)
+    m = re.match(r'^√(\d*)\s*/\s*(\d+)$', text)
     if m:
         g = m.groups()
         return sqrt(int(g[0])) / int(g[1])
-    m = re.match('-(\d*)\s*/\s*(\d+)', text)
+    m = re.match('^-(\d*)\s*/\s*(\d+)$', text)
     if m:
         g = m.groups()
         return -int(g[0]) / int(g[1])
-    m = re.match(r'(\d*)\s*/\s*(\d+)', text)
+    m = re.match(r'^(\d*)\s*/\s*(\d+)$', text)
     if m:
         g = m.groups()
         return int(g[0]) / int(g[1])
-    m = re.match(r'π\s*/\s*(\d+)$', text)
+    m = re.match(r'^π\s*/\s*(\d+)$', text)
     if m:
         return math.pi / int(m.groups()[0])
     m = re.match(r'^(-?\d+)$', text)
