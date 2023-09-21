@@ -40,6 +40,11 @@ def step_create_op2_val_id(context, name, op, t, o):
     context.scenario_vars[name] = op(t, context.scenario_vars[o])
 
 
+@step("{:id} ← {:op}({:id}, {:rn}, {:rn})")
+def step_create_op2_val_id(context, name, op, o, x, y):
+    context.scenario_vars[name] = op(context.scenario_vars[o], x, y)
+
+
 @step("{:id} ← {:op}({:ids})")
 def step_create_op_ids(context, a, op, ids):
     context.scenario_vars[a] = op(*[context.scenario_vars[i] for i in ids])
@@ -68,6 +73,11 @@ def step_create_method_id_op_vals(context, n, method, s, dtype, params):
 @step("{:id} ← {:id} * {:id}")
 def step_create_product_ids(context, c, a, b):
     context.scenario_vars[c] = matrix.dot(context.scenario_vars[a], context.scenario_vars[b])
+
+
+@step("{:id}.transform ← {:op}({:rns}) * {:op}({:rns})")
+def step_create_product_ids(context, c, op1, params1, op2, params2):
+    context.scenario_vars[c] = context.scenario_vars[c].set_transform(matrix.dot(op1(*params1), op2(*params2)))
 
 
 @step("{:id} ← {:id} * {:id} * {:id}")
@@ -106,7 +116,7 @@ def step_is_not_invertible(context, a):
     assert (not matrix.invertible(context.scenario_vars[a]))
 
 
-@then("{:id}{:field} = {:op}({:rns})")
+@step("{:id}{:field} = {:op}({:rns})")
 def step_field_equals_op3(context, name, field, op, params):
     assert_equal(field(context.scenario_vars[name]), op(*params))
 

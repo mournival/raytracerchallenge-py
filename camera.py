@@ -2,7 +2,9 @@ import math
 
 import numpy as np
 
-from matrix import eye
+from matrix import eye, inverse, dot
+from ray import ray
+from tuple import point, normalize
 
 
 class Camera:
@@ -16,7 +18,23 @@ class Camera:
         self.vsize = vsize
         self.field_of_view = field_of_view
         self.transform = transform
+        self._inverse_transform = inverse(self.transform)
         self._pixel_size()
+
+    def set_transform(self, t):
+        return Camera(self.hsize, self.vsize, self.field_of_view, t)
+
+    def ray_for_pixel(self, px, py):
+        offset_x = (px + 0.5) * self.pixel_size
+        offset_y = (py + 0.5) * self.pixel_size
+
+        world_x = self.half_width - offset_x
+        world_y = self.half_height - offset_y
+
+        pixel = dot(self._inverse_transform, point(world_x, world_y, -1))
+        origin = dot(self._inverse_transform, point(0, 0, 0))
+        direction = normalize(pixel - origin)
+        return ray(origin, direction)
 
     def _pixel_size(self):
         half_view = math.tan(self.field_of_view / 2)
@@ -29,3 +47,7 @@ class Camera:
             self.half_width = half_view * aspect
             self.half_height = half_view
         self.pixel_size = self.half_width * 2 / self.hsize
+
+
+def ray_for_pixel(camera, px, py):
+    return camera.ray_for_pixel(px, py)
