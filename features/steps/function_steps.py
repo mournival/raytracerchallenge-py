@@ -80,6 +80,11 @@ def step_create_product_ids(context, c, op1, params1, op2, params2):
     context.scenario_vars[c] = context.scenario_vars[c].set_transform(matrix.dot(op1(*params1), op2(*params2)))
 
 
+@step("{:id}.transform ← {:op}({:ids})")
+def step_create_product_ids(context, c, op1, params1):
+    context.scenario_vars[c] = context.scenario_vars[c].set_transform(op1(*[context.scenario_vars[a] for a in params1]))
+
+
 @step("{:id} ← {:id} * {:id} * {:id}")
 def step_create_chained_product_ids(context, t, a, b, c):
     context.scenario_vars[t] = matrix.dot(matrix.dot(context.scenario_vars[a], context.scenario_vars[b]),

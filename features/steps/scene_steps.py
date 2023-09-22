@@ -32,6 +32,12 @@ def step_canvas_pixel_at(context, c, x, y, name):
                        context.scenario_vars[name]), f"pixel_at({c}, {x}, {y}) != {context.scenario_vars[c][x, y]}"
 
 
+@then("pixel_at({:id}, {:rn}, {:rn}) = {:op}({:rns})")
+def step_canvas_pixel_at(context, c, x, y, op, params):
+    assert np.allclose(context.scenario_vars[c][x, y], op(*params),
+                       rtol=0.0001), f"{context.scenario_vars[c][x, y]} != {op(*params)}"
+
+
 @when("{:id} ← canvas_to_ppm({:id})")
 def step_canvas_create_ppm_string(context, ppm, c):
     context.scenario_vars[ppm] = context.scenario_vars[c].to_ppm()

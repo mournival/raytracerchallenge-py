@@ -242,6 +242,7 @@ method_mapping = {
     "material.color": lambda s, p: s.set_color(p),
     "material.diffuse": lambda s, p: s.set_diffuse(p),
     "material.specular": lambda s, p: s.set_specular(p),
+    "render": lambda s, w: s.render(w),
     "set_transform": lambda s, p: s.set_transform(p),
 }
 

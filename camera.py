@@ -2,9 +2,11 @@ import math
 
 import numpy as np
 
+from canvas import Canvas
 from matrix import eye, inverse, dot
 from ray import ray
 from tuple import point, normalize
+from world import color_at
 
 
 class Camera:
@@ -35,6 +37,15 @@ class Camera:
         origin = dot(self._inverse_transform, point(0, 0, 0))
         direction = normalize(pixel - origin)
         return ray(origin, direction)
+
+    def render(self, world):
+        image = Canvas(self.hsize, self.vsize)
+        for y in range(self.vsize - 1):
+            for x in range(self.hsize - 1):
+                ray = self.ray_for_pixel(x, y)
+                c = color_at(world, ray)
+                image[x, y] = c
+        return image
 
     def _pixel_size(self):
         half_view = math.tan(self.field_of_view / 2)
