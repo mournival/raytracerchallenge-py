@@ -27,13 +27,13 @@ def step_canvas_write_pixel(context, c, x, y, name):
 
 
 @then("pixel_at({:id}, {:rn}, {:rn}) = {:id}")
-def step_canvas_pixel_at(context, c, x, y, name):
+def step_canvas_pixel_at_from_id(context, c, x, y, name):
     assert np.allclose(context.scenario_vars[c][x, y],
                        context.scenario_vars[name]), f"pixel_at({c}, {x}, {y}) != {context.scenario_vars[c][x, y]}"
 
 
 @then("pixel_at({:id}, {:rn}, {:rn}) = {:op}({:rns})")
-def step_canvas_pixel_at(context, c, x, y, op, params):
+def step_canvas_pixel_at_from_op(context, c, x, y, op, params):
     assert np.allclose(context.scenario_vars[c][x, y], op(*params),
                        rtol=0.0001), f"{context.scenario_vars[c][x, y]} != {op(*params)}"
 
