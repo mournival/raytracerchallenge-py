@@ -85,7 +85,7 @@ def step_test_no_objects(context, w):
 
 @given("{:id} ← sphere() with")
 @given("{:id} ← sphere() with:")
-def step_create_entity(context, id):
+def step_create_entity(context, a):
     heading_row = Row(context.table.headings, context.table.headings)
     table_data = context.table.rows
     table_data.insert(0, heading_row)
@@ -106,7 +106,7 @@ def step_create_entity(context, id):
             args = [float(n) for n in (field.translate(str.maketrans('', '', '(),')).split(' '))]
             d[test_cmd] = np.matmul(operation_mapping[op](*args), d[test_cmd])
 
-    context.scenario_vars[id] = sphere(transform_matrix=d['transform'], material=d['material'])
+    context.scenario_vars[a] = sphere(transform_matrix=d['transform'], material=d['material'])
 
 
 @step("{:id} contains {:id}")
