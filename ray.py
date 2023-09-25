@@ -59,20 +59,20 @@ class Material:
 
     def __eq__(self, other):
         return np.allclose(self.color, other.color) and (
-                self.ambient == other.ambient and self.diffuse == other.diffuse and 
+                self.ambient == other.ambient and self.diffuse == other.diffuse and
                 self.specular == other.specular and self.shininess == other.shininess)
 
 
 material = Material
 
 
-def lighting(m, light, pos, eye_v, normal_v):
+def lighting(m, light, pos, eye_v, normal_v, in_shadow=False):
     effective_color = m.color * light.intensity
     light_v = normalize(light.position - pos)
 
     ambient = effective_color * m.ambient
     light_dot_normal = dot(light_v, normal_v)
-    if light_dot_normal < 0:
+    if light_dot_normal < 0 or in_shadow:
         diffuse = color(0, 0, 0)
         specular = color(0, 0, 0)
     else:
