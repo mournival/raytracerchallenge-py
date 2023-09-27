@@ -8,6 +8,7 @@ from features.environment import parse_id, parse_operation, parse_user_g, assert
 from matrix import eye
 from ray import material
 from sphere import sphere
+from world import is_shadowed
 
 use_step_matcher("parse")
 register_type(id=parse_id)
@@ -117,3 +118,13 @@ def step_impl(context, w, o):
         if e == obj:
             contains = True
     assert contains
+
+
+@then("is_shadowed({:id}, {:id}) is false")
+def step_is_shadowed_false(context, w, p):
+    assert not is_shadowed(context.scenario_vars[w], context.scenario_vars[p])
+
+
+@then("is_shadowed({:id}, {:id}) is true")
+def step_is_shadowed_true(context, w, p):
+    assert is_shadowed(context.scenario_vars[w], context.scenario_vars[p])

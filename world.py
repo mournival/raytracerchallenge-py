@@ -4,9 +4,9 @@ from typing import List
 from color import color
 from intersect import intersections, hit, Computations
 from matrix import scaling
-from ray import point_light, material, lighting
+from ray import point_light, material, lighting, ray
 from sphere import sphere
-from tuple import point
+from tuple import point, magnitude, normalize
 
 
 def _flatten(a: List[List[any]]) -> List[any]:
@@ -46,3 +46,16 @@ def color_at(w, r):
 
 def shade_hit(w, comps):
     return lighting(comps.object.material, w.light, comps.point, comps.eyev, comps.normalv)
+
+
+def is_shadowed(w: World, p):
+    v = w.light.position
+    distance = magnitude(v)
+    direction = normalize(v)
+    
+    r = ray(p, direction)
+    intersections = w.intersect(r)
+    
+    h = hit(intersections)
+    
+    return h is not None and h.t < distance
