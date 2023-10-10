@@ -110,10 +110,20 @@ def step_create_entity(context, a):
 
 
 @step("{:id} contains {:id}")
-def step_impl(context, w, o):
+def contains_step_impl(context, w, o):
     contains = False
     obj = context.scenario_vars[o]
     for e in context.scenario_vars[w].entities:
         if e == obj:
             contains = True
     assert contains
+
+
+@then("is_shadowed({:id}, {:id}) is false")
+def is_shadowed_false_step_impl(context, w, p):
+    assert not context.scenario_vars[w].is_shadowed(context.scenario_vars[p])
+
+
+@then("is_shadowed({:id}, {:id}) is true")
+def is_shadowed_true_step_impl(context, w, p):
+    assert context.scenario_vars[w].is_shadowed(context.scenario_vars[p])

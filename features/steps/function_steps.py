@@ -31,7 +31,7 @@ def step_create_default(context, a, op):
 
 
 @step("{:id} ← true")
-def step_create_default(context, a):
+def step_create_true_default(context, a):
     context.scenario_vars[a] = True
 
 

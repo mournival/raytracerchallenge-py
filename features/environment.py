@@ -237,6 +237,7 @@ method_mapping = {
     "normal_at": lambda s, p: s.normal_at(p),
     "intersect": lambda s, p: s.intersect(p),
     "intersect_world": lambda s, p: s.intersect(p),
+    "is_shadowed": lambda w, p: w.is_shadowed(p),
     "position": lambda s, p: s.position(p),
     "transform": lambda s, p: s.set_transform(p),
     "material.color": lambda s, p: s.set_color(p),

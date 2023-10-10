@@ -4,9 +4,9 @@ from typing import List
 from color import color
 from intersect import intersections, hit, Computations
 from matrix import scaling
-from ray import point_light, material, lighting
+from ray import point_light, material, lighting, ray
 from sphere import sphere
-from tuple import point
+from tuple import point, magnitude, normalize
 
 
 def _flatten(a: List[List[any]]) -> List[any]:
@@ -20,6 +20,12 @@ class World:
 
     def intersect(self, r):
         return intersections(*_flatten([o.intersect(r) for o in self.entities]))
+
+    def is_shadowed(self, p):
+        v = self.light.position - p
+        direction = normalize(v)
+        h = hit(self.intersect(ray(p, direction)))
+        return h and h.t <= magnitude(v)
 
 
 def world():
