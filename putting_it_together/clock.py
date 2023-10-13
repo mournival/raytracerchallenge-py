@@ -2,8 +2,8 @@ from math import pi
 
 from canvas import Canvas
 from color import color
-from matrix import translation, scaling, rotation_z
-from tuple import point, dot, x, y
+from matrix import translation, scaling, rotation_z, dot
+from tuple import point, x, y
 
 COLOR = color(1, 1, 1)
 

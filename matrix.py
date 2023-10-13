@@ -30,7 +30,7 @@ def det(a):
 
 
 def dot(a, b):
-    return np.dot(a, b)
+    return np.matmul(a, b)
 
 
 def inverse(a):

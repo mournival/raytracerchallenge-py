@@ -30,13 +30,13 @@ def step_canvas_write_pixel(context, c, x, y, name):
 
 
 @then("pixel_at({:id}, {:rn}, {:rn}) = {:id}")
-def step_canvas_pixel_at(context, c, x, y, name):
+def step_canvas_pixel_at_from_id(context, c, x, y, name):
     assert np.allclose(context.scenario_vars[c][x, y],
                        context.scenario_vars[name]), f"pixel_at({c}, {x}, {y}) != {context.scenario_vars[c][x, y]}"
 
 
 @then("pixel_at({:id}, {:rn}, {:rn}) = {:op}({:rns})")
-def step_canvas_pixel_at_equals(context, c, x, y, op, params):
+def step_canvas_pixel_at_from_op(context, c, x, y, op, params):
     assert np.allclose(context.scenario_vars[c][x, y], op(*params),
                        rtol=0.0001), f"{context.scenario_vars[c][x, y]} != {op(*params)}"
 
@@ -88,7 +88,7 @@ def step_test_no_objects(context, w):
 
 @given("{:id} ← sphere() with")
 @given("{:id} ← sphere() with:")
-def step_create_entity(context, id):
+def step_create_entity(context, a):
     heading_row = Row(context.table.headings, context.table.headings)
     table_data = context.table.rows
     table_data.insert(0, heading_row)
@@ -109,7 +109,7 @@ def step_create_entity(context, id):
             args = [float(n) for n in (field.translate(str.maketrans('', '', '(),')).split(' '))]
             d[test_cmd] = np.matmul(operation_mapping[op](*args), d[test_cmd])
 
-    context.scenario_vars[id] = sphere(transform_matrix=d['transform'], material=d['material'])
+    context.scenario_vars[a] = sphere(transform_matrix=d['transform'], material=d['material'])
 
 
 @step("{:id} contains {:id}")

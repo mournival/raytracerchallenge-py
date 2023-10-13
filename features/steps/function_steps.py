@@ -21,7 +21,7 @@ register_type(rns=parse_user_g_many)
 
 
 @step("{:id} ← {:rn}")
-def step_create_number(context, a, val):
+def step_set_value(context, a, val):
     context.scenario_vars[a] = val
 
 
@@ -33,6 +33,11 @@ def step_create_true(context, a):
 @step("{:id} ← {:op}()")
 def step_create_default(context, a, op):
     context.scenario_vars[a] = op()
+
+
+@step("{:id} ← true")
+def step_create_true_default(context, a):
+    context.scenario_vars[a] = True
 
 
 @given("{:mn}")
@@ -81,12 +86,12 @@ def step_create_product_ids(context, c, a, b):
 
 
 @step("{:id}.transform ← {:op}({:rns}) * {:op}({:rns})")
-def step_create_product_vals(context, c, op1, params1, op2, params2):
+def step_create_product_op_values(context, c, op1, params1, op2, params2):
     context.scenario_vars[c] = context.scenario_vars[c].set_transform(matrix.dot(op1(*params1), op2(*params2)))
 
 
 @step("{:id}.transform ← {:op}({:ids})")
-def step_assign_transform(context, c, op1, params1):
+def step_create_transform_op_ids(context, c, op1, params1):
     context.scenario_vars[c] = context.scenario_vars[c].set_transform(op1(*[context.scenario_vars[a] for a in params1]))
 
 

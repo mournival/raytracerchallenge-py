@@ -102,7 +102,6 @@ Feature: World
     When comps ← prepare_computations(i, r)
     And c ← shade_hit(w, comps)
     Then c = color(0.1, 0.1, 0.1)
-
 #Scenario: The reflected color for a nonreflective material
 #  Given w ← default_world()
 #    And r ← ray(point(0, 0, 0), vector(0, 0, 1))
