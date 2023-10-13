@@ -45,17 +45,15 @@ def color_at(w, r):
 
 
 def shade_hit(w, comps):
-    return lighting(comps.object.material, w.light, comps.point, comps.eyev, comps.normalv)
+    return lighting(comps.object.material, w.light, comps.over_point, comps.eyev, comps.normalv,
+                    is_shadowed(w, comps.over_point))
 
 
 def is_shadowed(w: World, p):
-    v = w.light.position
+    v = w.light.position - p
     distance = magnitude(v)
     direction = normalize(v)
-    
-    r = ray(p, direction)
-    intersections = w.intersect(r)
-    
-    h = hit(intersections)
+
+    h = hit(w.intersect(ray(p, direction)))
     
     return h is not None and h.t < distance

@@ -5,10 +5,12 @@ from behave.model import Row
 from color import color
 from features.environment import parse_id, parse_operation, parse_user_g, assert_equal, method_mapping, \
     operation_mapping
+from intersect import EPSILON
 from matrix import eye
 from ray import material
 from sphere import sphere
-from world import is_shadowed
+from tuple import z
+from world import is_shadowed, World
 
 use_step_matcher("parse")
 register_type(id=parse_id)
@@ -34,7 +36,7 @@ def step_canvas_pixel_at(context, c, x, y, name):
 
 
 @then("pixel_at({:id}, {:rn}, {:rn}) = {:op}({:rns})")
-def step_canvas_pixel_at(context, c, x, y, op, params):
+def step_canvas_pixel_at_equals(context, c, x, y, op, params):
     assert np.allclose(context.scenario_vars[c][x, y], op(*params),
                        rtol=0.0001), f"{context.scenario_vars[c][x, y]} != {op(*params)}"
 
@@ -111,7 +113,7 @@ def step_create_entity(context, id):
 
 
 @step("{:id} contains {:id}")
-def step_impl(context, w, o):
+def step_contains_entity(context, w, o):
     contains = False
     obj = context.scenario_vars[o]
     for e in context.scenario_vars[w].entities:
@@ -128,3 +130,21 @@ def step_is_shadowed_false(context, w, p):
 @then("is_shadowed({:id}, {:id}) is true")
 def step_is_shadowed_true(context, w, p):
     assert is_shadowed(context.scenario_vars[w], context.scenario_vars[p])
+
+
+@step("{:id} is added to {:id}")
+def step_add_entity(context, s, w):
+    world = context.scenario_vars[w]
+    entities = world.entities
+    entities.append(context.scenario_vars[s])
+    context.scenario_vars[w] = World(world.light, entities)
+
+
+@then("{:id}.over_point.z < -EPSILON/2")
+def z_step_impl(context, comps):
+    assert z(context.scenario_vars[comps].over_point) < EPSILON / 2
+
+
+@then("{:id}.point.z > {:id}.over_point.z")
+def z_compare_step_impl(context, a, b):
+    assert z(context.scenario_vars[a].point) > z(context.scenario_vars[b].over_point)

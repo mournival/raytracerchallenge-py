@@ -66,11 +66,14 @@ class Material:
 material = Material
 
 
-def lighting(m, light, pos, eye_v, normal_v):
+def lighting(m, light, pos, eye_v, normal_v, is_shadowed=False):
     effective_color = m.color * light.intensity
     light_v = normalize(light.position - pos)
 
     ambient = effective_color * m.ambient
+    if is_shadowed:
+        return ambient
+    
     light_dot_normal = dot(light_v, normal_v)
     if light_dot_normal < 0:
         diffuse = color(0, 0, 0)

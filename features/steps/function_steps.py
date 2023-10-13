@@ -21,8 +21,13 @@ register_type(rns=parse_user_g_many)
 
 
 @step("{:id} ← {:rn}")
-def step_create_default(context, a, val):
+def step_create_number(context, a, val):
     context.scenario_vars[a] = val
+
+
+@step("{:id} ← true")
+def step_create_true(context, a):
+    context.scenario_vars[a] = True
 
 
 @step("{:id} ← {:op}()")
@@ -41,7 +46,7 @@ def step_create_op2_val_id(context, name, op, t, o):
 
 
 @step("{:id} ← {:op}({:id}, {:rn}, {:rn})")
-def step_create_op2_val_id(context, name, op, o, x, y):
+def step_create_op3_id_vals(context, name, op, o, x, y):
     context.scenario_vars[name] = op(context.scenario_vars[o], x, y)
 
 
@@ -76,12 +81,12 @@ def step_create_product_ids(context, c, a, b):
 
 
 @step("{:id}.transform ← {:op}({:rns}) * {:op}({:rns})")
-def step_create_product_ids(context, c, op1, params1, op2, params2):
+def step_create_product_vals(context, c, op1, params1, op2, params2):
     context.scenario_vars[c] = context.scenario_vars[c].set_transform(matrix.dot(op1(*params1), op2(*params2)))
 
 
 @step("{:id}.transform ← {:op}({:ids})")
-def step_create_product_ids(context, c, op1, params1):
+def step_assign_transform(context, c, op1, params1):
     context.scenario_vars[c] = context.scenario_vars[c].set_transform(op1(*[context.scenario_vars[a] for a in params1]))
 
 
@@ -142,12 +147,12 @@ def step_field_equals_id(context, name, field, expected):
 
 
 @then("{:id}{:field} = false")
-def step_field_equals_id(context, name, field):
+def step_field_equals_false(context, name, field):
     assert_equal(field(context.scenario_vars[name]), False)
 
 
 @then("{:id}{:field} = true")
-def step_field_equals_id(context, name, field):
+def step_field_equals_true(context, name, field):
     assert_equal(field(context.scenario_vars[name]), True)
 
 
@@ -162,7 +167,7 @@ def step_field_equals_val(context, name, field, expected):
 
 
 @given("{:id}.light ← {:op}({:op}({:rns}), {:op}({:rns}))")
-def step_create_op2_with_op_op(context, name, op1, op2, params2, op3, params3):
+def step_create_op2_with_op_op_vals(context, name, op1, op2, params2, op3, params3):
     context.scenario_vars[name] = World(op1(op2(*params2), op3(*params3)), context.scenario_vars[name].entities)
 
 
@@ -318,5 +323,5 @@ def step_first_object(context, shape, w):
 
 
 @step("{:id} ← the second object in {:id}")
-def step_first_object(context, shape, w):
+def step_second_object(context, shape, w):
     context.scenario_vars[shape] = context.scenario_vars[w].entities[1]

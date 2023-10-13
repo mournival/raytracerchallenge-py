@@ -6,6 +6,8 @@ import numpy as np
 from ray import Ray
 from tuple import dot
 
+EPSILON = 0.00001
+
 
 @dataclass
 class Intersection:
@@ -23,7 +25,7 @@ class Computations:
     eyev: np.array
     normalv: np.array
     inside: bool
-    
+
     def __init__(self, i: Intersection, r: Ray):
         self.t = i.t
         self.object = i.object
@@ -33,6 +35,8 @@ class Computations:
         self.inside = dot(self.normalv, self.eyev) < 0
         if self.inside:
             self.normalv = -self.normalv
+        self.over_point = self.point + self.normalv * EPSILON
+
 
 intersection = Intersection
 
