@@ -60,12 +60,8 @@
   </ol>
 </details>
 
-
-
-<!-- ABOUT THE PROJECT -->
-## About The Project
-
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+## About The Project <a name="#about-the-project"></a>
+![Ray Tracer Challenge](images%2Flogo.png)
 
 This is a Python implementation of a Ray Tracer as described in [The Ray Tracer Challenge](http://raytracerchallenge.com/). The principal objective is personal development (in particular mine), with an emphasis on:
 
@@ -87,40 +83,34 @@ If adding tests to doc my discovered bugs / 'Putting it all together' implementa
 
 
 
-### Built With
+### Built With <a name="#built-with"></a>
 * ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/numpy)
 * [![Behave][Behave]][Behave-url]
 * [![NumPy][Numpy.js]][Numpy-url]
-
-
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
-
-<!-- GETTING STARTED -->
-## Getting Started
-
+## Getting Started <a name="#getting-started"></a>
 To get a local copy up and running follow these steps.
 
-### Prerequisites
-
+### Prerequisites <a name="#prerequisites"></a>
 This list things you need to use the software and how to install them.
 * pip
   ```sh
    pip install -r requirements.txt
   ```
 
-### Installation
+### Installation <a name="#installation"></a>
 
 1. Clone the repo
    ```sh
    git clone https://github.com/mournival/raytracerchallenge-py.git
    ```
-1. Install NPM packages
+2. Install NPM packages
    ```sh
    pip install -r requirements.txt
    ```
-1. Run the ray tracer
+3. Run the ray tracer
    ``` sh
    python -i input_file -o output_file
     ```
@@ -129,7 +119,7 @@ This list things you need to use the software and how to install them.
 
 
 <!-- USAGE EXAMPLES -->
-## Usage
+## Usage <a name="#usage"></a>
 
 **TODO** 
 Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
@@ -141,11 +131,9 @@ Use this space to show useful examples of how a project can be used. Additional 
 
 
 <!-- ROADMAP -->
-## Roadmap
+## Roadmap <a name="#roadmap"></a>
 
 - [ ] README.md
-- [ ] Tuple
-- [ ] Matrices
 - ...
 
 See the [open issues](https://github.com/mournival/raytracerchallenge-py/issues) for a full list of proposed features (and known issues).
@@ -155,7 +143,7 @@ See the [open issues](https://github.com/mournival/raytracerchallenge-py/issues)
 
 
 <!-- CONTRIBUTING -->
-## Contributing
+## Contributing <a name="#contributing"></a>
 
 Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
@@ -173,7 +161,7 @@ Don't forget to give the project a star! Thanks again!
 
 
 <!-- LICENSE -->
-## License
+## License <a name="#license"></a>
 
 Distributed under the MIT License. See `LICENSE.txt` for more information.
 
@@ -182,7 +170,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 
 <!-- CONTACT -->
-## Contact
+## Contact <a name="#contact"></a>
 
 Kristian Holvoet - kwh@mournival.com
 
@@ -193,7 +181,7 @@ Project Link: [https://github.com/mournival/raytracerchallenge-py](https://githu
 
 
 <!-- ACKNOWLEDGMENTS -->
-## Acknowledgments
+## Acknowledgments <a name="#acknowledgments"></a>
 
 * [Jamis Buck](http://raytracerchallenge.com/) For writing [The Ray Tracer Challenge](http://raytracerchallenge.com/)
 
@@ -216,7 +204,7 @@ Project Link: [https://github.com/mournival/raytracerchallenge-py](https://githu
 [license-url]: https://github.com/mournival/raytracerchallenge-py/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/kristian-holvoet-10101
-[product-screenshot]: images/screenshot.png
+[product-screenshot]: images/logo.png
 [Behave]: https://behave.readthedocs.io/en/latest/_static/behave_logo1.png
 [Behave-url]: https://behave.readthedocs.io/en/latest/
 [Numpy.js]: https://numpy.org/doc/stable/_static/numpylogo.svg
