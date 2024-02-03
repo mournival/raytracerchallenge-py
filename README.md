@@ -60,7 +60,7 @@
   </ol>
 </details>
 
-## About The Project <a name="#about-the-project"></a>
+## About The Project <a name="about-the-project"></a>
 ![Ray Tracer Challenge](images%2Flogo.png)
 
 This is a Python implementation of a Ray Tracer as described in [The Ray Tracer Challenge](http://raytracerchallenge.com/). The principal objective is personal development (in particular mine), with an emphasis on:
@@ -83,24 +83,24 @@ If adding tests to doc my discovered bugs / 'Putting it all together' implementa
 
 
 
-### Built With <a name="#built-with"></a>
+### Built With <a name="built-with"></a>
 * ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/numpy)
 * [![Behave][Behave]][Behave-url]
 * [![NumPy][Numpy.js]][Numpy-url]
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
-## Getting Started <a name="#getting-started"></a>
+## Getting Started <a name="getting-started"></a>
 To get a local copy up and running follow these steps.
 
-### Prerequisites <a name="#prerequisites"></a>
+### Prerequisites <a name="prerequisites"></a>
 This list things you need to use the software and how to install them.
 * pip
   ```sh
    pip install -r requirements.txt
   ```
 
-### Installation <a name="#installation"></a>
+### Installation <a name="installation"></a>
 
 1. Clone the repo
    ```sh
@@ -119,7 +119,7 @@ This list things you need to use the software and how to install them.
 
 
 <!-- USAGE EXAMPLES -->
-## Usage <a name="#usage"></a>
+## Usage <a name="usage"></a>
 
 **TODO** 
 Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
@@ -131,7 +131,7 @@ Use this space to show useful examples of how a project can be used. Additional 
 
 
 <!-- ROADMAP -->
-## Roadmap <a name="#roadmap"></a>
+## Roadmap <a name="roadmap"></a>
 
 - [ ] README.md
 - ...
@@ -143,7 +143,7 @@ See the [open issues](https://github.com/mournival/raytracerchallenge-py/issues)
 
 
 <!-- CONTRIBUTING -->
-## Contributing <a name="#contributing"></a>
+## Contributing <a name="contributing"></a>
 
 Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
@@ -161,7 +161,7 @@ Don't forget to give the project a star! Thanks again!
 
 
 <!-- LICENSE -->
-## License <a name="#license"></a>
+## License <a name="license"></a>
 
 Distributed under the MIT License. See `LICENSE.txt` for more information.
 
@@ -170,7 +170,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 
 <!-- CONTACT -->
-## Contact <a name="#contact"></a>
+## Contact <a name="contact"></a>
 
 Kristian Holvoet - kwh@mournival.com
 
@@ -181,7 +181,7 @@ Project Link: [https://github.com/mournival/raytracerchallenge-py](https://githu
 
 
 <!-- ACKNOWLEDGMENTS -->
-## Acknowledgments <a name="#acknowledgments"></a>
+## Acknowledgments <a name="acknowledgments"></a>
 
 * [Jamis Buck](http://raytracerchallenge.com/) For writing [The Ray Tracer Challenge](http://raytracerchallenge.com/)
 
