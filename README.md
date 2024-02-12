@@ -33,7 +33,6 @@
 </div>
 
 
-
 <!-- TABLE OF CONTENTS -->
 <details>
   <summary>Table of Contents</summary>
@@ -79,8 +78,8 @@ rewrite a test if mutability is required.
 real frameworks, i.e., numpy for the matrices and vectors. I already know how to implement
 student level numerical methods and  classes.
 * If adding tests to doc my discovered bugs / 'Putting it all together' implementations, they will be identified as added and separated from the original tests. (Honored in the breach at this point, been adding new tests and files, added extra 'Then ... clauses for mutation testing')
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 ### Built With <a name="built-with"></a>
@@ -117,8 +116,6 @@ This list things you need to use the software and how to install them.
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
-
-<!-- USAGE EXAMPLES -->
 ## Usage <a name="usage"></a>
 
 **TODO** 
@@ -129,8 +126,6 @@ Use this space to show useful examples of how a project can be used. Additional 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
-
-<!-- ROADMAP -->
 ## Roadmap <a name="roadmap"></a>
 
 - [ ] README.md
@@ -141,8 +136,6 @@ See the [open issues](https://github.com/mournival/raytracerchallenge-py/issues)
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
-
-<!-- CONTRIBUTING -->
 ## Contributing <a name="contributing"></a>
 
 Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
@@ -159,14 +152,12 @@ Don't forget to give the project a star! Thanks again!
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
-
 <!-- LICENSE -->
 ## License <a name="license"></a>
 
 Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 
 
 <!-- CONTACT -->
