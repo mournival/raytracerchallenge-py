@@ -65,20 +65,20 @@
 
 This is a Python implementation of a Ray Tracer as described in [The Ray Tracer Challenge](http://raytracerchallenge.com/). The principal objective is personal development (in particular mine), with an emphasis on:
 
-Practicing the Python Behave (Gherkin) testing framework
-Improving my Python
-Practicing fairly pure aspects of TDD
-(Finally) revisiting topics from a favorite graduate CS graphics class
-Constraints
+* Practicing the Python Behave (Gherkin) testing framework
+* Improving my Python
+* Practicing fairly pure aspects of TDD
+* (and Finally) Revisiting topics from a favorite graduate CS graphics class
+
+### Constraints
 
 Do NOT change / rewrite any of the given tests. Some 'exceptions to the rule':
-- From previous (other language) implementations, the book pushes for mutable data. I'm  not a fan. I may ignore or 
+* From previous (other language) implementations, the book pushes for mutable data. I'm  not a fan. I may ignore or 
 rewrite a test if mutability is required.
-- Previous implementations didn't use 'common' frameworks for the APP code (test frameworks, sure). I am going to use 
-real frameworks, like numpy for the matrices and vectors. I already know how to implement
-student level numerical methods.
-
-If adding tests to doc my discovered bugs / 'Putting it all together' implementations, they will be identified as added and separated from the original tests. (Honored in the break at this point, been adding new tests and files, added extra 'Then ... clauses for mutation testing')
+* Previous implementations didn't use 'common' frameworks for the APP code (test frameworks, sure). I am going to use 
+real frameworks, i.e., numpy for the matrices and vectors. I already know how to implement
+student level numerical methods and  classes.
+* If adding tests to doc my discovered bugs / 'Putting it all together' implementations, they will be identified as added and separated from the original tests. (Honored in the breach at this point, been adding new tests and files, added extra 'Then ... clauses for mutation testing')
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
