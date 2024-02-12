@@ -95,7 +95,7 @@ To get a local copy up and running follow these steps.
 
 ### Prerequisites <a name="prerequisites"></a>
 This list things you need to use the software and how to install them.
-* pip
+* using pip
   ```sh
    pip install -r requirements.txt
   ```
@@ -106,7 +106,7 @@ This list things you need to use the software and how to install them.
    ```sh
    git clone https://github.com/mournival/raytracerchallenge-py.git
    ```
-2. Install NPM packages
+2. Install PyPi packages
    ```sh
    pip install -r requirements.txt
    ```
@@ -121,6 +121,9 @@ This list things you need to use the software and how to install them.
 
 **TODO** 
 Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+   ``` sh
+   python -i input_file -o output_file
+   ```
 
 [//]: # (_For more examples, please refer to the [Documentation]&#40;https://example.com&#41;_)
 
@@ -129,7 +132,9 @@ Use this space to show useful examples of how a project can be used. Additional 
 
 ## Roadmap <a name="roadmap"></a>
 
-- [ ] README.md
+- [x] README.md
+- [ ] Restart from layoff
+  - [ ] Determine restart point
 - ...
 
 See the [open issues](https://github.com/mournival/raytracerchallenge-py/issues) for a full list of proposed features (and known issues).
