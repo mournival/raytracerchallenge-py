@@ -83,9 +83,10 @@ student level numerical methods and  classes.
 
 
 ### Built With <a name="built-with"></a>
-* ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/numpy)
-* [![Behave][Behave]][Behave-url]
-* [![NumPy][Numpy.js]][Numpy-url]
+- [![PyPI - Python Version][PyPi]][PyPi-url]
+- [![Behave][Behave]][Behave-url]
+- [![NumPy][Numpy.js]][Numpy-url]
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
@@ -200,3 +201,5 @@ Project Link: [https://github.com/mournival/raytracerchallenge-py](https://githu
 [Behave-url]: https://behave.readthedocs.io/en/latest/
 [Numpy.js]: https://numpy.org/doc/stable/_static/numpylogo.svg
 [Numpy-url]: https://numpy.org/
+[PyPi]:https://pypi.org/static/images/logo-small.2a411bc6.svg
+[PyPi-url]:https://img.shields.io/pypi/pyversions/numpy
