@@ -13,7 +13,7 @@ from tuple import point, vector3
 from world import World
 
 
-def main():
+def main():  # pragma: no cover
     floor = sphere(scaling(10, 0.01, 10), material(color=color(1, 0.9, 0.9), specular=0))
     left_wall = sphere(np.matmul(matrix.translation(0, 0, 5), np.matmul(matrix.rotation_y(- math.pi / 4),
                                                                         np.matmul(matrix.rotation_x(math.pi / 2),
@@ -40,7 +40,7 @@ def main():
             f.write(line)
 
 
-if __name__ == '__main__':
+if __name__ == '__main__':  # pragma: no cover
     start = datetime.datetime.now()
     main()
     print(f"{datetime.datetime.now() - start}")

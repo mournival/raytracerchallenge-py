@@ -35,11 +35,6 @@ def step_create_default(context, a, op):
     context.scenario_vars[a] = op()
 
 
-@step("{:id} ← true")
-def step_create_true_default(context, a):
-    context.scenario_vars[a] = True
-
-
 @given("{:mn}")
 def step_create__empty_n_m(context, name):
     context.scenario_vars[name] = create_table_from(context)

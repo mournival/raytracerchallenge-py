@@ -4,12 +4,11 @@ from color import color, clamp_color, BLACK
 
 
 def clamp_line(line):
-    if (len(line)) < 71:
+    if (len(line)) < 70:
         return [line]
-    for i in range(70, 0, -1):
+    for i in range(69, 0, -1):
         if line[i] == ' ':
             return [line[: i]] + clamp_line(line[i + 1:])
-    return [line]
 
 
 class Canvas(object):
@@ -29,14 +28,15 @@ class Canvas(object):
         self._data[key] = value
 
     def to_ppm(self):
-        return '\n'.join(['P3', f"{self.width} {self.height}", "255", *self._pixel_rows()]) + '\n'
+        rows = '\n'.join(self._pixel_rows())
+        return '\n'.join(["P3", f"{self.width} {self.height}", "255", rows]) + '\n'
 
     def _pixel_rows(self):
         pr = list()
         pixels = self.pixels()
         rows = [pixels[x: x + self.width] for x in range(0, self.width * self.height, self.width)]
         for row in rows:
-            line = ' '.join([' '.join(clamp_color(p, 0, 255)) for p in row])
+            line = ' '.join([' '.join(clamp_color(p)) for p in row])
             pr += clamp_line(line)
         return pr
 
@@ -44,7 +44,7 @@ class Canvas(object):
         self._data.fill(clr)
 
 
-if __name__ == '__main__':
+if __name__ == '__main__':  # pragma: no cover
     c = Canvas(2, 2)
     # print(c.height)
     # print(c.width)

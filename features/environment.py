@@ -57,7 +57,6 @@ def create_table_from(context):
 
 number_patterns = [
     '√\d+',
-    '-\d*\s*/√\s*\d+',
     '\d*/√\d+',
     '-√\d*\s*/\s*\d+',
     '√\d*\s*/\s*\d+',
@@ -74,10 +73,6 @@ def parse_user_g(text):
     m = re.match(r'^√(\d+)$', text)
     if m:
         return sqrt(int(m.groups()[0]))
-    m = re.match('^-(\d*)\s*/√\s*(\d+)$', text)
-    if m:
-        g = m.groups()
-        return -int(g[0]) / sqrt(int(g[1]))
     m = re.match('^(\d*)/√(\d+)$', text)
     if m:
         g = m.groups()
@@ -162,7 +157,7 @@ operation_mapping = {
     'rotation_z': rotation_z,
     'scaling': scaling,
     'shade_hit': shade_hit,
-    'shearing': shearing, 
+    'shearing': shearing,
     'sphere': sphere,
     'translation': translation,
     'transpose': transpose,
@@ -237,7 +232,7 @@ method_mapping = {
     "normal_at": lambda s, p: s.normal_at(p),
     "intersect": lambda s, p: s.intersect(p),
     "intersect_world": lambda s, p: s.intersect(p),
-    "is_shadowed": lambda w, p: w.is_shadowed(p),
+    "is_shadowed": lambda s, p: s.is_shadowed(p),
     "position": lambda s, p: s.position(p),
     "transform": lambda s, p: s.set_transform(p),
     "material.color": lambda s, p: s.set_color(p),

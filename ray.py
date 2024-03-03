@@ -3,10 +3,9 @@ from dataclasses import dataclass, field
 
 import numpy as np
 
-import tuple
 from color import color
 from matrix import dot
-from tuple import normalize
+from tuple import normalize, reflect
 
 
 @dataclass
@@ -79,7 +78,7 @@ def lighting(m, light, pos, eye_v, normal_v, is_shadowed=False):
     else:
         diffuse = effective_color * light_dot_normal * m.diffuse
 
-        reflect_v = tuple.reflect(-light_v, normal_v)
+        reflect_v = reflect(-light_v, normal_v)
         reflect_dot_eye = dot(reflect_v, eye_v)
 
         if reflect_dot_eye <= 0:

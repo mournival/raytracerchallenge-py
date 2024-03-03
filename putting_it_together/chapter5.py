@@ -1,12 +1,12 @@
 from canvas import Canvas
 from color import color
-from intersect import hit, intersect
+from intersect import hit
 from ray import ray
 from sphere import sphere
 from tuple import point, normalize
 
 
-def main():
+def main():  # pragma: no cover
     ray_origin = point(0, 0, -5)
     wall_z = 10
     wall_size = 8.0
@@ -26,7 +26,7 @@ def main():
             p = point(world_x, world_y, wall_z)
             r = ray(ray_origin, normalize(p - ray_origin))
 
-            xs = intersect(shape, r)
+            xs = shape.intersect(r)
             
             if hit(xs):
                 c[x, y] = red
@@ -38,5 +38,5 @@ def main():
             f.write(line)
 
 
-if __name__ == '__main__':
+if __name__ == '__main__':  # pragma: no cover
     main()
