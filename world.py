@@ -1,10 +1,11 @@
 from dataclasses import dataclass
 from typing import List
 
+import material as mat
 from color import color
 from intersect import intersections, hit, Computations
 from matrix import scaling
-from ray import point_light, material, lighting, ray
+from ray import point_light, lighting, ray
 from sphere import sphere
 from tuple import point, magnitude, normalize
 
@@ -37,7 +38,7 @@ def default_world():
         point_light(point(-10, 10, -10), color(1, 1, 1)),
         [
             sphere(
-                material=material(color(0.8, 1.0, 0.6), diffuse=0.7, specular=0.2)
+                material=mat.material(color(0.8, 1.0, 0.6), diffuse=0.7, specular=0.2)
             ),
             sphere(
                 transform_matrix=scaling(0.5, 0.5, 0.5))

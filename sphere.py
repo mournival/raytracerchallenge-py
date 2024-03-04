@@ -2,16 +2,18 @@ import math
 
 import numpy as np
 
+import material as mat
 import matrix
 import tuple as tp
 from intersect import intersection
 from matrix import inverse, eye
-from ray import ray, material
+from ray import ray
+from shape import Shape
 
 
-class Sphere(object):
+class Sphere(Shape):
 
-    def __init__(self, transform_matrix=eye(4), material=material()):
+    def __init__(self, transform_matrix=eye(4), material=mat.material()):
         self.transform = transform_matrix
         self._inverse_transform = inverse(self.transform)
         self.material = material

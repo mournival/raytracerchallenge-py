@@ -1,10 +1,11 @@
 from timeit import default_timer
 
+import material as mat
 import matrix
 from canvas import Canvas
 from color import color
 from intersect import hit
-from ray import ray, point_light, lighting, material
+from ray import ray, point_light, lighting
 from sphere import sphere
 from tuple import point, normalize
 
@@ -22,7 +23,7 @@ def main():  # pragma: no cover
 
     color(1, 0, 0)
     light = point_light(point(-10, 10, -10), color(1, 1, 1))
-    shape = sphere(matrix.eye(4), material=material(color(1, 0.2, 1)))
+    shape = sphere(matrix.eye(4), material=mat.material(color(1, 0.2, 1)))
 
     for y in range(canvas_pixels):
         world_y = half - pixel_size * y
@@ -37,7 +38,7 @@ def main():  # pragma: no cover
                 pt = r.position(hit(xs).t)
                 normal = shape.normal_at(pt)
                 eye = -r.direction
-                c[x, y] = lighting(hit(xs).object.material, light, pt, eye, normal)
+                c[x, y] = lighting(material.material, light, pt, eye, normal)
             else:
                 c[x, y] = color(0, 0, 0)
                 # c[x, y] = color(y / canvas_pixels, y / canvas_pixels, y / canvas_pixels)

@@ -7,7 +7,7 @@ from features.environment import parse_id, parse_operation, parse_user_g, assert
     operation_mapping
 from intersect import EPSILON
 from matrix import eye
-from ray import material
+import material as mat
 from sphere import sphere
 from tuple import z
 from world import is_shadowed, World
@@ -93,7 +93,7 @@ def step_create_entity(context, a):
     table_data = context.table.rows
     table_data.insert(0, heading_row)
     d = {
-        'material': material(),
+        'material': mat.material(),
         'transform': eye(4)
     }
     for test_cmd, args in table_data:

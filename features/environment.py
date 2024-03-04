@@ -14,11 +14,12 @@ from color import color, red, blue, green
 from intersect import intersections, hit, intersection, Computations
 from matrix import array_equal, array_approximately_equal, matrix, transpose, translation, scaling, minor, inverse, \
     cofactor, det, rotation_x, rotation_y, rotation_z, shearing, view_transform
-from ray import ray, point_light, material, lighting
+from ray import ray, point_light, lighting
+import material as mat
 from sphere import sphere
 from tuple import y, vector3, vector4, point, normalize, magnitude, cross3, dot, z, w, x, is_point, reflect
 from world import world, default_world, color_at, shade_hit
-
+from steps.shape_step import test_shape
 
 def before_feature(context, _feature):
     context.scenario_vars = dict()
@@ -140,10 +141,10 @@ operation_mapping = {
     'is_vector': is_point,
     'lighting': lighting,
     'magnitude': magnitude,
-    'material': material,
-    'material.color': lambda prop, val: material(color(*[float(c) for c in val])),
-    'material.diffuse': lambda prop, val: material(diffuse=float(val)),
-    'material.specular': lambda prop, val: material(specular=float(val)),
+    'material': mat.material,
+    'material.color': lambda prop, val: mat.material(color(*[float(c) for c in val])),
+    'material.diffuse': lambda prop, val: mat.material(diffuse=float(val)),
+    'material.specular': lambda prop, val: mat.material(specular=float(val)),
     'minor': minor,
     'normalize': normalize,
     'point': point,
@@ -159,6 +160,7 @@ operation_mapping = {
     'shade_hit': shade_hit,
     'shearing': shearing,
     'sphere': sphere,
+    'test_shape': test_shape,
     'translation': translation,
     'transpose': transpose,
     'tuple': vector4,
