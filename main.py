@@ -37,7 +37,7 @@ def main():
                 pt = r.position(hit(xs).t)
                 normal = shape.normal_at(pt)
                 eye = -r.direction
-                c[x, y] = lighting(material.material, light, pt, eye, normal)
+                c[x, y] = lighting(shape.material, light, pt, eye, normal)
             else:
                 # c[x, y] = color(0,0,0) # BLACK
                 c[x, y] = color(x / canvas_pixels, y / canvas_pixels, ((x + y) * 0.2) / canvas_pixels)  # GRADIANT

@@ -3,12 +3,12 @@ import math
 
 import numpy as np
 
+import material as mat
 import matrix
 from camera import Camera
 from color import color
 from matrix import scaling
 from ray import point_light
-import material  as mat
 from sphere import sphere
 from tuple import point, vector3
 from world import World

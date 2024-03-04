@@ -15,5 +15,5 @@ class Shape(ABC):
         self.material = material
 
     @abstractmethod
-    def set_transform(self, t) -> np.array: 
+    def set_transform(self, t) -> np.array:
         pass

@@ -10,16 +10,17 @@ from parse_type import TypeBuilder
 
 import camera
 import canvas
+import material as mat
 from color import color, red, blue, green
 from intersect import intersections, hit, intersection, Computations
 from matrix import array_equal, array_approximately_equal, matrix, transpose, translation, scaling, minor, inverse, \
     cofactor, det, rotation_x, rotation_y, rotation_z, shearing, view_transform
 from ray import ray, point_light, lighting
-import material as mat
 from sphere import sphere
+from steps.shape_step import test_shape
 from tuple import y, vector3, vector4, point, normalize, magnitude, cross3, dot, z, w, x, is_point, reflect
 from world import world, default_world, color_at, shade_hit
-from steps.shape_step import test_shape
+
 
 def before_feature(context, _feature):
     context.scenario_vars = dict()

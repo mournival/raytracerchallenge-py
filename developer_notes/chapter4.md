@@ -1,17 +1,20 @@
 # Chapter 4: Matrix Translation
+
 This looks it is going to be the first big refactor. Due to how matrix vector
-multiplication works using numpy, using namedtuples for the Tuples (vector & point) 
+multiplication works using numpy, using namedtuples for the Tuples (vector & point)
 may be a poor design choice.
 
 BBIAB
 
 Err, never mind. Given
+
 ```gherkin
 Scenario: Translation does not affect vectors
   Given transform ← translation(5, -3, 2)
     And v ← vector(-3, 4, 5)
    Then transform * v = v
 ```
+
 the 'Then' step def is
 
 ```python
@@ -23,13 +26,17 @@ from matrix import dot
 def step_impl(context, a, b, c):
     assert_array_equal(dot(context.scenario_vars[a], context.scenario_vars[b]), context.scenario_vars[c])
 ```
+
 and that looks fine.
 
 ## Test parsing
+
 And here is where I begin to think about creating parsing helper utils for the 'special' cases (radicals)
+
 ```gherkin
     Then inv * p = point(0, √2/2, -√2/2)
 ```
+
 and all the matrix and vector multiplications and dot products.
 
 Starting to consider how much time to put into step utility functions.
@@ -47,13 +54,16 @@ non-ascii symbols and rational numbers, e.g.:
     And full_quarter * p = point(0, 0, 1)
 ```
 
-Creating a custom number parser probably makes sense, so that, if :rn is the 
+Creating a custom number parser probably makes sense, so that, if :rn is the
 tag for the custom parse method, the step function that matches
+
 ```gherkin
    Then half_quarter * p = point(0, √2/2, √2/2)
     And full_quarter * p = point(0, 0, 1)
 ```
+
 is
+
 ```gherkin
 @then("{:id} * {:id} = point({:g}, {:rn}, {:rn})")
 def step_matrix_translate_with_radicals_alt1_point_approximately_equals(context, a, b, x, y, z):
@@ -61,7 +71,9 @@ def step_matrix_translate_with_radicals_alt1_point_approximately_equals(context,
 ```
 
 ## Finished Chapter 4
+
 Fairly large reworking of test code with a small number of new library code:
+
 ```python
 from math import cos, sin
 import numpy as np
@@ -100,7 +112,8 @@ def translation(x, y, z):
 
 ```
 
-The (test) environment file had the largest change, as the custom type parsers was a rabbit's warren of paths. Finally got
+The (test) environment file had the largest change, as the custom type parsers was a rabbit's warren of paths. Finally
+got
 a settled at:
 
 ```python
@@ -176,8 +189,10 @@ def parse_matrix_name(text):
     return m.groups()[0]
 ```
 
-The idea was to make the pattern look close to the domain (matrix / vector algebra) in the step file. It looks okay (with some compromises). 
+The idea was to make the pattern look close to the domain (matrix / vector algebra) in the step file. It looks okay (
+with some compromises).
 The assignment steps are quite nice:
+
 ```python
 from behave import step
 from matrix import dot, rotation_x
@@ -200,6 +215,7 @@ def step_matrix_create_rotation_x(context, c, radians):
 ```
 
 And the operation based ones also seem to work out:
+
 ```python
 from behave import then
 from features.environment import assert_array_equal, assert_array_approximately_equal
@@ -227,10 +243,11 @@ def step_matrix_point_multiplication_equals(context, a, b, dtype, x, y, z):
 ```
 
 N.B., Color is implemented like Tuple/vector/point, and the steps have a huge structural similarity,
-but are not IS-A compatible in the code, so there is a bit of type hackery. May return to this later, but for now it 
+but are not IS-A compatible in the code, so there is a bit of type hackery. May return to this later, but for now it
 does not offend my senses overly much (it does, no simple solution has presented itself).
 
 # Major Refactor
+
 Yanked out custom tuple/color classes, just left api wrappers for np.array
 
 Also implemented the clock demo (thogh it looks more liking an aiming reticle.)

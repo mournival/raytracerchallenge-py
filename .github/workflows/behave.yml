@@ -1,6 +1,6 @@
 name: raytracerchallenge-py Behave Tests
 run-name: ${{ github.actor }} is running Behave tests.
-on: [push]
+on: [ push ]
 jobs:
   Behave:
     runs-on: ubuntu-latest

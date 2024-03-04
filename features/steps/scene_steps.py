@@ -2,12 +2,12 @@ import numpy as np
 from behave import use_step_matcher, given, when, then, step, register_type
 from behave.model import Row
 
+import material as mat
 from color import color
 from features.environment import parse_id, parse_operation, parse_user_g, assert_equal, method_mapping, \
     operation_mapping
 from intersect import EPSILON
 from matrix import eye
-import material as mat
 from sphere import sphere
 from tuple import z
 from world import is_shadowed, World

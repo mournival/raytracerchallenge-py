@@ -62,5 +62,5 @@ def is_shadowed(w: World, p):
     direction = normalize(v)
 
     h = hit(w.intersect(ray(p, direction)))
-    
+
     return h is not None and h.t < distance

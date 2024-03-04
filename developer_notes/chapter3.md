@@ -1,7 +1,10 @@
 # Chapter 3: Matrices
+
 ## Introduction
+
 Biggest diversion from the intent of the book: I am using numpy for
 the matrix operations. Two reasons:
+
 1. I have done matrix implementations many times, in C++, Java, Typescript
 2. Numpy is the (almost?) standard way of doing linear algebra in Python
 
@@ -12,14 +15,18 @@ will be learning pythonic code better, the behave framework, some github
 actions, and other miscellaneous skills.
 
 ## Behave
+
 A bit of oddity here. The parser for JetBrains PyCharm and
-Behave don't agree. Perhaps because I use 
+Behave don't agree. Perhaps because I use
+
 ```gherkin
 use_step_matcher("parse")
 ```
+
 ?
 
-Anyway, for 
+Anyway, for
+
 ```gherkin
 Given the following 4x4 matrix M:
   | 1    | 2    | 3    | 4    |
@@ -31,14 +38,18 @@ Given the following 4x4 matrix M:
 ```gherkin
 @then("inverse({:id}) is the following 4x4 matrix")
 ```
-matches for Behave, but 
+
+matches for Behave, but
+
 ```gherkin
 @then("inverse({:id}) is the following 4x4 matrix:")
 ```
+
 matches for PyCharm (no warning nag)
 
 By putting both annotations on the step, both are happy.
 It looks wierd though:
+
 ```gherkin
 @then("inverse({:id}) is the following 4x4 matrix")
 @then("inverse({:id}) is the following 4x4 matrix:")
