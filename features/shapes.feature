@@ -9,11 +9,11 @@ Feature: Abstract Shapes
     When set_transform(s, translation(2, 3, 4))
     Then s.transform = translation(2, 3, 4)
 
-#Scenario: The default material
-#  Given s ← test_shape()
-#  When m ← s.material
-#  Then m = material()
-#
+  Scenario: The default material
+    Given s ← test_shape()
+    When m ← s.material
+    Then m = material()
+
 #Scenario: Assigning a material
 #  Given s ← test_shape()
 #    And m ← material()

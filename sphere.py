@@ -1,7 +1,5 @@
 import math
 
-import numpy as np
-
 import material as mat
 import matrix
 import tuple as tp
@@ -37,9 +35,6 @@ class Sphere(Shape):
 
     def set_transform(self, t):
         return sphere(t)
-
-    def __eq__(self, other):
-        return self.material == other.material and np.allclose(self.transform, other.transform)
 
 
 sphere = Sphere

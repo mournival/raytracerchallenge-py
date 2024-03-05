@@ -206,6 +206,7 @@ fields_mapping = {
     '\.inside': lambda i: i.inside,
     '\.intensity': lambda r: r.intensity,
     '\.light': lambda o: o.light,
+    '\.material': lambda o: o.material,
     '\.normalv': lambda o: o.normalv,
     '\.object': lambda o: o.object,
     '\.origin': lambda o: o.origin,

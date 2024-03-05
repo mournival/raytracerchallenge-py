@@ -112,7 +112,7 @@ def translation(x, y, z):
 
 ```
 
-The (test) environment file had the largest change, as the custom type parsers was a rabbit's warren of paths. 
+The (test) environment file had the largest change, as the custom type parsers was a rabbit's warren of paths.
 Finally, settled at:
 
 ```python

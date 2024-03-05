@@ -96,6 +96,11 @@ def step_create_chained_product_ids(context, t, a, b, c):
                                           context.scenario_vars[c])
 
 
+@step("{:id} ← {:id}{:field}")
+def step_set_from_field(context, m, s, field):
+    context.scenario_vars[m] = field(context.scenario_vars[s])
+
+
 @step("{:id} ← submatrix({:id}, {:rn}, {:rn})")
 def step_create_submatrix(context, b, a, m, n):
     context.scenario_vars[b] = matrix.submatrix(context.scenario_vars[a], m, n)
@@ -229,6 +234,11 @@ def step_op2_ids_equals_op3_vals(context, op1, a, b, op2, params):
 @then("{:id} = {:op}({:id})")
 def step_id_equals_op1_id(context, a, op, b):
     assert_equal(context.scenario_vars[a], op(context.scenario_vars[b]))
+
+
+@then("{:id} = {:op}()")
+def step_id_equals_op0(context, a, op):
+    assert_equal(context.scenario_vars[a], op())
 
 
 @then("{:id} = approximately {:op}({:rns})")

@@ -18,3 +18,6 @@ class Shape(ABC):
     @abstractmethod
     def set_transform(self, t) -> np.array:
         pass
+    
+    def __eq__(self, other):
+        return self.material == other.material and np.allclose(self.transform, other.transform)
