@@ -61,7 +61,7 @@
 
 ## About The Project <a name="about-the-project"></a>
 
-![Ray Tracer Challenge](images%2Flogo.png)
+![Ray Tracer Challenge](images/logo.png)
 
 This is a Python implementation of a Ray Tracer as described
 in [The Ray Tracer Challenge](http://raytracerchallenge.com/). The principal objective is personal development (in

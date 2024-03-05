@@ -66,14 +66,14 @@ def step_canvas_ppm_end_newline(context, ppm):
     assert context.scenario_vars[ppm][-1] == '\n', f"{ppm} does not end with a newline character"
 
 
-@step("{:mthd}({:id}, {:id})")
-def step_set_transform(context, mthd, s, t):
-    context.scenario_vars[s] = mthd(context.scenario_vars[s], context.scenario_vars[t])
+@step("{:method}({:id}, {:id})")
+def step_set_transform(context, method, s, t):
+    context.scenario_vars[s] = method(context.scenario_vars[s], context.scenario_vars[t])
 
 
-@step("{:mthd}({:id}, {:op}({:rn}, {:rn}, {:rn}))")
-def step_set_transform_from_op(context, mthd, s, op, x, y, z):
-    context.scenario_vars[s] = mthd(context.scenario_vars[s], op(x, y, z))
+@step("{:method}({:id}, {:op}({:rns}))")
+def step_set_transform_from_op(context, method, s, op, x):
+    context.scenario_vars[s] = method(context.scenario_vars[s], op(*x))
 
 
 @step("{:id} has no light source")

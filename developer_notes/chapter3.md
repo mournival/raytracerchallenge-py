@@ -11,7 +11,7 @@ the matrix operations. Two reasons:
 Really, numpy is at the core of why Python is popular in production code (
 its popularity in education is for different reasons). Learning numpy while
 doing the project is going to be the biggest benefit to me. Secondary benefits
-will be learning pythonic code better, the behave framework, some github
+will be learning pythonic code better, the behave framework, some GitHub
 actions, and other miscellaneous skills.
 
 ## Behave

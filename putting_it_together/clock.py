@@ -28,8 +28,8 @@ def clock(canvas, dots, dot_size):
     sl = 2 * pi / dots
     half_dot = dot_size / 2
     _12 = point(0, 1, 0)
-    for min in [sl * d for d in range(dots)]:
-        p = dot(dot(st, rotation_z(min)), _12)
+    for minute in [sl * d for d in range(dots)]:
+        p = dot(dot(st, rotation_z(minute)), _12)
         for _c in range(dot_size):
             dot__c = y(p) - half_dot + _c
             p_half_dot = x(p) - half_dot

@@ -42,7 +42,7 @@ and all the matrix and vector multiplications and dot products.
 Starting to consider how much time to put into step utility functions.
 Some tradeoffs are, lots of simple step vs. potential ambiguities over time.
 
-Some of the parsing, it does make since because the feature files use
+Some of the parsing, it does make sense because the feature files use
 non-ascii symbols and rational numbers, e.g.:
 
 ```gherkin
@@ -112,9 +112,8 @@ def translation(x, y, z):
 
 ```
 
-The (test) environment file had the largest change, as the custom type parsers was a rabbit's warren of paths. Finally
-got
-a settled at:
+The (test) environment file had the largest change, as the custom type parsers was a rabbit's warren of paths. 
+Finally, settled at:
 
 ```python
 import math
@@ -250,5 +249,5 @@ does not offend my senses overly much (it does, no simple solution has presented
 
 Yanked out custom tuple/color classes, just left api wrappers for np.array
 
-Also implemented the clock demo (thogh it looks more liking an aiming reticle.)
-![chatper4.png](..%2Fimages%2Fchapter4.png)
+Also implemented the clock demo (though it looks more liking an aiming reticle.)
+![chapter4.png](../images/chapter4.png)

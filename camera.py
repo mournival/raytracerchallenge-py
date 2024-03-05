@@ -42,8 +42,8 @@ class Camera:
         image = Canvas(self.hsize, self.vsize)
         for y in range(self.vsize):
             for x in range(self.hsize):
-                ray = self.ray_for_pixel(x, y)
-                c = color_at(world, ray)
+                r = self.ray_for_pixel(x, y)
+                c = color_at(world, r)
                 image[x, y] = c
         return image
 

@@ -94,7 +94,7 @@ Feature: Intersections
     When i ← hit(xs)
     Then i is nothing
 
-  Scenario: The hit is always the lowest nonnegative intersection
+  Scenario: The hit is always the lowest non-negative intersection
     Given s ← sphere()
     And i1 ← intersection(5, s)
     And i2 ← intersection(7, s)

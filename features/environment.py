@@ -17,7 +17,7 @@ from matrix import array_equal, array_approximately_equal, matrix, transpose, tr
     cofactor, det, rotation_x, rotation_y, rotation_z, shearing, view_transform
 from ray import ray, point_light, lighting
 from sphere import sphere
-from steps.shape_step import test_shape
+from steps.shape_step import TestShape
 from tuple import y, vector3, vector4, point, normalize, magnitude, cross3, dot, z, w, x, is_point, reflect
 from world import world, default_world, color_at, shade_hit
 
@@ -161,7 +161,7 @@ operation_mapping = {
     'shade_hit': shade_hit,
     'shearing': shearing,
     'sphere': sphere,
-    'test_shape': test_shape,
+    'test_shape': TestShape,
     'translation': translation,
     'transpose': transpose,
     'tuple': vector4,
@@ -241,7 +241,7 @@ method_mapping = {
     "material.color": lambda s, p: s.set_color(p),
     "material.diffuse": lambda s, p: s.set_diffuse(p),
     "material.specular": lambda s, p: s.set_specular(p),
-    "render": lambda s, w: s.render(w),
+    "render": lambda s, wld: s.render(wld),
     "set_transform": lambda s, p: s.set_transform(p),
 }
 

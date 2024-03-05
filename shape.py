@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 import numpy as np
 
 import material as mat
-from matrix import eye
+from matrix import eye, inverse
 
 
 class Shape(ABC):
@@ -13,6 +13,7 @@ class Shape(ABC):
     def __init__(self, transform_matrix=eye(4), material: mat.material = mat.Material()):
         self.transform = transform_matrix
         self.material = material
+        self._inverse_transform = inverse(self.transform)
 
     @abstractmethod
     def set_transform(self, t) -> np.array:

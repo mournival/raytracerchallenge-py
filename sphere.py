@@ -6,7 +6,7 @@ import material as mat
 import matrix
 import tuple as tp
 from intersect import intersection
-from matrix import inverse, eye
+from matrix import eye
 from ray import ray
 from shape import Shape
 
@@ -14,9 +14,7 @@ from shape import Shape
 class Sphere(Shape):
 
     def __init__(self, transform_matrix=eye(4), material=mat.material()):
-        self.transform = transform_matrix
-        self._inverse_transform = inverse(self.transform)
-        self.material = material
+        super().__init__(transform_matrix, material)
 
     def intersect(self, r: ray):
         tray = r.set_transform(self._inverse_transform)

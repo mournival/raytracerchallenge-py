@@ -14,7 +14,7 @@ register_type(id=parse_id)
 register_type(ids=parse_id_many)
 register_type(isnota=parse_is_is_not)
 register_type(mn=parse_matrix_name)
-register_type(mthd=parse_method)
+register_type(method=parse_method)
 register_type(op=parse_operation)
 register_type(rn=parse_user_g)
 register_type(rns=parse_user_g_many)
@@ -70,7 +70,7 @@ def step_create_op2_with_op_op(context, name, op1, op2, params2, op3, params3):
     context.scenario_vars[name] = op1(op2(*params2), op3(*params3))
 
 
-@step("{:id} ← {:mthd}({:id}, {:op}({:rns}))")
+@step("{:id} ← {:method}({:id}, {:op}({:rns}))")
 def step_create_method_id_op_vals(context, n, method, s, dtype, params):
     context.scenario_vars[n] = method(context.scenario_vars[s], dtype(*params))
 
@@ -241,7 +241,7 @@ def step_addition_equals_op3_vals(context, a, b, op, params):
     assert_equal(context.scenario_vars[a] + context.scenario_vars[b], op(*params))
 
 
-@then("{:mthd}({:id}, {:rn}) = {:op}({:rns})")
+@then("{:method}({:id}, {:rn}) = {:op}({:rns})")
 def step_op2_id_val_equals_op3_vals(context, operation, r, t, dtype, params):
     assert_equal(operation(context.scenario_vars[r], t), dtype(*params))
 
@@ -312,9 +312,9 @@ def step_inverse_multiplication_equals(context, c, operation, b, a):
     assert_array_approximately_equal(actual, context.scenario_vars[a])
 
 
-@step("{:id} ← {:mthd}({:id}, {:id})")
-def step_set_functional_method(context, a, mthd, o, b):
-    context.scenario_vars[a] = mthd(context.scenario_vars[o], context.scenario_vars[b])
+@step("{:id} ← {:method}({:id}, {:id})")
+def step_set_functional_method(context, a, method, o, b):
+    context.scenario_vars[a] = method(context.scenario_vars[o], context.scenario_vars[b])
 
 
 @step("{:id} ← the first object in {:id}")
