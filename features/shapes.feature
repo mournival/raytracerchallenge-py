@@ -14,13 +14,13 @@ Feature: Abstract Shapes
     When m ← s.material
     Then m = material()
 
-#Scenario: Assigning a material
-#  Given s ← test_shape()
-#    And m ← material()
-#    And m.ambient ← 1
-#  When s.material ← m
-#  Then s.material = m
-#
+  Scenario: Assigning a material
+    Given s ← test_shape()
+    And m ← material()
+    And m.ambient ← 1
+    When s.material ← m
+    Then s.material = m
+
 #Scenario: Intersecting a scaled shape with a ray
 #  Given r ← ray(point(0, 0, -5), vector(0, 0, 1))
 #    And s ← test_shape()

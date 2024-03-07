@@ -34,7 +34,10 @@ class Sphere(Shape):
         return tp.normalize(tp.vector3(tp.x(world_normal), tp.y(world_normal), tp.z(world_normal)))
 
     def set_transform(self, t):
-        return sphere(t)
+        return sphere(t, self.material)
+
+    def set_material(self, m):
+        return sphere(self.transform, m)
 
 
 sphere = Sphere

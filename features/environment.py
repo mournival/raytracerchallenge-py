@@ -239,10 +239,13 @@ method_mapping = {
     "is_shadowed": lambda s, p: s.is_shadowed(p),
     "position": lambda s, p: s.position(p),
     "transform": lambda s, p: s.set_transform(p),
+    "material.set_ambient": lambda s, p: s.set_ambient(p),
     "material.color": lambda s, p: s.set_color(p),
     "material.diffuse": lambda s, p: s.set_diffuse(p),
     "material.specular": lambda s, p: s.set_specular(p),
     "render": lambda s, wld: s.render(wld),
+    "set_ambient": lambda s, p: s.set_ambient(p),
+    "set_color": lambda s, p: s.set_color(p),
     "set_transform": lambda s, p: s.set_transform(p),
 }
 

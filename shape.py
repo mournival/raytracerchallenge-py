@@ -16,8 +16,12 @@ class Shape(ABC):
         self._inverse_transform = inverse(self.transform)
 
     @abstractmethod
-    def set_transform(self, t) -> np.array:
+    def set_transform(self, t):
         pass
-    
+
+    @abstractmethod
+    def set_material(self, m):
+        pass
+
     def __eq__(self, other):
         return self.material == other.material and np.allclose(self.transform, other.transform)

@@ -11,3 +11,6 @@ class TestShape(Shape):
 
     def set_transform(self, t) -> np.array:
         return TestShape(t, self.material)
+
+    def set_material(self, m):
+        return TestShape(self.transform, m)

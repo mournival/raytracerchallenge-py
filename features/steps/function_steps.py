@@ -101,6 +101,16 @@ def step_set_from_field(context, m, s, field):
     context.scenario_vars[m] = field(context.scenario_vars[s])
 
 
+@step("{:id}.ambient ← {:rn}")
+def step_set_from_field(context, m, value):
+    context.scenario_vars[m] = context.scenario_vars[m].set_ambient(value)
+
+
+@step("{:id}.material ← {:id}")
+def step_set_from_field(context, s, m):
+    context.scenario_vars[s] = context.scenario_vars[s].set_material(context.scenario_vars[m])
+
+
 @step("{:id} ← submatrix({:id}, {:rn}, {:rn})")
 def step_create_submatrix(context, b, a, m, n):
     context.scenario_vars[b] = matrix.submatrix(context.scenario_vars[a], m, n)
