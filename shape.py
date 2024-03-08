@@ -12,10 +12,12 @@ class Shape(ABC):
     transform: np.array
     material: mat.Material
 
+    # parent: Shape  # Not sure how to forward declare ...
     def __init__(self, transform_matrix=eye(4), material: mat.material = mat.Material()):
         self.transform = transform_matrix
         self.material = material
         self._inverse_transform = inverse(self.transform)
+        self.parent = None
 
     def intersect(self, r: ray):
         local_ray = r.set_transform(self._inverse_transform)

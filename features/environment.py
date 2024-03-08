@@ -11,14 +11,14 @@ from parse_type import TypeBuilder
 import camera
 import canvas
 import material as mat
-from color import color, red, blue, green
-from intersect import intersections, hit, intersection, Computations
+from color import color
+from intersect import intersections, hit, Computations
 from matrix import array_equal, array_approximately_equal, matrix, transpose, translation, scaling, minor, inverse, \
     cofactor, det, rotation_x, rotation_y, rotation_z, shearing, view_transform
 from ray import ray, point_light, lighting
 from sphere import sphere
 from steps.shape_step import TestShape
-from tuple import y, vector3, vector4, point, normalize, magnitude, cross3, dot, z, w, x, is_point, reflect
+from tuple import vector3, vector4, point, normalize, magnitude, cross3, dot, is_point, reflect
 from world import world, default_world, color_at, shade_hit
 
 
@@ -134,8 +134,6 @@ operation_mapping = {
     'determinant': det,
     'dot': dot,
     'hit': hit,
-    # 'intersect': intersect,
-    'intersection': intersection,
     'intersections': intersections,
     'inverse': inverse,
     'is_point': is_point,
@@ -192,17 +190,13 @@ def parse_is_is_not(text):
 
 
 fields_mapping = {
-    '\.ambient': lambda ob: ob.ambient,
-    '\.blue': blue,
     '\.count': lambda lx: len(lx),
     '\.color': lambda ob: ob.color,
     '\.direction': lambda r: r.direction,
     '\.diffuse': lambda r: r.diffuse,
     '\.eyev': lambda r: r.eyev,
     '\.field_of_view': lambda c: c.field_of_view,
-    '\.green': green,
     '\.height': lambda c: c.height,
-    '\.hsize': lambda c: c.hsize,
     '\.inside': lambda i: i.inside,
     '\.intensity': lambda r: r.intensity,
     '\.light': lambda o: o.light,
@@ -213,17 +207,11 @@ fields_mapping = {
     '\.pixel_size': lambda o: o.pixel_size,
     '\.point': lambda o: o.point,
     '\.position': lambda o: o.position,
-    '\.red': red,
     '\.specular': lambda o: o.specular,
     '\.shininess': lambda o: o.shininess,
     '\.t': lambda i: i.t,
     '\.transform': lambda o: o.transform,
-    '\.vsize': lambda c: c.vsize,
-    '\.w': w,
     '\.width': lambda c: c.width,
-    '\.x': x,
-    '\.y': y,
-    '\.z': z,
 }
 
 
@@ -233,8 +221,6 @@ def parse_field(text):
 
 
 method_mapping = {
-    "normal_at": lambda s, p: s.normal_at(p),
-    "intersect": lambda s, p: s.intersect(p),
     "intersect_world": lambda s, p: s.intersect(p),
     "is_shadowed": lambda s, p: s.is_shadowed(p),
     "position": lambda s, p: s.position(p),

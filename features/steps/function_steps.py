@@ -1,12 +1,12 @@
 from behave import use_step_matcher, given, then, step, register_type
 
 import matrix
-from color import color
+from color import color, blue, green, red
 from features.environment import assert_equal, parse_user_g, parse_operation, assert_approximately_equal, parse_id, \
     parse_is_is_not, parse_field, parse_method, parse_matrix_name, create_table_from, assert_array_equal, \
     assert_array_approximately_equal, assert_array_not_equal, parse_id_many, parse_user_g_many
 from intersect import intersection
-from tuple import is_point, is_vector
+from tuple import is_point, is_vector, w, z, y, x
 from world import World
 
 use_step_matcher("parse")
@@ -56,6 +56,11 @@ def step_create_op_ids(context, a, op, ids):
     context.scenario_vars[a] = op(*[context.scenario_vars[i] for i in ids])
 
 
+@step("{:id} ← intersect_world({:id}, {:id})")
+def step_create_interect_world_ids(context, xs, w, r):
+    context.scenario_vars[xs] = context.scenario_vars[w].intersect(context.scenario_vars[r])
+
+
 @given("{:id} ← {:op}({:rns})")
 def step_create_op_vals(context, c, op, params):
     context.scenario_vars[c] = op(*params)
@@ -71,14 +76,29 @@ def step_create_op2_with_op_op(context, name, op1, op2, params2, op3, params3):
     context.scenario_vars[name] = op1(op2(*params2), op3(*params3))
 
 
-@step("{:id} ← {:method}({:id}, {:op}({:rns}))")
-def step_create_method_id_op_vals(context, n, method, s, dtype, params):
-    context.scenario_vars[n] = method(context.scenario_vars[s], dtype(*params))
+@step("{:id} ← intersect({:id}, {:id})")
+def step_create_method_intersect_vals(context, n, s, p):
+    context.scenario_vars[n] = context.scenario_vars[s].intersect(context.scenario_vars[p])
+
+
+@step("{:id} ← normal_at({:id}, {:op}({:rns}))")
+def step_create_method_normal_at_vals(context, n, s, dtype, params):
+    context.scenario_vars[n] = context.scenario_vars[s].normal_at(dtype(*params))
 
 
 @step("{:id} ← {:id} * {:id}")
 def step_create_product_ids(context, c, a, b):
     context.scenario_vars[c] = matrix.dot(context.scenario_vars[a], context.scenario_vars[b])
+
+
+@step("{:id}.hsize = {:rn}")
+def step_create_hsize(context, c, val):
+    assert_equal(context.scenario_vars[c].hsize, val), f"{c}.hsize = {val}"
+
+
+@step("{:id}.vsize = {:rn}")
+def step_create_vsize(context, c, val):
+    assert_equal(context.scenario_vars[c].vsize, val), f"{c}.vsize = {val}"
 
 
 @step("{:id}.transform ← {:op}({:rns}) * {:op}({:rns})")
@@ -108,7 +128,7 @@ def step_set_from_field(context, m, value):
 
 
 @step("{:id}.material ← {:id}")
-def step_set_from_field(context, s, m):
+def step_set_material_from_field(context, s, m):
     context.scenario_vars[s] = context.scenario_vars[s].set_material(context.scenario_vars[m])
 
 
@@ -122,29 +142,38 @@ def step_item_is_none(context, name):
     assert context.scenario_vars[name] is None, f"Actual {context.scenario_vars[name] =}, expected None"
 
 
+@then("{:id}.parent is nothing")
+def step_parent_is_none(context, name):
+    assert context.scenario_vars[name].parent is None, f"Actual {context.scenario_vars[name] =}, expected None"
+
+
 @then("{:id} {:isnota} point")
 def step_test_is_point(context, name, is_or_not):
-    assert_equal(is_point(context.scenario_vars[name]), is_or_not)
+    assert_equal(is_point(context.scenario_vars[name]),
+                 is_or_not), f"{is_point(context.scenario_vars[name]) =}, expected {is_or_not} point"
 
 
 @then("{:id} {:isnota} vector")
 def step_test_is_vector(context, name, is_or_not):
-    assert_equal(is_vector(context.scenario_vars[name]), is_or_not)
+    assert_equal(is_vector(context.scenario_vars[name]),
+                 is_or_not), f"{is_vector(context.scenario_vars[name]) =}, expected {is_or_not} vector"
 
 
 @step("{:id} is invertible")
 def step_is_invertible(context, a):
-    assert (matrix.invertible(context.scenario_vars[a]))
+    assert (matrix.invertible(context.scenario_vars[a])), f"{context.scenario_vars[a] = } expected is invertible"
 
 
 @step("{:id} is not invertible")
 def step_is_not_invertible(context, a):
-    assert (not matrix.invertible(context.scenario_vars[a]))
+    assert (
+        not matrix.invertible(context.scenario_vars[a])), f"{context.scenario_vars[a] =}, expected is not invertible"
 
 
 @step("{:id}{:field} = {:op}({:rns})")
 def step_field_equals_op3(context, name, field, op, params):
-    assert_equal(field(context.scenario_vars[name]), op(*params))
+    assert_equal(field(context.scenario_vars[name]),
+                 op(*params)), f"{field(context.scenario_vars[name]) =}, expected {op}({params})"
 
 
 @step("{:id}.saved_ray.origin = {:op}({:rns})")
@@ -153,13 +182,8 @@ def step_origin_equals_op3(context, name, op, params):
 
 
 @step("{:id}.saved_ray.direction = {:op}({:rns})")
-def step_field_origin_op3(context, name, op, params):
+def step_field_direction_op3(context, name, op, params):
     assert_equal(context.scenario_vars[name].saved_ray.direction, op(*params))
-
-
-@step("{:id}{:field} = {:op}({:rns})")
-def step_field_equals_op3(context, name, field, op, params):
-    assert_equal(field(context.scenario_vars[name]), op(*params))
 
 
 @then("{:id}[{:rn}]{:field} = {:rn}")
@@ -195,6 +219,46 @@ def step_field_equals_field(context, name, field, expected_name, expected_field)
 @then("{:id}{:field} = {:rn}")
 def step_field_equals_val(context, name, field, expected):
     assert_approximately_equal(field(context.scenario_vars[name]), expected)
+
+
+@then("{:id}.ambient = {:rn}")
+def step_ambient_equals_val(context, name, expected):
+    assert_approximately_equal(context.scenario_vars[name].ambient, expected)
+
+
+@then("{:id}.blue = {:rn}")
+def step_blue_equals_val(context, name, expected):
+    assert_approximately_equal(blue(context.scenario_vars[name]), expected)
+
+
+@then("{:id}.green = {:rn}")
+def step_green_equals_val(context, name, expected):
+    assert_approximately_equal(green(context.scenario_vars[name]), expected)
+
+
+@then("{:id}.red = {:rn}")
+def step_red_equals_val(context, name, expected):
+    assert_approximately_equal(red(context.scenario_vars[name]), expected)
+
+
+@then("{:id}.w = {:rn}")
+def step_w_equals_val(context, name, expected):
+    assert_approximately_equal(w(context.scenario_vars[name]), expected)
+
+
+@then("{:id}.x = {:rn}")
+def step_x_equals_val(context, name, expected):
+    assert_approximately_equal(x(context.scenario_vars[name]), expected)
+
+
+@then("{:id}.y = {:rn}")
+def step_y_equals_val(context, name, expected):
+    assert_approximately_equal(y(context.scenario_vars[name]), expected)
+
+
+@then("{:id}.z = {:rn}")
+def step_z_equals_val(context, name, expected):
+    assert_approximately_equal(z(context.scenario_vars[name]), expected)
 
 
 @given("{:id}.light ← {:op}({:op}({:rns}), {:op}({:rns}))")
