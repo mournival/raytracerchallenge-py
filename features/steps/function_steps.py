@@ -47,8 +47,8 @@ def step_create_intersection(context, name, t, o):
 
 
 @step("{:id} ← ray_for_pixel({:id}, {:rn}, {:rn})")
-def step_create_ray_for_pixel(context, name, o, x, y):
-    context.scenario_vars[name] = context.scenario_vars[o].ray_for_pixel(x, y)
+def step_create_ray_for_pixel(context, name, o, p_x, p_y):
+    context.scenario_vars[name] = context.scenario_vars[o].ray_for_pixel(p_x, p_y)
 
 
 @step("{:id} ← {:op}({:ids})")
@@ -57,8 +57,8 @@ def step_create_op_ids(context, a, op, ids):
 
 
 @step("{:id} ← intersect_world({:id}, {:id})")
-def step_create_interect_world_ids(context, xs, w, r):
-    context.scenario_vars[xs] = context.scenario_vars[w].intersect(context.scenario_vars[r])
+def step_create_intersect_world_ids(context, xs, wrld, ry):
+    context.scenario_vars[xs] = context.scenario_vars[wrld].intersect(context.scenario_vars[ry])
 
 
 @given("{:id} ← {:op}({:rns})")
@@ -277,8 +277,8 @@ def step_id_equals_op_vals(context, name, op, params):
 
 
 @then("{:id} - {:id} = {:op}({:rn}, {:rn}, {:rn})")
-def step_subtraction_equals_op3_vals(context, a, b, dtype, x, y, z):
-    assert_approximately_equal(context.scenario_vars[a] - context.scenario_vars[b], dtype(x, y, z))
+def step_subtraction_equals_op3_vals(context, a, b, dtype, p_x, p_y, p_z):
+    assert_approximately_equal(context.scenario_vars[a] - context.scenario_vars[b], dtype(p_x, p_y, p_z))
 
 
 @then("{:id} * {:rn} = {:op}({:rns})")
@@ -418,10 +418,10 @@ def step_set_functional_method(context, a, method, o, b):
 
 
 @step("{:id} ← the first object in {:id}")
-def step_first_object(context, shape, w):
-    context.scenario_vars[shape] = context.scenario_vars[w].entities[0]
+def step_first_object(context, shape, wrld):
+    context.scenario_vars[shape] = context.scenario_vars[wrld].entities[0]
 
 
 @step("{:id} ← the second object in {:id}")
-def step_second_object(context, shape, w):
-    context.scenario_vars[shape] = context.scenario_vars[w].entities[1]
+def step_second_object(context, shape, wrld):
+    context.scenario_vars[shape] = context.scenario_vars[wrld].entities[1]

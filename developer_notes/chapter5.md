@@ -128,27 +128,27 @@ from parse import with_pattern
 from tuple import w, x, y, z
 
 fields_mapping = {
-    '.blue': blue,
-    '.count': lambda lx: len(lx),
-    '.direction': lambda r: r.direction,
-    '.green': green,
-    '.height': lambda c: c.height,
-    '.object': lambda ob: ob.object,
-    '.origin': lambda ob: ob.origin,
-    '.red': red,
-    '.t': lambda i: i.t,
-    '.transform': lambda o: o.transform,
-    '.w': w,
-    '.width': lambda c: c.width,
-    '.x': x,
-    '.y': y,
-    '.z': z,
+  '.blue': blue,
+  '.count': lambda lx: len(lx),
+  '.direction': lambda r: r.direction,
+  '.green': green,
+  '.height': lambda c: c.height,
+  '.object': lambda ob: ob.object,
+  '.origin': lambda ob: ob.origin,
+  '.red': red,
+  '.t': lambda i: i.t,
+  '.transform': lambda o: o.transform,
+  '.w': w,
+  '.width': lambda c: c.width,
+  '.x': x,
+  '.y': y,
+  '.z': z,
 }
 
 
 @with_pattern(r"|".join(fields_mapping))
 def parse_field(text):
-    return fields_mapping[text]
+  return fields_mapping[text]
 ```
 
 Overall, I really like where this refactoring went. The step function are really functions, and only the setter (*
