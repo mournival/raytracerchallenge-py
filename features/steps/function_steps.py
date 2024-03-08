@@ -5,6 +5,7 @@ from color import color
 from features.environment import assert_equal, parse_user_g, parse_operation, assert_approximately_equal, parse_id, \
     parse_is_is_not, parse_field, parse_method, parse_matrix_name, create_table_from, assert_array_equal, \
     assert_array_approximately_equal, assert_array_not_equal, parse_id_many, parse_user_g_many
+from intersect import intersection
 from tuple import is_point, is_vector
 from world import World
 
@@ -40,14 +41,14 @@ def step_create__empty_n_m(context, name):
     context.scenario_vars[name] = create_table_from(context)
 
 
-@step("{:id} ← {:op}({:rn}, {:id})")
-def step_create_op2_val_id(context, name, op, t, o):
-    context.scenario_vars[name] = op(t, context.scenario_vars[o])
+@step("{:id} ← intersection({:rn}, {:id})")
+def step_create_intersection(context, name, t, o):
+    context.scenario_vars[name] = intersection(t, context.scenario_vars[o])
 
 
-@step("{:id} ← {:op}({:id}, {:rn}, {:rn})")
-def step_create_op3_id_vals(context, name, op, o, x, y):
-    context.scenario_vars[name] = op(context.scenario_vars[o], x, y)
+@step("{:id} ← ray_for_pixel({:id}, {:rn}, {:rn})")
+def step_create_ray_for_pixel(context, name, o, x, y):
+    context.scenario_vars[name] = context.scenario_vars[o].ray_for_pixel(x, y)
 
 
 @step("{:id} ← {:op}({:ids})")
@@ -96,9 +97,9 @@ def step_create_chained_product_ids(context, t, a, b, c):
                                           context.scenario_vars[c])
 
 
-@step("{:id} ← {:id}{:field}")
-def step_set_from_field(context, m, s, field):
-    context.scenario_vars[m] = field(context.scenario_vars[s])
+@step("{:id} ← {:id}.material")
+def step_set_from_material(context, m, s):
+    context.scenario_vars[m] = context.scenario_vars[s].material
 
 
 @step("{:id}.ambient ← {:rn}")
@@ -139,6 +140,21 @@ def step_is_invertible(context, a):
 @step("{:id} is not invertible")
 def step_is_not_invertible(context, a):
     assert (not matrix.invertible(context.scenario_vars[a]))
+
+
+@step("{:id}{:field} = {:op}({:rns})")
+def step_field_equals_op3(context, name, field, op, params):
+    assert_equal(field(context.scenario_vars[name]), op(*params))
+
+
+@step("{:id}.saved_ray.origin = {:op}({:rns})")
+def step_origin_equals_op3(context, name, op, params):
+    assert_equal(context.scenario_vars[name].saved_ray.origin, op(*params))
+
+
+@step("{:id}.saved_ray.direction = {:op}({:rns})")
+def step_field_origin_op3(context, name, op, params):
+    assert_equal(context.scenario_vars[name].saved_ray.direction, op(*params))
 
 
 @step("{:id}{:field} = {:op}({:rns})")
