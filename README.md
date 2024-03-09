@@ -122,11 +122,6 @@ This list things you need to use the software and how to install them.
    ``` sh
    python -i input_file -o output_file
     ```
-4. To run the tests (ignoring unimplemented tests), add the
-    ``` sh
-   --tags=-skip
-   ```
-   to the run command for you features test (however behave is invoked)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
