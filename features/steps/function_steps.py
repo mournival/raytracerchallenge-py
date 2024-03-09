@@ -6,7 +6,7 @@ from features.environment import assert_equal, parse_user_g, parse_operation, as
     parse_is_is_not, parse_field, parse_method, parse_matrix_name, create_table_from, assert_array_equal, \
     assert_array_approximately_equal, assert_array_not_equal, parse_id_many, parse_user_g_many
 from intersect import intersection
-from tuple import is_point, is_vector, w, z, y, x
+from tuple import is_point, is_vector, w, z, y, x, point
 from world import World
 
 use_step_matcher("parse")
@@ -415,6 +415,11 @@ def step_inverse_multiplication_equals(context, c, operation, b, a):
 @step("{:id} ← {:method}({:id}, {:id})")
 def step_set_functional_method(context, a, method, o, b):
     context.scenario_vars[a] = method(context.scenario_vars[o], context.scenario_vars[b])
+
+
+@step("{:id} ← local_normal_at({:id}, point({:rns}))")
+def step_set_local_normal_at_var(context, a, p, params):
+    context.scenario_vars[a] = context.scenario_vars[p].local_normal_at(point(*params))
 
 
 @step("{:id} ← the first object in {:id}")

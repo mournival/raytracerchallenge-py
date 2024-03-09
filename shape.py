@@ -26,10 +26,13 @@ class Shape(ABC):
     @abstractmethod
     def local_intersect(self, r: ray):
         pass
+    
+    @abstractmethod
+    def local_normal_at(self, p):
+        pass
 
     def normal_at(self, world_point):
-        object_point = dot(self._inverse_transform, world_point)
-        object_normal = object_point - tp.point(0, 0, 0)
+        object_normal = self.local_normal_at(world_point)
         world_normal = dot(transpose(self._inverse_transform), object_normal)
         return tp.normalize(tp.vector3(tp.x(world_normal), tp.y(world_normal), tp.z(world_normal)))
 

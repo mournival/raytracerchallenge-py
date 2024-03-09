@@ -8,6 +8,7 @@ from features.environment import parse_id, parse_operation, parse_user_g, assert
     operation_mapping
 from intersect import EPSILON
 from matrix import eye
+from plane import Plane
 from sphere import sphere
 from tuple import z
 from world import is_shadowed, World
@@ -148,3 +149,7 @@ def z_step_impl(context, comps):
 @then("{:id}.point.z > {:id}.over_point.z")
 def z_compare_step_impl(context, a, b):
     assert z(context.scenario_vars[a].point) > z(context.scenario_vars[b].over_point)
+
+@step("{:id} ← plane()")
+def step_create_plane(context, name):
+    context.scenario_vars[name] = Plane()

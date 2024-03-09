@@ -17,7 +17,7 @@ from matrix import array_equal, array_approximately_equal, matrix, transpose, tr
     cofactor, det, rotation_x, rotation_y, rotation_z, shearing, view_transform
 from ray import ray, point_light, lighting
 from sphere import sphere
-from steps.shape_step import TestShape
+from test_shape import TestShape
 from tuple import vector3, vector4, point, normalize, magnitude, cross3, dot, is_point, reflect
 from world import world, default_world, color_at, shade_hit
 

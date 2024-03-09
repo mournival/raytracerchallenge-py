@@ -5,7 +5,7 @@ import numpy as np
 import material as mat
 import tuple as tp
 from intersect import intersection
-from matrix import eye
+from matrix import eye, dot
 from ray import ray
 from shape import Shape
 
@@ -27,6 +27,10 @@ class TestShape(Shape):
             return []
         d = math.sqrt(discriminant)
         return [intersection((-b - d) / (2 * a), self), intersection((-b + d) / (2 * a), self)]
+
+    def local_normal_at(self, world_point):
+        object_point = dot(self._inverse_transform, world_point)
+        return object_point - tp.point(0, 0, 0)
 
     def set_transform(self, t) -> np.array:
         return TestShape(t, self.material)

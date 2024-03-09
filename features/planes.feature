@@ -1,6 +1,5 @@
 Feature: Planes
 
-  @skip
   Scenario: The normal of a plane is constant everywhere
     Given p ← plane()
     When n1 ← local_normal_at(p, point(0, 0, 0))
