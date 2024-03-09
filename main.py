@@ -42,7 +42,7 @@ def main():
                 # c[x, y] = color(0,0,0) # BLACK
                 c[x, y] = color(x / canvas_pixels, y / canvas_pixels, ((x + y) * 0.2) / canvas_pixels)  # GRADIANT
 
-    with open('./images/chapter6.ppm', 'w', encoding="ascii") as f:
+    with open('./images/main.ppm', 'w', encoding="ascii") as f:
         for line in c.to_ppm():
             f.write(line)
 
