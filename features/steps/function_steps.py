@@ -139,24 +139,29 @@ def step_create_submatrix(context, b, a, m, n):
 
 @then("{:id} is nothing")
 def step_item_is_none(context, name):
-    assert context.scenario_vars[name] is None, f"Actual {context.scenario_vars[name] =}, expected None"
+    assert context.scenario_vars[name] is None, f"Actual {context.scenario_vars[name] = }, expected None"
 
 
 @then("{:id}.parent is nothing")
 def step_parent_is_none(context, name):
-    assert context.scenario_vars[name].parent is None, f"Actual {context.scenario_vars[name] =}, expected None"
+    assert context.scenario_vars[name].parent is None, f"Actual {context.scenario_vars[name] = }, expected None"
 
 
 @then("{:id} {:isnota} point")
 def step_test_is_point(context, name, is_or_not):
     assert_equal(is_point(context.scenario_vars[name]),
-                 is_or_not), f"{is_point(context.scenario_vars[name]) =}, expected {is_or_not} point"
+                 is_or_not), f"{is_point(context.scenario_vars[name]) = }, expected {is_or_not} point"
 
 
 @then("{:id} {:isnota} vector")
 def step_test_is_vector(context, name, is_or_not):
     assert_equal(is_vector(context.scenario_vars[name]),
-                 is_or_not), f"{is_vector(context.scenario_vars[name]) =}, expected {is_or_not} vector"
+                 is_or_not), f"{is_vector(context.scenario_vars[name]) = }, expected {is_or_not} vector"
+
+
+@step("{:id} is empty")
+def step_is_empty(context, a):
+    assert context.scenario_vars[a] is None, f"{context.scenario_vars[a] = } expected is not empty"
 
 
 @step("{:id} is invertible")
@@ -167,13 +172,13 @@ def step_is_invertible(context, a):
 @step("{:id} is not invertible")
 def step_is_not_invertible(context, a):
     assert (
-        not matrix.invertible(context.scenario_vars[a])), f"{context.scenario_vars[a] =}, expected is not invertible"
+        not matrix.invertible(context.scenario_vars[a])), f"{context.scenario_vars[a] = }, expected is not invertible"
 
 
 @step("{:id}{:field} = {:op}({:rns})")
 def step_field_equals_op3(context, name, field, op, params):
     assert_equal(field(context.scenario_vars[name]),
-                 op(*params)), f"{field(context.scenario_vars[name]) =}, expected {op}({params})"
+                 op(*params)), f"{field(context.scenario_vars[name]) = }, expected {op}({params})"
 
 
 @step("{:id}.saved_ray.origin = {:op}({:rns})")
@@ -415,6 +420,11 @@ def step_inverse_multiplication_equals(context, c, operation, b, a):
 @step("{:id} ← {:method}({:id}, {:id})")
 def step_set_functional_method(context, a, method, o, b):
     context.scenario_vars[a] = method(context.scenario_vars[o], context.scenario_vars[b])
+
+
+@step("{:id} ← local_intersect({:id}, {:id})")
+def step_set_local_intersect_method(context, xs, p, r):
+    context.scenario_vars[xs] = context.scenario_vars[p].local_intersect(context.scenario_vars[r])
 
 
 @step("{:id} ← local_normal_at({:id}, point({:rns}))")

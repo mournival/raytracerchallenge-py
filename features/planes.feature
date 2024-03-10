@@ -9,14 +9,12 @@ Feature: Planes
     And n2 = vector(0, 1, 0)
     And n3 = vector(0, 1, 0)
 
-  @skip
   Scenario: Intersect with a ray parallel to the plane
     Given p ← plane()
     And r ← ray(point(0, 10, 0), vector(0, 0, 1))
     When xs ← local_intersect(p, r)
     Then xs is empty
 
-  @skip
   Scenario: Intersect with a coplanar ray
     Given p ← plane()
     And r ← ray(point(0, 0, 0), vector(0, 0, 1))
