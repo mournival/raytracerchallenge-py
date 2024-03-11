@@ -16,14 +16,24 @@ from world import World
 
 def create_image():
     floor = sphere(scaling(10, 0.01, 10), mat.material(color=color(1, 0.9, 0.9), specular=0))
-    left_wall = sphere(np.matmul(matrix.translation(0, 0, 5), np.matmul(matrix.rotation_y(- math.pi / 4),
-                                                                        np.matmul(matrix.rotation_x(math.pi / 2),
-                                                                                  scaling(10, 0.01, 10)))),
-                       floor.material)
-    right_wall = sphere(np.matmul(matrix.translation(0, 0, 5), np.matmul(matrix.rotation_y(math.pi / 4),
-                                                                         np.matmul(matrix.rotation_x(math.pi / 2),
-                                                                                   scaling(10, 0.01, 10)))),
-                        floor.material)
+    left_wall = sphere(
+        np.matmul(
+            matrix.translation(0, 0, 5),
+            np.matmul(
+                matrix.rotation_y(- math.pi / 4),
+                np.matmul(
+                    matrix.rotation_x(math.pi / 2),
+                    scaling(10, 0.01, 10)))),
+        floor.material)
+    right_wall = sphere(
+        np.matmul(
+            matrix.translation(0, 0, 5),
+            np.matmul(
+                matrix.rotation_y(math.pi / 4),
+                np.matmul(
+                    matrix.rotation_x(math.pi / 2),
+                    scaling(10, 0.01, 10)))),
+        floor.material)
     middle = sphere(matrix.translation(-0.5, 1, 0.5), mat.material(color=color(0.1, 1, 0.5), diffuse=0.7, specular=0.3))
     right = sphere(np.matmul(matrix.translation(1.5, 0.5, -0.5), scaling(0.5, 0.5, 0.5)),
                    mat.material(color=color(0.5, 1, 0.1), diffuse=0.7, specular=0.3))
