@@ -21,7 +21,7 @@ Feature: Planes
     When xs ← local_intersect(p, r)
     Then xs is empty
 
-  @skip
+
   Scenario: A ray intersecting a plane from above
     Given p ← plane()
     And r ← ray(point(0, 1, 0), vector(0, -1, 0))
@@ -30,7 +30,6 @@ Feature: Planes
     And xs[0].t = 1
     And xs[0].object = p
 
-  @skip
   Scenario: A ray intersecting a plane from below
     Given p ← plane()
     And r ← ray(point(0, -1, 0), vector(0, 1, 0))

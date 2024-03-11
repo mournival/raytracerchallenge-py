@@ -180,8 +180,7 @@ def parse_matrix_name(text):
     return m.groups()[0]
 
 
-is_is_not_mapping = {'is a': True,
-                     'is not a': False}
+is_is_not_mapping = {'is a': True, 'is not a': False}
 
 
 @with_pattern(r"|".join(is_is_not_mapping))
@@ -190,7 +189,6 @@ def parse_is_is_not(text):
 
 
 fields_mapping = {
-    '\.count': lambda lx: len(lx),
     '\.color': lambda ob: ob.color,
     '\.direction': lambda r: r.direction,
     '\.diffuse': lambda r: r.diffuse,

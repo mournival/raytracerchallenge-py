@@ -161,7 +161,7 @@ def step_test_is_vector(context, name, is_or_not):
 
 @step("{:id} is empty")
 def step_is_empty(context, a):
-    assert context.scenario_vars[a] is None, f"{context.scenario_vars[a] = } expected is not empty"
+    assert len(context.scenario_vars[a]) == 0, f"{context.scenario_vars[a] = } expected is not empty"
 
 
 @step("{:id} is invertible")
@@ -171,8 +171,13 @@ def step_is_invertible(context, a):
 
 @step("{:id} is not invertible")
 def step_is_not_invertible(context, a):
-    assert (
-        not matrix.invertible(context.scenario_vars[a])), f"{context.scenario_vars[a] = }, expected is not invertible"
+    assert not matrix.invertible(context.scenario_vars[a]), f"{context.scenario_vars[a] = }, expected is not invertible"
+
+
+@step("{:id}.count = {:rn}")
+def step_count_is(context, xs, expected_count):
+    assert len(
+        context.scenario_vars[xs]) == expected_count, f"{context.scenario_vars[xs] = } expected is not {expected_count}"
 
 
 @step("{:id}{:field} = {:op}({:rns})")
