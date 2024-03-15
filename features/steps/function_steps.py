@@ -6,6 +6,7 @@ from features.environment import assert_equal, parse_user_g, parse_operation, as
     parse_is_is_not, parse_field, parse_method, parse_matrix_name, create_table_from, assert_array_equal, \
     assert_array_approximately_equal, assert_array_not_equal, parse_id_many, parse_user_g_many
 from intersect import intersection
+from pattern import StripePattern
 from tuple import is_point, is_vector, w, z, y, x, point
 from world import World
 
@@ -64,6 +65,11 @@ def step_create_intersect_world_ids(context, xs, wrld, ry):
 @given("{:id} ← {:op}({:rns})")
 def step_create_op_vals(context, c, op, params):
     context.scenario_vars[c] = op(*params)
+
+
+@given("{:id} ← stripe_pattern({:id}, {:id})")
+def step_create_strip_pattern_vals(context, c, a, b):
+    context.scenario_vars[c] = StripePattern(context.scenario_vars[a], context.scenario_vars[b])
 
 
 @given("{:id} ← {:op}({:rns}) * {:op}({:rn})")
@@ -259,6 +265,18 @@ def step_w_equals_val(context, name, expected):
 @then("{:id}.x = {:rn}")
 def step_x_equals_val(context, name, expected):
     assert_approximately_equal(x(context.scenario_vars[name]), expected)
+
+
+@then("{:id}.a = {:id}")
+def step_x_equals_val(context, name, expected):
+    assert_approximately_equal(context.scenario_vars[name].a, context.scenario_vars[expected]),
+    f"{context.scenario_vars[name].a = }, expected {context.scenario_vars[expected]})"
+
+
+@then("{:id}.b = {:id}")
+def step_x_equals_val(context, name, expected):
+    assert_approximately_equal(context.scenario_vars[name].b, context.scenario_vars[expected]),
+    f"{context.scenario_vars[name].b = }, expected {context.scenario_vars[expected]})"
 
 
 @then("{:id}.y = {:rn}")
