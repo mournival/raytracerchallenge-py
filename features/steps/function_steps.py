@@ -268,15 +268,24 @@ def step_x_equals_val(context, name, expected):
 
 
 @then("{:id}.a = {:id}")
-def step_a_equals_val(context, name, expected):
-    assert_approximately_equal(context.scenario_vars[name].a, context.scenario_vars[expected]),
-    f"{context.scenario_vars[name].a = }, expected {context.scenario_vars[expected]})"
+def step_a_equals_val(context, name, c):
+    actual = context.scenario_vars[name].a
+    expected = context.scenario_vars[c]
+    assert_approximately_equal(actual, expected), f"{ actual = }, expected {expected})"
 
 
 @then("{:id}.b = {:id}")
-def step_b_equals_val(context, name, expected):
-    assert_approximately_equal(context.scenario_vars[name].b, context.scenario_vars[expected]),
-    f"{context.scenario_vars[name].b = }, expected {context.scenario_vars[expected]})"
+def step_b_equals_val(context, name, c):
+    actual = context.scenario_vars[name].b
+    expected = context.scenario_vars[c]
+    assert_approximately_equal(actual, expected), f"{ actual = }, expected {expected})"
+
+
+@then("stripe_at({:id}, point({:rns})) = {:id}")
+def step_color_at_equals_val(context, pattern, params, c):
+    actual = context.scenario_vars[pattern].color_at(point(*params))
+    expected = context.scenario_vars[c]
+    assert_approximately_equal(actual, expected), f"{ actual = }, expected {context.scenario_vars[c]})"
 
 
 @then("{:id}.y = {:rn}")

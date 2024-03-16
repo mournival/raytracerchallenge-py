@@ -9,14 +9,12 @@ Feature: Patterns
     Then pattern.a = white
     And pattern.b = black
 
-  @skip
   Scenario: A stripe pattern is constant in y
     Given pattern ← stripe_pattern(white, black)
     Then stripe_at(pattern, point(0, 0, 0)) = white
     And stripe_at(pattern, point(0, 1, 0)) = white
     And stripe_at(pattern, point(0, 2, 0)) = white
 
-  @skip
   Scenario: A stripe pattern is constant in z
     Given pattern ← stripe_pattern(white, black)
     Then stripe_at(pattern, point(0, 0, 0)) = white
