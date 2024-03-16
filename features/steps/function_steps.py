@@ -118,7 +118,7 @@ def step_create_transform_op_ids(context, c, op1, params1):
 
 
 @step("{:id}.pattern ← stripe_pattern(color({:rns}), color({:rns}))")
-def step_create_transform_op_ids(context, c, a_params, b_params):
+def step_create_strpe_patter(context, c, a_params, b_params):
     context.scenario_vars[c] = context.scenario_vars[c].set_pattern(StripePattern(color(*a_params), color(*b_params)))
 
 
