@@ -117,6 +117,11 @@ def step_create_transform_op_ids(context, c, op1, params1):
     context.scenario_vars[c] = context.scenario_vars[c].set_transform(op1(*[context.scenario_vars[a] for a in params1]))
 
 
+@step("{:id}.pattern ← stripe_pattern(color({:rns}), color({:rns}))")
+def step_create_transform_op_ids(context, c, a_params, b_params):
+    context.scenario_vars[c] = context.scenario_vars[c].set_pattern(StripePattern(color(*a_params), color(*b_params)))
+
+
 @step("{:id} ← {:id} * {:id} * {:id}")
 def step_create_chained_product_ids(context, t, a, b, c):
     context.scenario_vars[t] = matrix.dot(matrix.dot(context.scenario_vars[a], context.scenario_vars[b]),
@@ -129,13 +134,23 @@ def step_set_from_material(context, m, s):
 
 
 @step("{:id}.ambient ← {:rn}")
-def step_set_from_field(context, m, value):
+def step_set_ambient(context, m, value):
     context.scenario_vars[m] = context.scenario_vars[m].set_ambient(value)
 
 
+@step("{:id}.diffuse ← {:rn}")
+def step_set_diffuse(context, m, value):
+    context.scenario_vars[m] = context.scenario_vars[m].set_diffuse(value)
+
+
 @step("{:id}.material ← {:id}")
-def step_set_material_from_field(context, s, m):
+def step_set_material(context, s, m):
     context.scenario_vars[s] = context.scenario_vars[s].set_material(context.scenario_vars[m])
+
+
+@step("{:id}.specular ← {:rn}")
+def step_set_specular(context, m, val):
+    context.scenario_vars[m] = context.scenario_vars[m].set_specular(val)
 
 
 @step("{:id} ← submatrix({:id}, {:rn}, {:rn})")

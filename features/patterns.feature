@@ -21,7 +21,6 @@ Feature: Patterns
     And stripe_at(pattern, point(0, 0, 1)) = white
     And stripe_at(pattern, point(0, 0, 2)) = white
 
-  @skip
   Scenario: A stripe pattern alternates in x
     Given pattern ← stripe_pattern(white, black)
     Then stripe_at(pattern, point(0, 0, 0)) = white

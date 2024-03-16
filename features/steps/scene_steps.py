@@ -9,8 +9,9 @@ from features.environment import parse_id, parse_operation, parse_user_g, assert
 from intersect import EPSILON
 from matrix import eye
 from plane import Plane
+from ray import lighting
 from sphere import sphere
-from tuple import z
+from tuple import z, point
 from world import is_shadowed, World
 
 use_step_matcher("parse")
@@ -150,6 +151,19 @@ def z_step_impl(context, comps):
 def z_compare_step_impl(context, a, b):
     assert z(context.scenario_vars[a].point) > z(context.scenario_vars[b].over_point)
 
+
 @step("{:id} ← plane()")
 def step_create_plane(context, name):
     context.scenario_vars[name] = Plane()
+
+
+@step("{:id} ← lighting({:id}, {:id}, point({:rns}), {:id}, {:id}, false)")
+def step_lighting(context, c1, m, light, p_params, eyev, normalv):
+    context.scenario_vars[c1] = lighting(
+        context.scenario_vars[m],
+        context.scenario_vars[light],
+        point(*p_params),
+        context.scenario_vars[eyev],
+        context.scenario_vars[normalv],
+        False
+    )

@@ -36,7 +36,10 @@ point_light = PointLight
 
 
 def lighting(m, light, pos, eye_v, normal_v, is_shadowed=False):
-    effective_color = m.color * light.intensity
+    if m.pattern is not None:
+        effective_color = m.pattern.color_at(pos) * light.intensity
+    else:
+        effective_color = m.color * light.intensity
     light_v = normalize(light.position - pos)
 
     ambient = effective_color * m.ambient
