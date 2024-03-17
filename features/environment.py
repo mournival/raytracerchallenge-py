@@ -4,6 +4,7 @@ from math import sqrt
 
 import numpy
 import numpy as np
+from behave import register_type, use_step_matcher
 from behave.model import Row
 from parse import with_pattern
 from parse_type import TypeBuilder
@@ -12,14 +13,26 @@ import camera
 import canvas
 import material as mat
 from color import color
-from intersect import intersections, hit, Computations
+from intersect import intersections, Computations, hit
 from matrix import array_equal, array_approximately_equal, matrix, transpose, translation, scaling, minor, inverse, \
     cofactor, det, rotation_x, rotation_y, rotation_z, shearing, view_transform
-from ray import ray, point_light, lighting
+from ray import point_light, lighting, ray
 from sphere import sphere
 from test_shape import TestShape
-from tuple import vector3, vector4, point, normalize, magnitude, cross3, dot, is_point, reflect
+from tuple import vector3, vector4, point, normalize, magnitude, cross3, dot, reflect
 from world import world, default_world, color_at, shade_hit
+
+
+def register_custom_parsers():
+    use_step_matcher("parse")
+    register_type(id=parse_id)
+    register_type(ids=parse_id_many)
+    register_type(isnota=parse_is_is_not)
+    register_type(method=parse_method)
+    register_type(mn=parse_matrix_name)
+    register_type(op=parse_operation)
+    register_type(rn=parse_user_g)
+    register_type(rns=parse_user_g_many)
 
 
 def before_feature(context, _feature):
@@ -136,14 +149,9 @@ operation_mapping = {
     'hit': hit,
     'intersections': intersections,
     'inverse': inverse,
-    'is_point': is_point,
-    'is_vector': is_point,
     'lighting': lighting,
     'magnitude': magnitude,
     'material': mat.material,
-    'material.color': lambda prop, val: mat.material(color(*[float(c) for c in val])),
-    'material.diffuse': lambda prop, val: mat.material(diffuse=float(val)),
-    'material.specular': lambda prop, val: mat.material(specular=float(val)),
     'minor': minor,
     'normalize': normalize,
     'point': point,
@@ -188,49 +196,13 @@ def parse_is_is_not(text):
     return is_is_not_mapping[text]
 
 
-fields_mapping = {
-    '\.color': lambda ob: ob.color,
-    '\.direction': lambda r: r.direction,
-    '\.diffuse': lambda r: r.diffuse,
-    '\.eyev': lambda r: r.eyev,
-    '\.field_of_view': lambda c: c.field_of_view,
-    '\.height': lambda c: c.height,
-    '\.inside': lambda i: i.inside,
-    '\.intensity': lambda r: r.intensity,
-    '\.light': lambda o: o.light,
-    '\.material': lambda o: o.material,
-    '\.normalv': lambda o: o.normalv,
-    '\.object': lambda o: o.object,
-    '\.origin': lambda o: o.origin,
-    '\.pixel_size': lambda o: o.pixel_size,
-    '\.point': lambda o: o.point,
-    '\.position': lambda o: o.position,
-    '\.specular': lambda o: o.specular,
-    '\.shininess': lambda o: o.shininess,
-    '\.t': lambda i: i.t,
-    '\.transform': lambda o: o.transform,
-    '\.width': lambda c: c.width,
-}
-
-
-@with_pattern(r"|".join(fields_mapping))
-def parse_field(text):
-    return fields_mapping[f"\\{text}"]
-
-
 method_mapping = {
-    "intersect_world": lambda s, p: s.intersect(p),
-    "is_shadowed": lambda s, p: s.is_shadowed(p),
-    "position": lambda s, p: s.position(p),
     "transform": lambda s, p: s.set_transform(p),
-    "material.set_ambient": lambda s, p: s.set_ambient(p),
     "material.color": lambda s, p: s.set_color(p),
     "material.diffuse": lambda s, p: s.set_diffuse(p),
     "material.specular": lambda s, p: s.set_specular(p),
     "render": lambda s, wld: s.render(wld),
-    "set_ambient": lambda s, p: s.set_ambient(p),
-    "set_color": lambda s, p: s.set_color(p),
-    "set_transform": lambda s, p: s.set_transform(p),
+    "set_transform": lambda s, p: s.set_transform(p)
 }
 
 
