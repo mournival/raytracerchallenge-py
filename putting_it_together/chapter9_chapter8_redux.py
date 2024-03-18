@@ -43,8 +43,8 @@ def create_image():
         floor, left_wall, right_wall, middle, left, right
     ])
     c = Camera(1000, 500, math.pi / 3, matrix.view_transform(point(0, 1.5, -5), point(0, 1, 0), vector3(0, 1, 0)))
-    image = c.render(w)
-    return image
+
+    return c.render(w)
 
 
 if __name__ == '__main__':  # pragma: no cover

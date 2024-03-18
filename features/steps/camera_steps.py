@@ -22,8 +22,8 @@ def step_set_field_of_view(context, val):
 
 
 @step("{:id} ← ray_for_pixel({:id}, {:rn}, {:rn})")
-def step_create_ray_for_pixel(context, name, o, p_x, p_y):
-    context.scenario_vars[name] = context.scenario_vars[o].ray_for_pixel(p_x, p_y)
+def step_create_ray_for_pixel(context, n, p, p_x, p_y):
+    context.scenario_vars[n] = context.scenario_vars[p].ray_for_pixel(p_x, p_y)
 
 
 @step("{:id}.transform ← {:op}({:rns}) * {:op}({:rns})")
