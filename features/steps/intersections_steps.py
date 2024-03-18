@@ -1,4 +1,4 @@
-from behave import then
+from behave import then, step
 
 from features.environment import assert_equal, register_custom_parsers
 from tuple import vector3, point
@@ -9,6 +9,12 @@ register_custom_parsers()
 @then("{:id} is nothing")
 def step_item_is_none(context, name):
     assert context.scenario_vars[name] is None, f"Actual {context.scenario_vars[name] = }, expected None"
+
+
+@step("{:id}.count = {:rn}")
+def step_count_is(context, xs, expected):
+    actual = context.scenario_vars[xs]
+    assert len(actual) == expected, f"{ actual = } expected is not {expected}"
 
 
 @then("{:id}.normalv = vector({:rns})")

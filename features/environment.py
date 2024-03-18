@@ -27,7 +27,6 @@ def register_custom_parsers():
     use_step_matcher("parse")
     register_type(id=parse_id)
     register_type(ids=parse_id_many)
-    register_type(isnota=parse_is_is_not)
     register_type(method=parse_method)
     register_type(mn=parse_matrix_name)
     register_type(op=parse_operation)
@@ -186,14 +185,6 @@ def parse_operation(text):
 def parse_matrix_name(text):
     m = re.match(r'the following \d?x?\d? ?matrix (\w):?', text)
     return m.groups()[0]
-
-
-is_is_not_mapping = {'is a': True, 'is not a': False}
-
-
-@with_pattern(r"|".join(is_is_not_mapping))
-def parse_is_is_not(text):
-    return is_is_not_mapping[text]
 
 
 method_mapping = {

@@ -76,16 +76,33 @@ def step_scalar_division_equals_op4_vals(context, a, c, op, params):
     assert_equal(context.scenario_vars[a] / c, op(*params))
 
 
-@then("{:id} {:isnota} point")
-def step_test_is_point(context, name, is_or_not):
+@then("{:id} is a point")
+def step_test_is_a_point(context, name):
     assert_equal(is_point(context.scenario_vars[name]),
-                 is_or_not), f"{is_point(context.scenario_vars[name]) = }, expected {is_or_not} point"
+                 True), f"{is_point(context.scenario_vars[name]) = }, expected is a point"
 
 
-@then("{:id} {:isnota} vector")
-def step_test_is_vector(context, name, is_or_not):
+@then("{:id} is not a point")
+def step_test_is_not_a_point(context, name):
+    assert_equal(is_point(context.scenario_vars[name]),
+                 False), f"{is_point(context.scenario_vars[name]) = }, expected is not a point"
+
+
+@then("{:id} is a vector")
+def step_test_is_a_vector(context, name):
     assert_equal(is_vector(context.scenario_vars[name]),
-                 is_or_not), f"{is_vector(context.scenario_vars[name]) = }, expected {is_or_not} vector"
+                 True), f"{is_vector(context.scenario_vars[name]) = }, expected is a vector"
+
+
+@then("{:id} is not a vector")
+def step_test_is_not_a_vector(context, name):
+    assert_equal(is_vector(context.scenario_vars[name]),
+                 False), f"{is_vector(context.scenario_vars[name]) = }, expected is not a vector"
+
+
+@then("{:id} = approximately {:op}({:rns})")
+def step_id_approximately_equal_op3_vals(context, v, dtype, params):
+    assert_approximately_equal(context.scenario_vars[v], dtype(*params))
 
 
 @then("{:op}({:id}) = approximately {:rn}")

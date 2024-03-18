@@ -1,7 +1,6 @@
 from behave import given, then, step
 
 from features.environment import assert_equal, assert_approximately_equal, register_custom_parsers
-from tuple import point
 
 register_custom_parsers()
 
@@ -29,12 +28,6 @@ def step_create_op2_with_op_op(context, name, op1, op2, params2, op3, params3):
 @step("{:id} ← {:method}({:id}, {:id})")
 def step_set_functional_method(context, a, method, o, b):
     context.scenario_vars[a] = method(context.scenario_vars[o], context.scenario_vars[b])
-
-
-@step("{:id}.count = {:rn}")
-def step_count_is(context, xs, expected):
-    actual = context.scenario_vars[xs]
-    assert len(actual) == expected, f"{ actual = } expected is not {expected}"
 
 
 @then("{:id} = {:op}({:rns})")
@@ -72,19 +65,9 @@ def step_id_equals_op0(context, a, op):
     assert_equal(context.scenario_vars[a], op())
 
 
-@then("{:id} = approximately {:op}({:rns})")
-def step_id_approximately_equal_op3_vals(context, v, dtype, params):
-    assert_approximately_equal(context.scenario_vars[v], dtype(*params))
-
-
 @then("{:id} + {:id} = {:op}({:rns})")
 def step_addition_equals_op3_vals(context, a, b, op, params):
     assert_equal(context.scenario_vars[a] + context.scenario_vars[b], op(*params))
-
-
-@then("position({:id}, {:rn}) = point({:rns})")
-def step_op2_id_val_equals_op3_vals(context, r, t, params):
-    assert_equal(context.scenario_vars[r].position(t), point(*params))
 
 
 @then("{:id}[{:rn},{:rn}] = {:rn}")

@@ -210,6 +210,7 @@ def step_field_of_view_equals_val(context, name, expected):
 def step_intensity_equals_val(context, name, p):
     assert_approximately_equal(context.scenario_vars[name].intensity, context.scenario_vars[p])
 
+
 @then("{:id}.light = {:id}")
 def step_light_equals_val(context, w, p):
     actual = context.scenario_vars[w].light
