@@ -163,12 +163,11 @@ def step_test_no_objects(context, w):
 
 @step("{:id} contains {:id}")
 def step_contains_entity(context, w, o):
-    contains = False
     obj = context.scenario_vars[o]
     for e in context.scenario_vars[w].entities:
         if e == obj:
-            contains = True
-    assert contains
+            return
+    assert False
 
 
 @then("is_shadowed({:id}, {:id}) is false")

@@ -13,8 +13,7 @@ def step_item_is_none(context, name):
 
 @step("{:id}.count = {:rn}")
 def step_count_is(context, xs, expected):
-    actual = context.scenario_vars[xs]
-    assert len(actual) == expected, f"{ actual = } expected is not {expected}"
+    assert len(context.scenario_vars[xs]) == expected, f"{ context.scenario_vars[xs] = } expected is not {expected}"
 
 
 @then("{:id}.normalv = vector({:rns})")

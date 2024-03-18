@@ -33,8 +33,7 @@ def step_create_product_op_values(context, c, op1, params1, op2, params2):
 
 @step("{:id}.transform ← {:op}({:ids})")
 def step_create_transform_op_ids(context, c, op1, params1):
-    context.scenario_vars[c] = context.scenario_vars[c].set_transform(
-        op1(*[context.scenario_vars[a] for a in params1]))
+    context.scenario_vars[c] = context.scenario_vars[c].set_transform(op1(*[context.scenario_vars[a] for a in params1]))
 
 
 @step("{:id}.hsize = {:rn}")

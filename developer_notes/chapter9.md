@@ -3,8 +3,8 @@
 Back after a break.
 
 I have decided to redo the steps to uncompress the parsing the test steps. I go
-back and forth on this, but right now, I think the step implementations 
-should be more explicit, as a form of documentation. Too much of the 
+back and forth on this, but right now, I think the step implementations
+should be more explicit, as a form of documentation. Too much of the
 tests were hidden in the parser and lambdas in the environment file.
 
 I should probably add tags to skip the tests, rather than have them

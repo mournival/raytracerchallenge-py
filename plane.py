@@ -15,7 +15,7 @@ class Plane(Shape):
         if abs(tp.y(r.direction)) < EPSILON:
             return []
         return [intersection(-tp.y(r.origin) / tp.y(r.direction), self)]
-    
+
     def local_normal_at(self, p):
         return tp.vector3(0, 1, 0)
 

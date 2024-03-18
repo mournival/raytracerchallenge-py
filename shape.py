@@ -26,7 +26,7 @@ class Shape(ABC):
     @abstractmethod
     def local_intersect(self, r: ray):
         pass
-    
+
     @abstractmethod
     def local_normal_at(self, p):
         pass
